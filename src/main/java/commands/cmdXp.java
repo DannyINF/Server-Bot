@@ -1,44 +1,44 @@
 package commands;
 
 import core.messageActions;
-import core.modulesChecker;
 import core.permissionChecker;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import util.LevelChecker;
+import util.SET_CHANNEL;
+import util.STATIC;
 import util.getUser;
 
 import java.awt.*;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 public class cmdXp implements Command {
 
-    private static void xp(MessageReceivedEvent event, Member xpmember) throws SQLException {
+    private static void xp(GuildMessageReceivedEvent event, Member xpmember) throws SQLException {
 
         String strmember;
         strmember = xpmember.getUser().getAsTag();
 
-        String xp;
-        String level;
         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
 
-        String[] arguments = {"users", "id = '" + xpmember.getUser().getId() + "'", "2", "xp", "level"};
-        String[] data = core.databaseHandler.database(event.getGuild().getId(), "select", arguments);
-        xp = data[0];
-        level = data[1];
-        event.getTextChannel().sendMessage(messageActions.getLocalizedString("xp_msg", "user", event.getAuthor().getId())
-                .replace("[USER]", strmember).replace("[LEVEL]", numberFormat.format(Integer.parseInt(level)))
-                .replace("[XP]", numberFormat.format(Integer.parseInt(xp)))).queue();
+        String[] xp_level = core.databaseHandler.database(event.getGuild().getId(), "select xp, level from users where id = '" + xpmember.getId() + "'");
+
+        assert xp_level != null;
+        event.getChannel().sendMessage(messageActions.getLocalizedString("xp_msg", "user", event.getAuthor().getId())
+                .replace("[USER]", strmember).replace("[LEVEL]", numberFormat.format(Long.parseLong(xp_level[1])))
+                .replace("[XP]", numberFormat.format(Long.parseLong(xp_level[0])))).queue();
 
     }
 
@@ -48,124 +48,112 @@ public class cmdXp implements Command {
     }
 
     @Override
-    public void action(String[] args, MessageReceivedEvent event) throws SQLException {
-        String status;
-        status = modulesChecker.moduleStatus("xp", event.getGuild().getId());
-        if (status.equals("activated")) {
+    public void action(String[] args, GuildMessageReceivedEvent event) throws SQLException {
+        try {
+            switch (args[0]) {
+                case "leaderboard":
+                case "ranking":
+                    cmdXpRanking.action(args, event);
+                    break;
+                case "give":
+                    if (permissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR}, event.getMember())) {
 
-            try {
-                switch (args[0]) {
-                    case "ranking":
-                        cmdXpRanking.action(args, event);
-                        break;
-                    case "give":
-                        if (permissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR}, event.getMember())) {
-                            long amount;
-                            Member member = null;
-                            MessageChannel channel = event.getChannel();
-                            if (args[1].contains("<") && args[1].contains(">") && args[1].contains("@")) {
-                                try {
-                                    member = event.getGuild().getMemberById(args[1].replace("@", "").replace("<", "").replace(">", "").replace("!", ""));
-                                } catch (Exception e) {
-                                    Message msg = channel.sendMessage("Gib bitte einen Nutzer an.").complete();
-                                    new Timer().schedule(new TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            msg.delete().queue();
-                                        }
-                                    }, 5000);
-                                    break;
-                                }
-                            } else {
-                                try {
-                                    int i = 1;
-                                    StringBuilder sb = new StringBuilder();
-                                    while (i < args.length - 2) {
-                                        sb.append(args[i]);
-                                        sb.append(" ");
-                                        i++;
-                                    }
-                                    sb.append(args[i]);
-                                    member = event.getGuild().getMembersByEffectiveName(sb.toString(), true).get(0);
-                                } catch (Exception e) {
-                                    Message msg = channel.sendMessage("Nutzer nicht gefunden.").complete();
-                                    new Timer().schedule(new TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            msg.delete().queue();
-                                        }
-                                    }, 5000);
-                                }
-                            }
-
-                            try {
-                                amount = Long.parseLong(args[args.length - 1]);
-                            } catch (Exception e) {
-                                Message msg = channel.sendMessage("Gib bitte die Anzahl an XP an, die du hinzuf\u00fcgen willst.").complete();
-                                new Timer().schedule(new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        msg.delete().queue();
-                                    }
-                                }, 5000);
-                                break;
-                            }
-
-                            try {
-                                String[] arguments = {"users", "id = '" + member.getUser().getId() + "'", "1", "xp"};
-                                String[] answer;
-                                answer = core.databaseHandler.database(event.getGuild().getId(), "select", arguments);
-
-                                long newxp = Long.parseLong(answer[0]) + amount;
-
-                                String[] arguments3 = {"users", "id = '" + member.getUser().getId() + "'", "xp", String.valueOf(newxp)};
-                                core.databaseHandler.database(event.getGuild().getId(), "update", arguments3);
-                                long level = LevelChecker.checker(member, event.getGuild(), newxp);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                        long amount;
+                        Member member;
+                        MessageChannel channel = event.getChannel();
+                        try {
+                            ArrayList<String> list = new ArrayList<>(Arrays.asList(args).subList(1, args.length - 1));
+                            member = util.getUser.getMemberFromInput(list.toArray(new String[0]), event.getAuthor(), event.getGuild(), event.getChannel());
+                        } catch (Exception e) {
+                            channel.sendMessage("Gib bitte einen Nutzer an.").queue(msg -> msg.delete().queueAfter(5, TimeUnit.SECONDS));
+                            break;
+                        }
+                        assert member != null;
+                        try {
+                            amount = Long.parseLong(args[args.length - 1]);
+                        } catch (Exception e) {
+                            channel.sendMessage("Gib bitte die Anzahl an XP an, die du hinzuf\u00fcgen willst.").queue(msg -> msg.delete().queueAfter(5, TimeUnit.SECONDS));
+                            break;
                         }
 
-                        break;
-                    case "next":
-                        String[] arguments = {"users", "id = '" + event.getAuthor().getId() + "'", "1", "xp"};
-                        String[] answer;
-                        answer = core.databaseHandler.database(event.getGuild().getId(), "select", arguments);
+                        try {
+                            core.databaseHandler.database(event.getGuild().getId(), "update users set xp = xp + " + amount + " where id = '" + member.getId() + "'");
 
-                        long newxp = Long.parseLong(answer[0]);
+                            EmbedBuilder embed = new EmbedBuilder();
+                            embed.setColor(Color.RED);
+                            NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
+                            embed.setDescription("**" + event.getAuthor().getAsTag() + "** hat dem Nutzer **" + member.getUser().getAsTag() + "**" +
+                                    " `" + numberFormat.format(amount) + "` XP hinzugef\u00fcgt.");
+                            embed.setTimestamp(Instant.now());
+                            STATIC.getModlog(). sendMessageEmbeds(embed.build()).queue();
+
+                            LevelChecker.checker(member, event.getGuild());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));
+                    }
+
+                    break;
+                case "next":
+                    try {
+                        String[] xp_level = core.databaseHandler.database(event.getGuild().getId(), "select xp, level from users where id = '" + event.getAuthor().getId() + "'");
+
+                        assert xp_level != null;
+                        long newxp = Long.parseLong(xp_level[0]);
+                        long level = Long.parseLong(xp_level[1]);
+
+                        Color color;
+                        if (level > 1049) {
+                            color = Color.decode("#ca2a1a");
+                        } else if (level > 749)
+                            color = Color.decode("#bf3636");
+                        else if (level > 499)
+                            color = Color.decode("#f25511");
+                        else if (level > 299)
+                            color = Color.decode("#f3730d");
+                        else if (level > 149)
+                            color = Color.decode("#e68f0a");
+                        else if (level > 49)
+                            color = Color.decode("#f7bf16");
+                        else if (level > 9)
+                            color = Color.decode("#fff53d");
+                        else
+                            color = Color.decode("#fff9ba");
+
                         EmbedBuilder embed = new EmbedBuilder();
-                        embed.setColor(Color.ORANGE);
+                        embed.setColor(color);
                         embed.setTitle("Next level / next rank for " + event.getAuthor().getAsTag());
                         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
                         embed.setDescription(
                                 "Next level: " + numberFormat.format(LevelChecker.nextLevel(newxp)) + " XP remaining\n" +
                                         "Next rank: " + LevelChecker.nextRank(newxp)[1] + " (" + numberFormat.format(Long.parseLong(LevelChecker.nextRank(newxp)[0])) + " XP remaining)"
                         );
-                        event.getTextChannel().sendMessage(embed.build()).queue();
-                        break;
-                    default:
-                        ArrayList<String> args2 = new ArrayList<>();
-                        int i = 0;
-                        while (i < args.length - 1) {
-                            args2.add(args[i]);
-                            args2.add(" ");
-                            i++;
-                        }
+                        event.getChannel(). sendMessageEmbeds(embed.build()).queue();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    ArrayList<String> args2 = new ArrayList<>();
+                    int i = 0;
+                    while (i < args.length - 1) {
                         args2.add(args[i]);
-                        String[] args3 = new String[args2.size()];
-                        args3 = args2.toArray(args3);
-                        Member member = getUser.getMemberFromInput(args3, event.getAuthor(), event.getGuild(), event.getTextChannel());
-                        xp(event, member);
+                        args2.add(" ");
+                        i++;
+                    }
+                    args2.add(args[i]);
+                    String[] args3 = new String[args2.size()];
+                    args3 = args2.toArray(args3);
+                    Member member = getUser.getMemberFromInput(args3, event.getAuthor(), event.getGuild(), event.getChannel());
+                    assert member != null;
+                    xp(event, member);
 
-                        break;
-                }
-            } catch (Exception e) {
-                xp(event, event.getMember());
+                    break;
             }
-
-
-        } else {
-            messageActions.moduleIsDeactivated(event, "xp");
+        } catch (Exception e) {
+            xp(event, Objects.requireNonNull(event.getMember()));
         }
     }
 }

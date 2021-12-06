@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BilboT.iml" filepath="$PROJECT_DIR$/BilboT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server-Bot.iml" filepath="$PROJECT_DIR$/Server-Bot.iml" />
     </modules>
   </component>
 </project>

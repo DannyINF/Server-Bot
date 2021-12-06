@@ -1,2 +1,2 @@
-# BilboT
+# Server-Bot
 Discord bot
