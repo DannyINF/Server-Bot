@@ -1,6 +1,6 @@
 package serverbot.commands;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import serverbot.core.messageActions;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -13,19 +13,19 @@ class cmdXpRanking {
 
     public static void action(String[] args, GuildMessageReceivedEvent event) throws SQLException {
         int start;
-        try {
+        /*try {
             start = Integer.parseInt(args[1]);
         } catch (Exception e) {
             start = Integer.parseInt(Objects.requireNonNull(databaseHandler.database(event.getGuild().getId(), "select * from (select row_number() over (), id from (select id, xp, level from users order by xp desc) as tmp) as temp where id = '" + event.getAuthor().getId() + "'"))[0]) - 5;
-        }
-        if (start <= 0)
+        }*/
+        /*if (start <= 0)
             start = 1;
         int k;
         String name;
         String level;
         String xp;
 
-        String[] answer = databaseHandler.database(event.getGuild().getId(), "select id, xp, level from users order by xp desc offset " + (start - 1) + " rows fetch next 10 rows only");
+        /*String[] answer = databaseHandler.database(event.getGuild().getId(), "select id, xp, level from users order by xp desc offset " + (start - 1) + " rows fetch next 10 rows only");
 
         StringBuilder sb = new StringBuilder();
 
@@ -78,7 +78,7 @@ class cmdXpRanking {
         sb.append("```");
 
         event.getChannel().sendMessage(sb.toString()).queue();
-
+*/
     }
 
 }

@@ -1,11 +1,9 @@
 package serverbot.listeners;
 
 import serverbot.audio.PlayerControl;
-import serverbot.audio.initScreamBot;
 import serverbot.audio.GuildMusicManager;
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import serverbot.util.PlaylistCheckerScreamBot;
-import serverbot.util.SECRETS;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -18,7 +16,6 @@ import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
@@ -26,11 +23,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class introListener extends ListenerAdapter {
@@ -38,7 +31,7 @@ public class introListener extends ListenerAdapter {
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
         if (!event.getMember().getUser().isBot()) {
-            boolean print;
+            /*boolean print;
             print = !event.getChannelJoined().getName().equals("\uD83D\uDCDA-Lyrikecke");
             boolean isOnServer = false;
             boolean isOnline = false;
@@ -105,7 +98,7 @@ public class introListener extends ListenerAdapter {
                         }, 0, 1, TimeUnit.SECONDS);
                     }
                 }
-            }
+            }*/
         }
     }
     private AudioPlayerManager playerManager;

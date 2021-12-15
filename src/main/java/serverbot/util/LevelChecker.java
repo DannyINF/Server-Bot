@@ -1,6 +1,6 @@
 package serverbot.util;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 
@@ -9,10 +9,10 @@ import java.util.Objects;
 
 public class LevelChecker {
     public static long checker(Member member, Guild guild) throws SQLException {
-        long xp = Long.parseLong(Objects.requireNonNull(
-                databaseHandler.database(guild.getId(), "select xp from users where id = '" + member.getId() + "'"))[0]);
-        long level;
-
+        /*long xp = Long.parseLong(Objects.requireNonNull(
+                databaseHandler.database(guild.getId(), "select xp from users where id = '" + member.getId() + "'"))[0]);*/
+        long level = 0L;
+/*
         if (xp <= 50000) {
             level = (int) (Math.sqrt(3 * xp + 10000) - 100) / 6;
         } else {
@@ -44,7 +44,7 @@ public class LevelChecker {
                     } catch (Exception ignored) {
                     }
                 }
-            }
+            }*/
             /*if (!member.getRoles().contains(guild.getRolesByName("BilboT-Add-Ons", true).get(0))) {
                 try {
                     guild.addRoleToMember(member, guild
@@ -52,7 +52,7 @@ public class LevelChecker {
                 } catch (Exception ignored) {
                 }
             }*/
-        }
+        //}
         return level;
     }
 

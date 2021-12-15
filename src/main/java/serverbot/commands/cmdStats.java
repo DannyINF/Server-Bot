@@ -1,18 +1,18 @@
 package serverbot.commands;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import org.apache.derby.impl.sql.execute.CurrentDatetime;
 import serverbot.util.getUser;
 
 import java.awt.*;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 
 public class cmdStats implements Command {
@@ -42,11 +42,11 @@ public class cmdStats implements Command {
         }
         assert member != null;
         String[] answer1 = null;
-        try {
+        /*try {
             answer1 = databaseHandler.database(event.getGuild().getId(), "select words, msg, chars, voicetime, first_join from users where id = '" + member.getId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         long words;
         long msg;
         long chars;
@@ -83,7 +83,8 @@ public class cmdStats implements Command {
         embed.setColor(new Color(191, 255, 178));
         embed.setTitle("Statistiken f\u00fcr " + member.getUser().getAsTag());
         embed.setFooter("seit dem " + answer1[4], null);
-        embed.setTimestamp(new CurrentDatetime().getCurrentTimestamp().toLocalDateTime().atZone(ZoneId.of("Europe/Berlin")));
+
+        embed.setTimestamp((TemporalAccessor) Timestamp.valueOf(LocalDateTime.now()));
         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
         embed.setDescription(
                         "Words: " + numberFormat.format(words) +

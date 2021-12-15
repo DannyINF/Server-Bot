@@ -1,6 +1,7 @@
 package serverbot.statistics;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +13,12 @@ import java.util.Optional;
 @Service
 @Transactional
 public class StatisticsManagement {
-    private StatisticsRepository statisticsRepository;
-    private ChannelManagement channelManagement;
 
-    public StatisticsManagement(StatisticsRepository statisticsRepository, ChannelManagement channelManagement) {
-        this.statisticsRepository = statisticsRepository;
-        this.channelManagement = channelManagement;
-    }
+    @Autowired
+    private StatisticsRepository statisticsRepository;
+
+    @Autowired
+    private ChannelManagement channelManagement;
 
     public void save(Statistics statistics) {
         statisticsRepository.save(statistics);
@@ -57,7 +57,6 @@ public class StatisticsManagement {
     }
 
     public void giveXP(GuildMessageReceivedEvent event) throws SQLException {
-        System.out.println("nice");
         Float xp;
         int amount = event.getMessage().getContentRaw().length();
 

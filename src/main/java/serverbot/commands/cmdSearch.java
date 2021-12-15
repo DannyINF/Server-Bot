@@ -1,6 +1,6 @@
 package serverbot.commands;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -31,9 +31,9 @@ public class cmdSearch implements Command {
             String url = null;
             String siteurl = null;
             String[] answer;
-            answer = databaseHandler.database("usersettings", "select language from users where id = '" + event.getAuthor().getId() + "'");
-            assert answer != null;
-            String country = answer[0];
+            //answer = databaseHandler.database("usersettings", "select language from users where id = '" + event.getAuthor().getId() + "'");
+            //assert answer != null;
+            //String country = answer[0];
             boolean sendMsg = false;
             boolean link = false;
             String describer = null;
@@ -115,7 +115,7 @@ public class cmdSearch implements Command {
                             msg.delete().queue();
                         }
                     }, 4000);
-                    siteurl = "https://" + country + ".wikipedia.org/wiki/" + sb.toString();
+                    //siteurl = "https://" + country + ".wikipedia.org/wiki/" + sb.toString();
                     // connecting to wikipedia
                     doc = Jsoup.connect(siteurl).get();
 

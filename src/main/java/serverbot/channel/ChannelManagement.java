@@ -1,5 +1,6 @@
 package serverbot.channel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +10,9 @@ import java.util.Optional;
 @Service
 @Transactional
 public class ChannelManagement {
-    private ChannelRepository channelRepository;
 
-    public ChannelManagement(ChannelRepository channelRepository) {
-        this.channelRepository = channelRepository;
-    }
+    @Autowired
+    private ChannelRepository channelRepository;
 
     public Streamable<Channel> findAll() {
         return channelRepository.findAll();

@@ -1,6 +1,6 @@
 package serverbot.util;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -39,10 +39,10 @@ public class voiceActivity {
                     if (Integer.parseInt(answer[0]) == 1000)
                         activity = 0;
                     //data.statistics
-                    if (membercount>1) {
+                    /*if (membercount>1) {
                         databaseHandler.database(guild.getId(), "update users set voicetime = voicetime + 1, activity = activity + " + activity + ", "  +
                                 "recent_activity = recent_activity + " + activity + " where id = '" + member.getId() + "'");
-                    }
+                    }*/
                 }
             }
         }

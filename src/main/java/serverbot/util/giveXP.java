@@ -1,6 +1,6 @@
 package serverbot.util;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -32,7 +32,7 @@ public class giveXP {
 
             xp = (long) (serverboost * channelboost * userboost * amount);
 
-            databaseHandler.database(guild.getId(), "update users set xp = xp + " + xp + " where id = '" + member.getId() + "'");
+            //databaseHandler.database(guild.getId(), "update users set xp = xp + " + xp + " where id = '" + member.getId() + "'");
         }
     }
 }

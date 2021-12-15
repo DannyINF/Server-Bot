@@ -1,6 +1,6 @@
 package serverbot.listeners;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import serverbot.core.messageActions;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.GuildBanEvent;
@@ -16,11 +16,11 @@ public class banListener extends ListenerAdapter {
 
 
     public void onGuildBan(@NotNull GuildBanEvent event) {
-        try {
+        /*try {
             databaseHandler.database(event.getGuild().getId(), "update users set verifystatus = FALSE where id = '" + event.getUser().getId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
         TextChannel welcome = event.getGuild().getDefaultChannel();
         assert welcome != null;

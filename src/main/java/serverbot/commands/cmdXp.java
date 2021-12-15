@@ -1,6 +1,6 @@
 package serverbot.commands;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import serverbot.core.messageActions;
 import serverbot.core.permissionChecker;
 import serverbot.statistics.Statistics;
@@ -78,7 +78,7 @@ public class cmdXp implements Command {
                             break;
                         }
 
-                        try {
+                        /*try {
                             databaseHandler.database(event.getGuild().getId(), "update users set xp = xp + " + amount + " where id = '" + member.getId() + "'");
 
                             EmbedBuilder embed = new EmbedBuilder();
@@ -92,14 +92,14 @@ public class cmdXp implements Command {
                             LevelChecker.checker(member, event.getGuild());
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     } else {
                         permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));
                     }
 
                     break;
                 case "next":
-                    try {
+                    /*try {
                         String[] xp_level = databaseHandler.database(event.getGuild().getId(), "select xp, level from users where id = '" + event.getAuthor().getId() + "'");
 
                         assert xp_level != null;
@@ -135,7 +135,7 @@ public class cmdXp implements Command {
                         event.getChannel(). sendMessageEmbeds(embed.build()).queue();
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                    }*/
                     break;
                 default:
                     ArrayList<String> args2 = new ArrayList<>();

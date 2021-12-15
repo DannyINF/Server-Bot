@@ -1,6 +1,6 @@
 package serverbot.commands;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import serverbot.core.messageActions;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -34,7 +34,7 @@ public class cmdIntro implements Command {
             case "s":
             case "set":
                 if (args[1].toLowerCase().equals("nothing")) {
-                    String[] answerIntrolist = databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'");
+                    /*String[] answerIntrolist = databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'");
                     String[] introlist;
                     try {
                         assert answerIntrolist != null;
@@ -55,9 +55,9 @@ public class cmdIntro implements Command {
 
                     embed.setDescription(messageActions.getLocalizedString("intro_equiped",
                                     "serverbot/user", event.getAuthor().getId())
-                            .replace("[USER]", event.getAuthor().getAsMention()).replace("[INTRO]", args[1]));
+                            .replace("[USER]", event.getAuthor().getAsMention()).replace("[INTRO]", args[1]));*/
                 } else {
-                    String[] answerIntrolist = databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'");
+                    /*String[] answerIntrolist = databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'");
                     String[] introlist;
                     try {
                         assert answerIntrolist != null;
@@ -92,7 +92,7 @@ public class cmdIntro implements Command {
                     } else {
                         embed.setDescription(messageActions.getLocalizedString("intro_not_in_inv", "serverbot/user", event.getAuthor().getId())
                                 .replace("[USER]", event.getAuthor().getAsMention()).replace("[INTRO]", args[1]));
-                    }
+                    }*/
                 }
                 break;
             case "i":
@@ -100,7 +100,7 @@ public class cmdIntro implements Command {
             case "c":
             case "cache":
                 String[] introlist1;
-                try {
+                /*try {
                     introlist1 = Objects.requireNonNull(databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'"))[0]
                             .split("#")[1].split("&");
                 } catch (Exception e) {
@@ -124,7 +124,7 @@ public class cmdIntro implements Command {
                     embed.setDescription(messageActions.getLocalizedString("intro_cache",
                                     "serverbot/user", event.getAuthor().getId())
                             .replace("[USER]", event.getAuthor().getAsTag()) + sb.toString());
-                }
+                }*/
 
                 break;
             // preparing a msg with all price-categories
@@ -140,7 +140,7 @@ public class cmdIntro implements Command {
             case "buy":
                 if (args[1].contains("common") || args[1].contains("rare") || args[1].contains("epic") || args[1].contains("legendary") || args[1].contains("custom")) {
                     // getting the data.user intros
-                    String[] answer = databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'");
+                    /*String[] answer = databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'");
                     String[] introlist2;
                     try {
                         assert answer != null;
@@ -334,7 +334,7 @@ public class cmdIntro implements Command {
 
                             }
                         }
-                    }
+                    }*/
                 } else {
                     embed.setDescription(messageActions.getLocalizedString("intro_no_exist",
                                     "serverbot/user", event.getAuthor().getId())

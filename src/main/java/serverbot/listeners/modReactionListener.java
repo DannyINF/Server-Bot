@@ -1,19 +1,10 @@
 package serverbot.listeners;
 
-import serverbot.commands.cmdExil;
-import serverbot.core.databaseHandler;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import serverbot.util.STATIC;
 
-import java.awt.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 
 public class modReactionListener extends ListenerAdapter {
 
@@ -66,7 +57,7 @@ public class modReactionListener extends ListenerAdapter {
     }
 
     private static void executeAction(GuildMessageReactionAddEvent event, String mode, Message msg, List<User> users) {
-        String[] answer = null;
+        /*String[] answer = null;
         try {
             answer = databaseHandler.database(event.getGuild().getId(), "select * from reports where report_id = '" + msg.getId() + "'");
         } catch (SQLException e) {
@@ -152,10 +143,10 @@ public class modReactionListener extends ListenerAdapter {
                 //STATIC.getModlog(). sendMessageEmbeds(embed.build()).queue();
                 break;
             case "exil":
-                /*if (offender.getRoles().contains(STATIC.getExil()[0])) {
+                if (offender.getRoles().contains(STATIC.getExil()[0])) {
                     event.getReaction().removeReaction(event.getUser()).queue();
                     break;
-                }*/
+                }
                 embed = new EmbedBuilder();
                 embed.setColor(Color.ORANGE);
                 embed.setTitle("Report bearbeitet: EXIL");
@@ -379,6 +370,6 @@ public class modReactionListener extends ListenerAdapter {
             databaseHandler.database(event.getGuild().getId(), "update reports set ruling = '" + mode + "' where report_id = '" + msg.getId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

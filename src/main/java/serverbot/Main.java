@@ -1,19 +1,13 @@
 package serverbot;
 
-import org.salespointframework.EnableSalespoint;
-import org.salespointframework.SalespointSecurityConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import serverbot.audio.PlayerControl;
 import serverbot.commands.*;
-import serverbot.core.commandHandler;
 import serverbot.listeners.*;
 import serverbot.util.Announcements;
 import serverbot.util.SECRETS;
@@ -42,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 //TODO: stats (!)
 //TODO: exil-channel (!)
 
-@EnableSalespoint
+@SpringBootApplication
 public class Main {
     private static JDABuilder builder;
 
@@ -103,20 +97,8 @@ public class Main {
     }
 
     @Configuration
-    @ComponentScan
-    @EntityScan
-    @EnableWebMvc
-    @EnableSpringConfigured
-    static class WebSecurityConfiguration extends SalespointSecurityConfiguration {
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.csrf().disable();  // for lab purposes, that's ok!
-            http.authorizeRequests().antMatchers("/**").permitAll().and()
-                    .formLogin().loginPage("/login").loginProcessingUrl("/login").and()
-                    .logout().logoutUrl("/logout").logoutSuccessUrl("/");
-            http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
-        }
+    @ComponentScan(basePackages = "serverbot")
+    static class WebSecurityConfiguration  {
 
         /**
          * Session registry session registry.
@@ -125,6 +107,7 @@ public class Main {
          */
         @Bean
         public SessionRegistry sessionRegistry() {
+            System.out.println("session");
             return new SessionRegistryImpl();
         }
     }

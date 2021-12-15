@@ -1,12 +1,11 @@
 package serverbot.channel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class ChannelController {
-    private final ChannelManagement channelManagement;
 
-    public ChannelController(ChannelManagement channelManagement) {
-        this.channelManagement = channelManagement;
-    }
+    @Autowired
+    private ChannelManagement channelManagement;
 }

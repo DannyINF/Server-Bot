@@ -34,11 +34,17 @@ public class readyListener extends ListenerAdapter {
             for (TextChannel textChannel : g.getTextChannels()) {
                 if (!channelManagement.findByChannelIdAndServerId(textChannel.getId(), g.getId()).isPresent()) {
                     channelManagement.save(new Channel(textChannel.getId(), g.getId(), 1F));
+                    System.out.println("add text channel " + textChannel.getName());
+                } else {
+                    System.out.println("has text channel " + textChannel.getName());
                 }
             }
             for (VoiceChannel voiceChannel : g.getVoiceChannels()) {
                 if (!channelManagement.findByChannelIdAndServerId(voiceChannel.getId(), g.getId()).isPresent()) {
                     channelManagement.save(new Channel(voiceChannel.getId(), g.getId(), 1F));
+                    System.out.println("add voice channel " + voiceChannel.getName());
+                } else {
+                    System.out.println("has voice channel " + voiceChannel.getName());
                 }
             }
             for (Member member : g.getMembers()) {
@@ -49,6 +55,9 @@ public class readyListener extends ListenerAdapter {
                     statisticsManagement.save(
                             new Statistics(member.getId(), g.getId(), 0L, 0L, 0L, 0L, LocalDateTime.now(),
                                     LocalDateTime.now(), null, 0L, 0L, 0L));
+                    System.out.println("add user " + member.getEffectiveName());
+                } else {
+                    System.out.println("has user " + member.getEffectiveName());
                 }
             }
         }

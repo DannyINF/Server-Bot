@@ -3,7 +3,7 @@ package serverbot.core;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class databaseHandler {
+//public class databaseHandler {
 
     /**
      * Databases:
@@ -26,6 +26,7 @@ public class databaseHandler {
      * - modlog(id varchar(20), datelog date, description clob(2000), action varchar(100))
      * - exil(id varchar(20), roles clob(2000), duration int)
      */
+    /*
     private static Connection conn;
 
     public static String[] database(String database, String statement_string) throws SQLException {
@@ -56,8 +57,8 @@ public class databaseHandler {
         // URL format is
         // jdbc:derby:<local directory to save data>
         // -------------------------------------------
-        /*String dbUrl = "jdbc:derby:Data/" + database + ";create=true";
+        String dbUrl = "jdbc:derby:Data/" + database + ";create=true";
         DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
-        conn = DriverManager.getConnection(dbUrl);*/
+        conn = DriverManager.getConnection(dbUrl);
     }
-}
+}*/

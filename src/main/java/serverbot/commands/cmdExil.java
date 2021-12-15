@@ -1,6 +1,6 @@
 package serverbot.commands;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import serverbot.core.permissionChecker;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -37,7 +37,7 @@ public class cmdExil implements Command {
 
     }
     public static void exileMember(Guild guild, Member member) throws SQLException {
-        String[] answer = databaseHandler.database(guild.getId(), "select id from exil");
+        /*String[] answer = databaseHandler.database(guild.getId(), "select id from exil");
         
         Role exil = guild.getRolesByName("exil", true).get(0);
         assert member != null;
@@ -79,6 +79,6 @@ public class cmdExil implements Command {
                 guild.kickVoiceMember(member).queue();
             } catch (Exception ignored) {}
 
-        }
+        }*/
     }
 }

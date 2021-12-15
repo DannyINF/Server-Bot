@@ -19,9 +19,9 @@ serverbot\commands\cmdSearch$2.class
 serverbot\commands\cmdEdit.class
 serverbot\listeners\leaveListener.class
 serverbot\core\channelActions.class
+serverbot\statistics\StatisticsDataInitializer.class
 serverbot\user\UserManagement.class
 serverbot\listeners\spamListener.class
-serverbot\listeners\xpListener$1.class
 serverbot\commands\cmdSearch$4.class
 serverbot\commands\cmdShutdown.class
 serverbot\util\Announcements.class
@@ -37,15 +37,11 @@ serverbot\commands\cmdApply.class
 serverbot\statistics\StatisticsController.class
 serverbot\util\SET_CHANNEL.class
 serverbot\commands\cmdSearch.class
-serverbot\core\databaseHandler.class
 serverbot\user\UserRepository.class
 serverbot\channel\ChannelManagement.class
-serverbot\channel\QChannel.class
 serverbot\channel\Channel.class
 serverbot\listeners\commandsListener.class
-serverbot\statistics\QStatistics.class
 serverbot\listeners\joinListener.class
-serverbot\user\QUser.class
 serverbot\util\quizActions.class
 serverbot\commands\cmdRules.class
 serverbot\listeners\voiceListenerAddon.class
@@ -70,6 +66,7 @@ serverbot\listeners\emptyChannelListener.class
 serverbot\listeners\voiceListener.class
 serverbot\util\STATIC.class
 serverbot\listeners\applicationListener.class
+serverbot\user\UserDataInitializer.class
 serverbot\commands\cmdIntro.class
 serverbot\audio\PlayerControl$1.class
 serverbot\listeners\verificationListener.class

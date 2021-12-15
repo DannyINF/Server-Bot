@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class channelActions {
     public static TextChannel getChannel(GuildMessageReceivedEvent event, String name) {
-        try {
+        /*try {
             String id = Objects.requireNonNull(databaseHandler.database("serversettings", "select " + name + " from channels where id = '" + event.getGuild().getId() + "'"))[0];
             return event.getGuild().getTextChannelById(id);
         } catch (Exception e) {
@@ -20,12 +20,12 @@ public class channelActions {
                 }
             } catch (Exception ignored) {
             }
-        }
+        }*/
         return event.getGuild().getDefaultChannel();
     }
 
     public static TextChannel getChannel(GuildMemberJoinEvent event, String name) {
-        try {
+        /*try {
             String id = Objects.requireNonNull(databaseHandler.database("serversettings", "select " + name + " from channels where id = '" + event.getGuild().getId() + "'"))[0];
             return event.getGuild().getTextChannelById(id);
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class channelActions {
                 }
             } catch (Exception ignored) {
             }
-        }
+        }*/
         return event.getGuild().getDefaultChannel();
     }
 }

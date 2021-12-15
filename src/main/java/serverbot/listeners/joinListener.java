@@ -1,6 +1,6 @@
 package serverbot.listeners;
 
-import serverbot.core.databaseHandler;
+//import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -17,11 +17,11 @@ public class joinListener extends ListenerAdapter {
         TextChannel welcome1 = event.getGuild().getDefaultChannel();
         if (event.getMember().getUser().isBot() == FALSE) {
             String[] exil = null;
-            try {
+            /*try {
                 exil = databaseHandler.database(event.getGuild().getId(), "select id from exil");
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }*/
             assert exil != null;
             boolean isExil = false;
             for (String str : exil) {

@@ -1,5 +1,6 @@
 package serverbot.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +10,9 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserManagement {
-    private UserRepository userRepository;
 
-    public UserManagement(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     public Streamable<User> findAll() {
         return userRepository.findAll();
