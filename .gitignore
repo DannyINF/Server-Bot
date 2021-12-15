@@ -4,3 +4,6 @@
 /src/main/resources/youtube.properties
 /dependency-reduced-pom.xml
 /derby.log
+/.idea
+/target/
+/Server-Bot.iml
