@@ -1,4 +1,4 @@
-/src/main/java/util/SECRETS.java
+/src/main/java/serverbot/util/SECRETS.java
 /src/main/resources/client_secret.json
 /src/main/resources/derbyclient.jar
 /src/main/resources/youtube.properties
