@@ -18,11 +18,23 @@ public class ChannelManagement {
         return channelRepository.findAll();
     }
 
+    public Optional<Channel> findById(String id) {
+        return channelRepository.findById(id);
+    }
+
     public Optional<Channel> findByChannelIdAndServerId(String channelId, String serverId) {
         return channelRepository.findByChannelIdAndServerId(channelId, serverId);
     }
 
+    public Streamable<Channel> findByServerIdAndChannelType(String serverId, ChannelType channelType) {
+        return channelRepository.findByServerIdAndChannelType(serverId, channelType);
+    }
+
     public void save(Channel channel) {
         channelRepository.save(channel);
+    }
+
+    public void delete(Channel channel) {
+        channelRepository.delete(channel);
     }
 }

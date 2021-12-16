@@ -132,7 +132,8 @@ public class modReactionListener extends ListenerAdapter {
             case "discussion":
                 event.getReaction().removeReaction(event.getUser()).queue();
                 assert jump != null;
-                //STATIC.getModlog().sendMessage(
+                //ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+                event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()).sendMessage(
                         //event.getGuild().getRolesByName("YT-Team", true).get(0).getAsMention()).queue();
                 embed = new EmbedBuilder();
                 embed.setColor(Color.YELLOW);
@@ -140,7 +141,8 @@ public class modReactionListener extends ListenerAdapter {
                 embed.setDescription("Seht euch mal diesen [Report](" + jump + ") von **" + victim.getUser().getAsTag() + "**" +
                         " \u00fcber **" + offender.getUser().getAsTag() + "** mit dem Grund `" +
                         answer[4] + "` an!");
-                //STATIC.getModlog(). sendMessageEmbeds(embed.build()).queue();
+                //ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+                event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()). sendMessageEmbeds(embed.build()).queue();
                 break;
             case "exil":
                 if (offender.getRoles().contains(STATIC.getExil()[0])) {

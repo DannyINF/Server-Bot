@@ -56,7 +56,19 @@ public class StatisticsManagement {
         save(statistics);
     }
 
-    public void giveXP(GuildMessageReceivedEvent event) throws SQLException {
+    public void addVoiceTimeToUser(String userId, String serverId, Long amount) {
+        Statistics statistics = findByUserIdAndServerId(userId, serverId).get();
+        statistics.setVoiceTime(statistics.getChars() + amount);
+        save(statistics);
+    }
+
+    public void setLevelOfUser(String userId, String serverId, Long level) {
+        Statistics statistics = findByUserIdAndServerId(userId, serverId).get();
+        statistics.setLevel(level);
+        save(statistics);
+    }
+
+    public void giveXP(GuildMessageReceivedEvent event) {
         Float xp;
         int amount = event.getMessage().getContentRaw().length();
 
@@ -69,7 +81,6 @@ public class StatisticsManagement {
 
         xp *= channelManagement.findByChannelIdAndServerId(event.getChannel().getId(), event.getGuild().getId()).get().getXpMultiplier();
 
-
-        addXpToUser(event.getMember().getId(), event.getGuild().getId(), xp.longValue());
+        serverbot.util.giveXP.giveXPToMember(event.getMember(), event.getGuild(), xp.longValue());
     }
 }

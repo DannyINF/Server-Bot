@@ -11,7 +11,7 @@ public class activityListener extends ListenerAdapter {
             length = 200;
         int activity = length / 20;
         String[] answer = null;
-        /*try {
+        /*try { this
             answer = databaseHandler.database(STATIC.getGuild().getId(), "select recent_activity from users where id = '" + event.getAuthor().getId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();

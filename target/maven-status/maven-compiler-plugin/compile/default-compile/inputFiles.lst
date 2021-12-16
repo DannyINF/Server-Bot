@@ -2,7 +2,7 @@ D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\command
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\listeners\readyListener.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\listeners\voiceListenerAddon.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\user\UserController.java
-D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\commands\cmdXp.java
+D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\commands\CmdXp.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\listeners\voiceListener.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\user\User.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\audio\TrackScheduler.java
@@ -69,6 +69,7 @@ D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\command
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\commands\cmdTalk.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\commands\cmdXpRanking.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\audio\GuildMusicManager.java
+D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\channel\ChannelType.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\statistics\StatisticsController.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\audio\initScreamBot.java
 D:\OneDrive\Danny Privat\IdeaProjects\Server-Bot\src\main\java\serverbot\util\LevelChecker.java

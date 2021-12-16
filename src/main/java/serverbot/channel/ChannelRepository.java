@@ -12,4 +12,6 @@ public interface ChannelRepository extends CrudRepository<Channel, String> {
     Streamable<Channel> findAll();
 
     Optional<Channel> findByChannelIdAndServerId(String channelId, String serverId);
+
+    Streamable<Channel> findByServerIdAndChannelType(String serverId, ChannelType channelType);
 }

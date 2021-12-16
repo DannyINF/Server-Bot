@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import serverbot.statistics.Statistics;
 import serverbot.statistics.StatisticsManagement;
 import serverbot.util.LevelChecker;
 import serverbot.util.SpringContextUtils;
@@ -19,59 +20,42 @@ public class xpListener extends ListenerAdapter {
     /**
      * @param event GuildMessageReceivedEvent
      */
-    private static void checkLevel(GuildMessageReceivedEvent event) throws SQLException {
-        long currentlevel;
+    private static void checkLevel(GuildMessageReceivedEvent event) {
+        StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
+        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get();
 
-        // getting level and xp of the data.user
-        //String[] level = databaseHandler.database(event.getGuild().getId(), "select level from users where id = '" + event.getAuthor().getId() + "'");
+        Long currentLevel = statistics.getLevel();
 
-        /*try {
-            currentlevel = Long.parseLong(level[0]);
-        } catch (Exception e) {
-            currentlevel = 0;
-        }*/
-
-        long newlevel = LevelChecker.checker(Objects.requireNonNull(event.getMember()), event.getGuild());
-
-        //databaseHandler.database(event.getGuild().getId(), "update users set level = " + newlevel + " where id = '" + event.getAuthor().getId() + "'");
+        Long newLevel = LevelChecker.checker(event.getMember(), event.getGuild());
 
         // if your current xp are bigger than the xp needed for the next level you receive a level up
-        /*if (newlevel != currentlevel) {
+        if (!Objects.equals(newLevel, currentLevel)) {
+            statisticsManagement.setLevelOfUser(event.getMember().getId(), event.getGuild().getId(), newLevel);
 
             //adding the coins received through level-up to the total coins-count
             // creating level-up msg
             if (!event.getAuthor().isBot()) {
 
-                Message msg = event.getChannel().sendMessage(
-                        messageActions.getLocalizedString("xp_level_up", "serverbot/user", event.getAuthor().getId())
-                        .replace("[USER]", event.getAuthor().getAsMention()).replace("[LEVEL]", String.valueOf(newlevel))).complete();
-                // msg deletes itself after 15000 milliseconds
-                if (!(newlevel == 50 || newlevel == 100 || newlevel == 200 || newlevel == 350 || newlevel == 550)) {
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            msg.delete().queue();
-                        }
-                    }, 15000);
-                }
+                event.getChannel().sendMessage(
+                        messageActions.getLocalizedString("xp_level_up", "user", event.getAuthor().getId())
+                        .replace("[USER]", event.getAuthor().getAsMention()).replace("[LEVEL]", String.valueOf(newLevel))).queue(msg -> {
+                            if (!(newLevel == 50 || newLevel == 100 || newLevel == 200 || newLevel == 350 || newLevel == 550)) {
+                                new Timer().schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        msg.delete().queue();
+                                    }
+                                }, 15000);
+                    }
+                });
             }
-        }*/
-
-        //databaseHandler.database(event.getGuild().getId(), "update users set level = " + newlevel + " where id = '" + event.getAuthor().getId() + "'");
-
+        }
     }
 
+    @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
-        try {
-            statisticsManagement.giveXP(event);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            checkLevel(event);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        statisticsManagement.giveXP(event);
+        checkLevel(event);
     }
 }

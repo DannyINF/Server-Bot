@@ -4,19 +4,22 @@ package serverbot.util;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import serverbot.channel.ChannelManagement;
+import serverbot.server.ServerManagement;
+import serverbot.statistics.StatisticsManagement;
+import serverbot.user.UserManagement;
 
 import java.sql.SQLException;
 
 public class giveXP {
-    public static void giveXPToMember(Member member, Guild guild, long amount) throws SQLException {
+    public static void giveXPToMember(Member member, Guild guild, long amount) {
         if (amount != 0) {
-            long xp;
-            double userboost = 1; // Double-XP Event
-            double channelboost = 1;
-            double serverboost = 1;
+            ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
+            StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
 
-            if (STATIC.is2x)
-                userboost = 2;
+            long xp;
+            double userBoost = 1;
+            double serverBoost = serverManagement.findById(guild.getId()).get().getXpMultiplier();
 
             Role nitro = null;
 
@@ -27,12 +30,12 @@ public class giveXP {
             }
 
             if (member.getRoles().contains(nitro)) {
-                userboost = 1.5;
+                userBoost += 0.1;
             }
 
-            xp = (long) (serverboost * channelboost * userboost * amount);
+            xp = (long) (serverBoost * userBoost * amount);
 
-            //databaseHandler.database(guild.getId(), "update users set xp = xp + " + xp + " where id = '" + member.getId() + "'");
+            statisticsManagement.addXpToUser(member.getId(), guild.getId(), xp);
         }
     }
 }

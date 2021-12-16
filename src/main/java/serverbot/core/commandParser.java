@@ -1,7 +1,9 @@
 package serverbot.core;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.server.ServerManagement;
 import serverbot.util.STATIC;
+import serverbot.util.SpringContextUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +12,9 @@ public class commandParser {
 
     public static commandContainer parser(String raw, GuildMessageReceivedEvent event) {
         String beheaded;
-        beheaded = raw.replaceFirst(STATIC.PREFIX, "");
+        ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
+
+        beheaded = raw.replaceFirst(serverManagement.findById(event.getGuild().getId()).get().getPrefix(), "");
 
         String[] splitBeheaded = beheaded.split(" ");
         String invoke = splitBeheaded[0];
@@ -20,7 +24,6 @@ public class commandParser {
         split.subList(1, split.size()).toArray(args);
 
         return new commandContainer(raw, beheaded, splitBeheaded, invoke, args, event);
-
     }
 
     public static class commandContainer {
@@ -40,7 +43,5 @@ public class commandParser {
             this.args = args;
             this.event = event;
         }
-
     }
-
 }

@@ -114,7 +114,8 @@ public class reportListener extends ListenerAdapter {
             embed.addField("Grund:", answer[4], false);
             embed.addField("Channel:", answer[3], false);
             embed.addField("Beschreibung:", answer[5], false);
-            /*STATIC.getModlog(). sendMessageEmbeds(embed.build()).queue(msg -> {
+            /*ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+                event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()). sendMessageEmbeds(embed.build()).queue(msg -> {
                 msg.addReaction("\u21A9").queue();
                 msg.addReaction("\u2705").queue();
                 msg.addReaction("\uD83C\uDFAD").queue();

@@ -3,16 +3,19 @@ package serverbot.util;
 //import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import serverbot.statistics.Statistics;
+import serverbot.statistics.StatisticsManagement;
 
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class LevelChecker {
-    public static long checker(Member member, Guild guild) throws SQLException {
-        /*long xp = Long.parseLong(Objects.requireNonNull(
-                databaseHandler.database(guild.getId(), "select xp from users where id = '" + member.getId() + "'"))[0]);*/
-        long level = 0L;
-/*
+    public static long checker(Member member, Guild guild) {
+        StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
+        Statistics statistics = statisticsManagement.findByUserIdAndServerId(member.getId(), guild.getId()).get();
+        long xp = statistics.getXp();
+        long level;
+
         if (xp <= 50000) {
             level = (int) (Math.sqrt(3 * xp + 10000) - 100) / 6;
         } else {
@@ -24,19 +27,20 @@ public class LevelChecker {
         if (level > 549)
             role = "Vanyar";
         else if (level > 349)
-          role = "Noldor";
+            role = "Noldor";
         else if (level > 199)
-          role = "Falmari";
+            role = "Falmari";
         else if (level > 99)
-          role = "Sindar";
+            role = "Sindar";
         else if (level > 49)
-          role = "Nandor";
+            role = "Nandor";
         else
-          role = "Avari";
+            role = "Avari";
 
         if (!member.getRoles().contains(guild.getRolesByName(role, true).get(0))) {
             String[] role_names = {"Vanyar", "Noldor", "Falmari", "Sindar", "Nandor", "Avari"};
             for (String role_name : role_names) {
+
                 if (member.getRoles().contains(guild.getRolesByName(role_name, true).get(0))) {
                     try {
                         guild.removeRoleFromMember(member, guild
@@ -44,19 +48,19 @@ public class LevelChecker {
                     } catch (Exception ignored) {
                     }
                 }
-            }*/
-            /*if (!member.getRoles().contains(guild.getRolesByName("BilboT-Add-Ons", true).get(0))) {
+
                 try {
                     guild.addRoleToMember(member, guild
                             .getRolesByName(role, true).get(0)).queue();
                 } catch (Exception ignored) {
                 }
-            }*/
-        //}
+
+            }
+        }
         return level;
     }
 
-    public static long nextLevel(long xp) {
+    public static Long nextLevel(Long xp) {
         long xpToLevel;
         long level;
         long xp2;
@@ -79,7 +83,7 @@ public class LevelChecker {
         return xpToLevel;
     }
 
-    public static String[] nextRank(long xp) {
+    public static String[] nextRank(Long xp) {
         long xpToRank;
         long level;
         long xp2;

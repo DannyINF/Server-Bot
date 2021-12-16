@@ -1,5 +1,7 @@
 package serverbot.commands;
 
+import serverbot.channel.ChannelManagement;
+import serverbot.channel.ChannelType;
 import serverbot.core.messageActions;
 import serverbot.core.permissionChecker;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -7,8 +9,10 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.util.SpringContextUtils;
 import serverbot.util.getUser;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -39,18 +43,20 @@ public class cmdKick implements Command {
                 }
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(Color.red);
-                embed.setTitle(messageActions.getLocalizedString("kick_title", "serverbot/user", event.getAuthor().getId()));
+                embed.setTitle(messageActions.getLocalizedString("kick_title", "user", event.getAuthor().getId()));
                 embed.setDescription("**" + messageActions.getLocalizedString("kick_msg_priv",
-                        "serverbot/user", event.getAuthor().getId()) + "**\n" + sb.toString());
+                        "user", event.getAuthor().getId()) + "**\n" + sb.toString());
                 user.openPrivateChannel().queue(channel ->
                         channel. sendMessageEmbeds(embed.build()).queue()
                 );
                 EmbedBuilder embed1 = new EmbedBuilder();
                 embed1.setColor(Color.RED);
-                embed1.setTitle(messageActions.getLocalizedString("kick_title", "serverbot/user", event.getAuthor().getId()));
+                embed1.setTitle(messageActions.getLocalizedString("kick_title", "user", event.getAuthor().getId()));
                 embed1.setDescription(messageActions.getLocalizedString("kick_msg", "server", event.getGuild().getId())
                         .replace("[USER]", user.getAsMention()).replace("[REASON]", sb.toString()));
-                //STATIC.getModlog(). sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().kick(user.getId(), sb.toString()).queue());
+
+                ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+                event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()).sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().kick(user.getId(), sb.toString()).queue());
             }
         } else {
             permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));

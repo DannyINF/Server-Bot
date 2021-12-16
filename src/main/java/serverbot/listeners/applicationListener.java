@@ -115,7 +115,8 @@ public class applicationListener extends ListenerAdapter {
             embed.addField("Sprachkenntnisse:", answer[5], false);
             embed.addField("Pers\u00f6nliche Angaben:", answer[6], false);
             embed.addField("Motivation:", answer[7], false);
-            //STATIC.getModlog(). sendMessageEmbeds(embed.build()).queue(msg -> {
+            //ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+                event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()). sendMessageEmbeds(embed.build()).queue(msg -> {
               /* try {
                     databaseHandler.database(STATIC.getGuild().getId(), "delete from applications where id = '" + event.getUserId() + "' and step = 7");
                 } catch (SQLException e) {

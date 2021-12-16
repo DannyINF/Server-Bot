@@ -1,5 +1,8 @@
 package serverbot.commands;
 
+import net.dv8tion.jda.api.entities.TextChannel;
+import serverbot.channel.ChannelManagement;
+import serverbot.channel.ChannelType;
 import serverbot.core.messageActions;
 import serverbot.core.permissionChecker;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -7,6 +10,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.util.SpringContextUtils;
 import serverbot.util.getUser;
 
 import java.awt.*;
@@ -23,7 +27,8 @@ public class cmdBan implements Command {
     public void action(String[] args, GuildMessageReceivedEvent event) {
         // only members with the ban permission are able to ban using this command
         if (permissionChecker.checkPermission(new Permission[]{Permission.BAN_MEMBERS}, event.getMember())) {
-            //TextChannel modlog = STATIC.getModlog();
+            ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+            TextChannel modlog = event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId());
 
             // getting the data.user
             ArrayList<String> args2 = new ArrayList<>();
@@ -58,8 +63,8 @@ public class cmdBan implements Command {
             embed1.setTitle(messageActions.getLocalizedString("banned_msg_title", "serverbot/user", event.getAuthor().getId()));
             embed1.setDescription(messageActions.getLocalizedString("log_mod_ban", "server", event.getGuild().getId())
                     .replace("[USER]", user.getAsTag()).replace("[REASON]", sb.toString()));
-            //assert modlog != null;
-            //modlog. sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().ban(user, delay, sb.toString()).queue());
+            assert modlog != null;
+            modlog.sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().ban(user, delay, sb.toString()).queue());
         } else {
             permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));
         }

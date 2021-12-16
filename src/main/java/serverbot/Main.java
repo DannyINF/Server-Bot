@@ -4,10 +4,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import serverbot.audio.PlayerControl;
 import serverbot.commands.*;
+import serverbot.core.commandHandler;
 import serverbot.listeners.*;
 import serverbot.util.Announcements;
 import serverbot.util.SECRETS;
@@ -97,6 +99,7 @@ public class Main {
     }
 
     @Configuration
+    @PropertySource("classpath:application.properties")
     @ComponentScan(basePackages = "serverbot")
     static class WebSecurityConfiguration  {
 
@@ -114,50 +117,52 @@ public class Main {
 
     private static void addCommands() {
 
-        serverbot.core.commandHandler.commands.put("help", new cmdHelp());
+        commandHandler.commands.put("help", new cmdHelp());
 
-        serverbot.core.commandHandler.commands.put("botinfo", new cmdBotinfo());
+        commandHandler.commands.put("botinfo", new cmdBotinfo());
 
-        serverbot.core.commandHandler.commands.put("rules", new cmdRules());
+        commandHandler.commands.put("rules", new cmdRules());
 
-        serverbot.core.commandHandler.commands.put("chatclear", new cmdClear());
-        serverbot.core.commandHandler.commands.put("clear", new cmdClear());
+        commandHandler.commands.put("chatclear", new cmdClear());
+        commandHandler.commands.put("clear", new cmdClear());
 
-        serverbot.core.commandHandler.commands.put("talk", new cmdTalk());
+        commandHandler.commands.put("talk", new cmdTalk());
 
-        serverbot.core.commandHandler.commands.put("report", new cmdReport());
+        commandHandler.commands.put("report", new cmdReport());
 
-        serverbot.core.commandHandler.commands.put("search", new cmdSearch());
+        commandHandler.commands.put("search", new cmdSearch());
 
-        serverbot.core.commandHandler.commands.put("music", new PlayerControl());
+        commandHandler.commands.put("music", new PlayerControl());
 
-        serverbot.core.commandHandler.commands.put("intro", new cmdIntro());
+        commandHandler.commands.put("intro", new cmdIntro());
 
-        serverbot.core.commandHandler.commands.put("ban", new cmdBan());
+        commandHandler.commands.put("ban", new cmdBan());
 
-        serverbot.core.commandHandler.commands.put("kick", new cmdKick());
+        commandHandler.commands.put("kick", new cmdKick());
 
-        serverbot.core.commandHandler.commands.put("statistik", new cmdStats());
-        serverbot.core.commandHandler.commands.put("statistic", new cmdStats());
-        serverbot.core.commandHandler.commands.put("statistics", new cmdStats());
+        commandHandler.commands.put("statistik", new cmdStats());
+        commandHandler.commands.put("statistic", new cmdStats());
+        commandHandler.commands.put("statistics", new cmdStats());
 
-        serverbot.core.commandHandler.commands.put("stats", new cmdStats());
+        commandHandler.commands.put("stats", new cmdStats());
 
-        serverbot.core.commandHandler.commands.put("exil", new cmdExil());
-        serverbot.core.commandHandler.commands.put("exile", new cmdExil());
+        commandHandler.commands.put("exil", new cmdExil());
+        commandHandler.commands.put("exile", new cmdExil());
 
-        serverbot.core.commandHandler.commands.put("edit", new cmdEdit());
+        commandHandler.commands.put("edit", new cmdEdit());
 
-        serverbot.core.commandHandler.commands.put("activity", new cmdActivity());
+        commandHandler.commands.put("shutdown", new cmdShutdown());
 
-        serverbot.core.commandHandler.commands.put("shutdown", new cmdShutdown());
+        commandHandler.commands.put("xp", new CmdXp());
 
-        serverbot.core.commandHandler.commands.put("xp", new cmdXp());
+        commandHandler.commands.put("2x", new cmd2x());
 
-        serverbot.core.commandHandler.commands.put("2x", new cmd2x());
+        commandHandler.commands.put("role", new CmdRole());
 
-        //commandHandler.commands.put("apply", new cmdMinecraftApply());
-        //commandHandler.commands.put("bewerben", new cmdMinecraftApply());
+        commandHandler.commands.put("channel", new CmdChannel());
+
+        // commands.put("apply", new cmdMinecraftApply());
+        // commands.put("bewerben", new cmdMinecraftApply());
     }
 
     private static void addListeners() {
@@ -175,7 +180,6 @@ public class Main {
         builder.addEventListeners(new spamListener());
         builder.addEventListeners(new emptyChannelListener());
         builder.addEventListeners(new statisticsListener());
-        builder.addEventListeners(new verificationListener());
         builder.addEventListeners(new activityListener());
         builder.addEventListeners(new modReactionListener());
         builder.addEventListeners(new xpListener());

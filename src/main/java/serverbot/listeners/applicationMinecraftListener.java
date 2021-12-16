@@ -118,7 +118,8 @@ public class applicationMinecraftListener extends ListenerAdapter {
             embed.addField("Sprachkenntnisse:", answer[5], false);
             embed.addField("Pers\u00f6nliche Angaben:", answer[6], false);
             embed.addField("Motivation:", answer[7], false);
-            /*STATIC.getModlog().getGuild().getTextChannelById("831194532502568981"). sendMessageEmbeds(embed.build()).queue(msg -> {
+            /*ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+                event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()).getGuild().getTextChannelById("831194532502568981"). sendMessageEmbeds(embed.build()).queue(msg -> {
                 try {
                     databaseHandler.database(STATIC.getGuild().getId(), "delete from applications where id = '" + event.getUserId() + "' and step = 7");
                 } catch (SQLException e) {

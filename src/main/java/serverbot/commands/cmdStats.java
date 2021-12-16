@@ -5,12 +5,16 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.statistics.Statistics;
+import serverbot.statistics.StatisticsManagement;
+import serverbot.util.SpringContextUtils;
 import serverbot.util.getUser;
 
 import java.awt.*;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
@@ -41,50 +45,29 @@ public class cmdStats implements Command {
             member = event.getMember();
         }
         assert member != null;
-        String[] answer1 = null;
-        /*try {
-            answer1 = databaseHandler.database(event.getGuild().getId(), "select words, msg, chars, voicetime, first_join from users where id = '" + member.getId() + "'");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
         long words;
         long msg;
         long chars;
-        long voicetime;
+        long voiceTime;
 
-        try {
-            assert answer1 != null;
-            words = Long.parseLong(answer1[0]);
-        } catch (Exception e) {
-            words = 0;
-        }
-        try {
-            msg = Long.parseLong(answer1[1]);
-        } catch (Exception e) {
-            msg = 0;
-        }
-        try {
-            chars = Long.parseLong(answer1[2]);
-        } catch (Exception e) {
-            chars = 0;
-        }
-        try {
-            voicetime = Long.parseLong(answer1[3]);
-        } catch (Exception e) {
-            voicetime = 0;
-        }
+        StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
+        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get();
+        words = statistics.getWords();
+        msg = statistics.getMessages();
+        chars = statistics.getChars();
+        voiceTime = statistics.getVoiceTime();
 
-        long hours = voicetime / 60;
-        long minutes = voicetime % 60;
+        long hours = voiceTime / 60;
+        long minutes = voiceTime % 60;
         long days = hours / 24;
         hours = hours % 24;
 
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(191, 255, 178));
         embed.setTitle("Statistiken f\u00fcr " + member.getUser().getAsTag());
-        embed.setFooter("seit dem " + answer1[4], null);
+        embed.setFooter("seit dem " + statistics.getFirstJoin(), null);
 
-        embed.setTimestamp((TemporalAccessor) Timestamp.valueOf(LocalDateTime.now()));
+        embed.setTimestamp(Instant.now());
         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
         embed.setDescription(
                         "Words: " + numberFormat.format(words) +

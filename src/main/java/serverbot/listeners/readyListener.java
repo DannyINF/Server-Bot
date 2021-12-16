@@ -6,6 +6,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.channel.Channel;
 import serverbot.channel.ChannelManagement;
+import serverbot.channel.ChannelType;
+import serverbot.server.Server;
+import serverbot.server.ServerManagement;
 import serverbot.statistics.Statistics;
 import serverbot.statistics.StatisticsManagement;
 import serverbot.user.User;
@@ -24,16 +27,18 @@ public class readyListener extends ListenerAdapter {
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
         UserManagement userManagement = SpringContextUtils.getBean(UserManagement.class);
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
+        ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
 
         StringBuilder out = new StringBuilder("\nThis bot is running on following servers: \n");
 
         for (Guild g : event.getJDA().getGuilds()) {
+            serverManagement.save(new Server(g.getId(), 1, "/", 0));
             members += g.getMembers().size();
             out.append(g.getName()).append(" (").append(g.getId()).append(")  ").append("Nutzeranzahl: ")
                     .append(g.getMembers().size()).append("\n");
             for (TextChannel textChannel : g.getTextChannels()) {
                 if (!channelManagement.findByChannelIdAndServerId(textChannel.getId(), g.getId()).isPresent()) {
-                    channelManagement.save(new Channel(textChannel.getId(), g.getId(), 1F));
+                    channelManagement.save(new Channel(textChannel.getId(), g.getId(), ChannelType.DEFAULT_TEXT, 1F));
                     System.out.println("add text channel " + textChannel.getName());
                 } else {
                     System.out.println("has text channel " + textChannel.getName());
@@ -41,7 +46,7 @@ public class readyListener extends ListenerAdapter {
             }
             for (VoiceChannel voiceChannel : g.getVoiceChannels()) {
                 if (!channelManagement.findByChannelIdAndServerId(voiceChannel.getId(), g.getId()).isPresent()) {
-                    channelManagement.save(new Channel(voiceChannel.getId(), g.getId(), 1F));
+                    channelManagement.save(new Channel(voiceChannel.getId(), g.getId(), ChannelType.DEFAULT_VOICE, 1F));
                     System.out.println("add voice channel " + voiceChannel.getName());
                 } else {
                     System.out.println("has voice channel " + voiceChannel.getName());
@@ -49,7 +54,7 @@ public class readyListener extends ListenerAdapter {
             }
             for (Member member : g.getMembers()) {
                 if (!userManagement.findById(member.getId()).isPresent()) {
-                    userManagement.save(new User(member.getId(), Locale.GERMAN));
+                    userManagement.save(new User(member.getId(), Locale.GERMAN, false));
                 }
                 if (!statisticsManagement.findByUserIdAndServerId(member.getId(), g.getId()).isPresent()) {
                     statisticsManagement.save(

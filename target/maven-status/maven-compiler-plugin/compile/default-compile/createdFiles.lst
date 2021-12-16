@@ -36,6 +36,7 @@ serverbot\commands\cmdSearch$1.class
 serverbot\commands\cmdApply.class
 serverbot\statistics\StatisticsController.class
 serverbot\util\SET_CHANNEL.class
+serverbot\channel\ChannelType.class
 serverbot\commands\cmdSearch.class
 serverbot\user\UserRepository.class
 serverbot\channel\ChannelManagement.class
@@ -47,6 +48,7 @@ serverbot\commands\cmdRules.class
 serverbot\listeners\voiceListenerAddon.class
 serverbot\statistics\StatisticsManagement.class
 serverbot\audio\initMusicAddon.class
+serverbot\commands\CmdXp.class
 serverbot\channel\ChannelController.class
 serverbot\commands\cmdXpRanking.class
 serverbot\core\messageActions.class
@@ -60,7 +62,6 @@ serverbot\listeners\introListener$1.class
 serverbot\commands\cmdKick.class
 serverbot\util\giveXP.class
 serverbot\channel\ChannelRepository.class
-serverbot\commands\cmdXp.class
 serverbot\commands\cmdExil.class
 serverbot\listeners\emptyChannelListener.class
 serverbot\listeners\voiceListener.class

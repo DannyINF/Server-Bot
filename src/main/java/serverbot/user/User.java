@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Locale;
 
 @Entity
@@ -18,8 +18,11 @@ public class User {
 
     private Locale language;
 
-    public User(String id, Locale language) {
+    private boolean isExiled;
+
+    public User(String id, Locale language, boolean isExiled) {
         this.id = id;
         this.language = language;
+        this.isExiled = isExiled;
     }
 }

@@ -15,9 +15,9 @@ public class statisticsListener extends ListenerAdapter {
         int newMsg = 1;
         int newChars = event.getMessage().getContentRaw().length();
 
-        statisticsManagement.addWordsToUser(event.getMember().getId(), event.getGuild().getId(), Long.valueOf(newWords));
-        statisticsManagement.addMessagesToUser(event.getMember().getId(), event.getGuild().getId(), Long.valueOf(newMsg));
-        statisticsManagement.addCharsToUser(event.getMember().getId(), event.getGuild().getId(), Long.valueOf(newChars));
+        statisticsManagement.addWordsToUser(event.getMember().getId(), event.getGuild().getId(), (long) newWords);
+        statisticsManagement.addMessagesToUser(event.getMember().getId(), event.getGuild().getId(), (long) newMsg);
+        statisticsManagement.addCharsToUser(event.getMember().getId(), event.getGuild().getId(), (long) newChars);
 
     }
 }

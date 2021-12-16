@@ -4,6 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import serverbot.server.Server;
+import serverbot.server.ServerManagement;
+import serverbot.statistics.StatisticsManagement;
 
 import java.awt.*;
 import java.time.Instant;
@@ -12,7 +15,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Announcements extends ListenerAdapter {
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        /*int i = STATIC.getAnnouncement();
+        ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
+        Server server = serverManagement.findById(event.getGuild().getId()).get();
+        int i = server.getAnnouncementsCounter();
         if (i >= 250) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setTimestamp(Instant.now());
@@ -35,14 +40,14 @@ public class Announcements extends ListenerAdapter {
                     break;
             }
             if (!event.getChannel().getName().toLowerCase().contains("offtopic")) {
-                STATIC.changeAnnouncement(1);
+                serverManagement.changeAnnouncementsCounterBy(event.getGuild().getId(), 1);
             } else {
-                STATIC.changeAnnouncement(-i);
-                event.getChannel(). sendMessageEmbeds(embed.build()).queue();
+                serverManagement.changeAnnouncementsCounterBy(event.getGuild().getId(), -i);
+                event.getChannel().sendMessageEmbeds(embed.build()).queue();
             }
 
         } else {
-            STATIC.changeAnnouncement(1);
-        }*/
+            serverManagement.changeAnnouncementsCounterBy(event.getGuild().getId(), 1);
+        }
     }
 }

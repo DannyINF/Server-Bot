@@ -1,7 +1,7 @@
 package serverbot.channel;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,12 +16,14 @@ public class Channel {
 
     private final String serverId;
 
-    private Float xpMultiplier;
-    private Long id;
+    private ChannelType channelType;
 
-    public Channel(String channelId, String serverId, Float xpMultiplier) {
+    private Float xpMultiplier;
+
+    public Channel(String channelId, String serverId, ChannelType channelType, Float xpMultiplier) {
         this.channelId = channelId;
         this.serverId = serverId;
+        this.channelType = channelType;
         this.xpMultiplier = xpMultiplier;
     }
 }
