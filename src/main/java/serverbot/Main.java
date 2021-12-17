@@ -78,14 +78,6 @@ public class Main {
         assert jda != null;
         jda.awaitReady();
 
-
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Europe/Berlin"));
-        ZonedDateTime nextActivityRun = now.withHour(3).withMinute(30).withSecond(30);
-        if (now.compareTo(nextActivityRun) > 0)
-            nextActivityRun = nextActivityRun.plusDays(1);
-
-        Duration durationActivity = Duration.between(now, nextActivityRun);
-
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
         exec.scheduleAtFixedRate(() -> {
             try {

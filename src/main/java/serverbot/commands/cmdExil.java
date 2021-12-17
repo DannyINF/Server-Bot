@@ -29,7 +29,7 @@ public class cmdExil implements Command {
                 Member member = getUser.getMemberFromInput(args, event.getAuthor(), event.getGuild(), event.getChannel());
                 exileMember(event.getGuild(), member);
             } else {
-                event.getChannel().sendMessage("Please provide an data.user.").queue();
+                event.getChannel().sendMessage("Please provide an user.").queue();
             }
         } else {
             permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));

@@ -29,10 +29,9 @@ public class voiceActivity {
                     xp = (long) (sqrt(2520 * membercount - 671) / 9 - 43 / 9);
 
                     giveXP.giveXPToMember(member, guild, xp);
-                    if (membercount>1) {
-                        StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
-                        statisticsManagement.addVoiceTimeToUser(member.getId(), guild.getId(), 1L);
-                    }
+                    StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
+                    statisticsManagement.addVoiceTimeToUser(member.getId(), guild.getId(), 1L);
+
                 }
             }
         }

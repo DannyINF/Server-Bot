@@ -10,6 +10,7 @@ import serverbot.channel.ChannelType;
 import serverbot.server.Server;
 import serverbot.server.ServerManagement;
 import serverbot.statistics.Statistics;
+import serverbot.statistics.StatisticsId;
 import serverbot.statistics.StatisticsManagement;
 import serverbot.user.User;
 import serverbot.user.UserManagement;
@@ -32,7 +33,12 @@ public class readyListener extends ListenerAdapter {
         StringBuilder out = new StringBuilder("\nThis bot is running on following servers: \n");
 
         for (Guild g : event.getJDA().getGuilds()) {
-            serverManagement.save(new Server(g.getId(), 1, "/", 0));
+            if (!serverManagement.findById(g.getId()).isPresent()) {
+                serverManagement.save(new Server(g.getId(), 1, "/", 0));
+                System.out.println("add server " + g.getName());
+            } else {
+                System.out.println("has server " + g.getName());
+            }
             members += g.getMembers().size();
             out.append(g.getName()).append(" (").append(g.getId()).append(")  ").append("Nutzeranzahl: ")
                     .append(g.getMembers().size()).append("\n");
@@ -55,14 +61,18 @@ public class readyListener extends ListenerAdapter {
             for (Member member : g.getMembers()) {
                 if (!userManagement.findById(member.getId()).isPresent()) {
                     userManagement.save(new User(member.getId(), Locale.GERMAN, false));
+                    System.out.println("add user " + member.getEffectiveName());
+                } else {
+                    System.out.println("has user " + member.getEffectiveName());
                 }
+                System.out.println(statisticsManagement.findByUserIdAndServerId(member.getId(), g.getId()));
                 if (!statisticsManagement.findByUserIdAndServerId(member.getId(), g.getId()).isPresent()) {
                     statisticsManagement.save(
                             new Statistics(member.getId(), g.getId(), 0L, 0L, 0L, 0L, LocalDateTime.now(),
                                     LocalDateTime.now(), null, 0L, 0L, 0L));
-                    System.out.println("add user " + member.getEffectiveName());
+                    System.out.println("add statistic for " + member.getEffectiveName());
                 } else {
-                    System.out.println("has user " + member.getEffectiveName());
+                    System.out.println("has statistic for " + member.getEffectiveName());
                 }
             }
         }

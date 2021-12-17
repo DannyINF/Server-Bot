@@ -18,8 +18,8 @@ public class RoleManagement {
         return roleRepository.findAll();
     }
 
-    public Optional<Role> findById(String id) {
-        return roleRepository.findById(id);
+    public Optional<Role> findByRoleId(String roleId) {
+        return roleRepository.findByRoleId(roleId);
     }
 
     public Streamable<Role> findByServerIdAndRoleType(String serverId, RoleType roleType) {

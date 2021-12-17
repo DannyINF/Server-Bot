@@ -2,6 +2,8 @@ package serverbot.channel;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,10 +12,12 @@ import lombok.Setter;
 @NoArgsConstructor(force = true)
 @Getter
 @Setter
+@IdClass(ChannelId.class)
 public class Channel {
     @Id
     private final String channelId;
 
+    @Id
     private final String serverId;
 
     private ChannelType channelType;

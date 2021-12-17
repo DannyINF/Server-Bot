@@ -6,15 +6,19 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(force = true)
 @Getter
 @Setter
+@IdClass(StatisticsId.class)
 public class Statistics {
     @Id
     private final String userId;
+
+    @Id
     private final String serverId;
 
     private Long words;
@@ -49,5 +53,23 @@ public class Statistics {
         this.xp = xp;
         this.level = level;
         this.currency = currency;
+    }
+
+    @Override
+    public String toString() {
+        return "Statistics{" +
+                "userId='" + userId + '\'' +
+                ", serverId='" + serverId + '\'' +
+                ", words=" + words +
+                ", messages=" + messages +
+                ", chars=" + chars +
+                ", voiceTime=" + voiceTime +
+                ", firstJoin=" + firstJoin +
+                ", lastJoin=" + lastJoin +
+                ", lastLeave=" + lastLeave +
+                ", xp=" + xp +
+                ", level=" + level +
+                ", currency=" + currency +
+                '}';
     }
 }

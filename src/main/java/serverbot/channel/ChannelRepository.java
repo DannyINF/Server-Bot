@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface ChannelRepository extends CrudRepository<Channel, String> {
+public interface ChannelRepository extends CrudRepository<Channel, ChannelId> {
     Streamable<Channel> findAll();
 
     Optional<Channel> findByChannelIdAndServerId(String channelId, String serverId);

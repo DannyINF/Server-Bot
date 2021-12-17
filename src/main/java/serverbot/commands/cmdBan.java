@@ -51,16 +51,16 @@ public class cmdBan implements Command {
             // setting up and sending the msg for the data.user
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(Color.red);
-            embed.setTitle(messageActions.getLocalizedString("banned_msg_title", "serverbot/user", event.getAuthor().getId()));
+            embed.setTitle(messageActions.getLocalizedString("banned_msg_title", "user", event.getAuthor().getId()));
             embed.setDescription("**" + messageActions.getLocalizedString("banned_msg_content",
-                    "serverbot/user", event.getAuthor().getId()) + "**\n" + sb.toString());
+                    "user", event.getAuthor().getId()) + "**\n" + sb.toString());
             user.openPrivateChannel().queue(channel ->
                     channel. sendMessageEmbeds(embed.build()).queue()
             );
             // setting up and sending the msg for the #modlog
             EmbedBuilder embed1 = new EmbedBuilder();
             embed1.setColor(Color.red);
-            embed1.setTitle(messageActions.getLocalizedString("banned_msg_title", "serverbot/user", event.getAuthor().getId()));
+            embed1.setTitle(messageActions.getLocalizedString("banned_msg_title", "user", event.getAuthor().getId()));
             embed1.setDescription(messageActions.getLocalizedString("log_mod_ban", "server", event.getGuild().getId())
                     .replace("[USER]", user.getAsTag()).replace("[REASON]", sb.toString()));
             assert modlog != null;
