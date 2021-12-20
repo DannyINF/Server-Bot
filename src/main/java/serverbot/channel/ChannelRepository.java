@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface ChannelRepository extends CrudRepository<Channel, ChannelId> {
     Streamable<Channel> findAll();
 
+    Optional<Channel> findByChannelId(String channelId);
+
     Optional<Channel> findByChannelIdAndServerId(String channelId, String serverId);
 
     Streamable<Channel> findByServerIdAndChannelType(String serverId, ChannelType channelType);

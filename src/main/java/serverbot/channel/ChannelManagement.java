@@ -18,8 +18,12 @@ public class ChannelManagement {
         return channelRepository.findAll();
     }
 
-    public Optional<Channel> findById(String id) {
-        return channelRepository.findById(id);
+    public Optional<Channel> findById(ChannelId channelId) {
+        return channelRepository.findById(channelId);
+    }
+
+    public Optional<Channel> findByChannelId(String channelId) {
+        return channelRepository.findByChannelId(channelId);
     }
 
     public Optional<Channel> findByChannelIdAndServerId(String channelId, String serverId) {

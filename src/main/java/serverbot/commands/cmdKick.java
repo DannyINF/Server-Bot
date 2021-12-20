@@ -9,11 +9,15 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.moderation.Moderation;
+import serverbot.moderation.ModerationManagement;
+import serverbot.moderation.ModerationType;
 import serverbot.util.SpringContextUtils;
 import serverbot.util.getUser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -43,11 +47,11 @@ public class cmdKick implements Command {
                 }
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(Color.red);
-                embed.setTitle(messageActions.getLocalizedString("kick_title", "user", event.getAuthor().getId()));
+                embed.setTitle(messageActions.getLocalizedString("kick_title", "user", user.getId()));
                 embed.setDescription("**" + messageActions.getLocalizedString("kick_msg_priv",
-                        "user", event.getAuthor().getId()) + "**\n" + sb.toString());
+                        "user", user.getId()) + "**\n" + sb.toString());
                 user.openPrivateChannel().queue(channel ->
-                        channel. sendMessageEmbeds(embed.build()).queue()
+                        channel.sendMessageEmbeds(embed.build()).queue()
                 );
                 EmbedBuilder embed1 = new EmbedBuilder();
                 embed1.setColor(Color.RED);
@@ -57,6 +61,10 @@ public class cmdKick implements Command {
 
                 ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
                 event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()).sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().kick(user.getId(), sb.toString()).queue());
+
+                ModerationManagement moderationManagement = SpringContextUtils.getBean(ModerationManagement.class);
+                moderationManagement.save(new Moderation(LocalDateTime.now(), user.getId(), event.getGuild().getId(), event.getAuthor().getId(),
+                        ModerationType.KICK, 0L, false, sb.toString()));
             }
         } else {
             permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));

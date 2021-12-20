@@ -7,6 +7,10 @@ import org.jetbrains.annotations.NotNull;
 import serverbot.channel.Channel;
 import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
+import serverbot.member.MemberId;
+import serverbot.member.MemberManagement;
+import serverbot.role.RoleManagement;
+import serverbot.role.RoleType;
 import serverbot.server.Server;
 import serverbot.server.ServerManagement;
 import serverbot.statistics.Statistics;
@@ -18,6 +22,7 @@ import serverbot.util.SpringContextUtils;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class readyListener extends ListenerAdapter {
 
@@ -29,6 +34,8 @@ public class readyListener extends ListenerAdapter {
         UserManagement userManagement = SpringContextUtils.getBean(UserManagement.class);
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
+        MemberManagement memberManagement = SpringContextUtils.getBean(MemberManagement.class);
+        RoleManagement roleManagement = SpringContextUtils.getBean(RoleManagement.class);
 
         StringBuilder out = new StringBuilder("\nThis bot is running on following servers: \n");
 
@@ -42,6 +49,14 @@ public class readyListener extends ListenerAdapter {
             members += g.getMembers().size();
             out.append(g.getName()).append(" (").append(g.getId()).append(")  ").append("Nutzeranzahl: ")
                     .append(g.getMembers().size()).append("\n");
+            for (Role role : g.getRoles()) {
+                if (!roleManagement.findByRoleId(role.getId()).isPresent()) {
+                    roleManagement.save(new serverbot.role.Role(role.getId(), g.getId(), RoleType.DEFAULT));
+                    System.out.println("add role " + role.getName());
+                } else {
+                    System.out.println("has role " + role.getName());
+                }
+            }
             for (TextChannel textChannel : g.getTextChannels()) {
                 if (!channelManagement.findByChannelIdAndServerId(textChannel.getId(), g.getId()).isPresent()) {
                     channelManagement.save(new Channel(textChannel.getId(), g.getId(), ChannelType.DEFAULT_TEXT, 1F));
@@ -64,6 +79,14 @@ public class readyListener extends ListenerAdapter {
                     System.out.println("add user " + member.getEffectiveName());
                 } else {
                     System.out.println("has user " + member.getEffectiveName());
+                }
+                if (!memberManagement.findById(new MemberId(member.getId(), g.getId())).isPresent()) {
+                    memberManagement.save(new serverbot.member.Member(member.getId(), g.getId(), false, false, false,
+                            member.getRoles().stream().map(role -> roleManagement.findByRoleId(role.getId()).get()).collect(
+                                    Collectors.toList())));
+                    System.out.println("add member " + member.getEffectiveName());
+                } else {
+                    System.out.println("has member " + member.getEffectiveName());
                 }
                 System.out.println(statisticsManagement.findByUserIdAndServerId(member.getId(), g.getId()));
                 if (!statisticsManagement.findByUserIdAndServerId(member.getId(), g.getId()).isPresent()) {

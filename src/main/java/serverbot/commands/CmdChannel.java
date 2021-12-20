@@ -30,10 +30,10 @@ public class CmdChannel implements Command {
                 break;
             case "delete":
             case "remove":
-                channelManagement.delete(channelManagement.findById(id).get());
+                channelManagement.delete(channelManagement.findByChannelId(id).get());
                 break;
             case "edit":
-                Channel editChannel = channelManagement.findById(id).get();
+                Channel editChannel = channelManagement.findByChannelId(id).get();
                 editChannel.setChannelType(ChannelType.valueOf(args[2]));
                 channelManagement.save(editChannel);
                 break;
@@ -47,7 +47,7 @@ public class CmdChannel implements Command {
                         stringBuilder.append(" ");
                     }
                 } else {
-                    stringBuilder.append(channelManagement.findById(id).get().getChannelType());
+                    stringBuilder.append(channelManagement.findByChannelId(id).get().getChannelType());
                 }
                 event.getChannel().sendMessage(stringBuilder.toString()).queue();
                 break;

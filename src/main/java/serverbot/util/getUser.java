@@ -40,12 +40,12 @@ public class getUser {
                     }
 
                 } catch (Exception ee) {
-                    tx.sendMessage(messageActions.getLocalizedString("user_not_found", "serverbot/user", author.getId())
+                    tx.sendMessage(messageActions.getLocalizedString("user_not_found", "user", author.getId())
                             .replace("[ARGUMENT]", args[1])).queue(msg -> msg.delete().queueAfter(4, TimeUnit.SECONDS));
                 }
             }
         } catch (Exception e) {
-            tx.sendMessage(messageActions.getLocalizedString("user_not_found", "serverbot/user", author.getId())
+            tx.sendMessage(messageActions.getLocalizedString("user_not_found", "user", author.getId())
                     .replace("[ARGUMENT]", args[1])).queue(msg -> msg.delete().queueAfter(4, TimeUnit.SECONDS));
         }
         return null;

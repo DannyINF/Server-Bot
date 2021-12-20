@@ -29,10 +29,10 @@ public class CmdRole implements Command {
                 break;
             case "delete":
             case "remove":
-                roleManagement.delete(roleManagement.findById(id).get());
+                roleManagement.delete(roleManagement.findByRoleId(id).get());
                 break;
             case "edit":
-                Role editRole = roleManagement.findById(id).get();
+                Role editRole = roleManagement.findByRoleId(id).get();
                 editRole.setRoleType(RoleType.valueOf(args[2]));
                 roleManagement.save(editRole);
                 break;
@@ -42,11 +42,11 @@ public class CmdRole implements Command {
                     .map(Enum::name)
                     .collect(Collectors.toList()).contains(id)) {
                     for (Role role : roleManagement.findByServerIdAndRoleType(event.getGuild().getId(), RoleType.valueOf(id))) {
-                        stringBuilder.append(event.getGuild().getRoleById(role.getId()).getName());
+                        stringBuilder.append(event.getGuild().getRoleById(role.getRoleId()).getName());
                         stringBuilder.append(" ");
                     }
                 } else {
-                    stringBuilder.append(roleManagement.findById(id).get().getRoleType());
+                    stringBuilder.append(roleManagement.findByRoleId(id).get().getRoleType());
                 }
                 event.getChannel().sendMessage(stringBuilder.toString()).queue();
                 break;

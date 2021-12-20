@@ -11,11 +11,11 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor(force = true)
 public class ChannelId implements Serializable {
-    private String userId;
+    private String channelId;
     private String serverId;
 
-    public ChannelId(String userId, String serverId) {
-        this.userId = userId;
+    public ChannelId(String channelId, String serverId) {
+        this.channelId = channelId;
         this.serverId = serverId;
     }
 
@@ -28,12 +28,12 @@ public class ChannelId implements Serializable {
             return false;
         }
         serverbot.channel.ChannelId channelId = (serverbot.channel.ChannelId) o;
-        return Objects.equals( userId, channelId.userId ) &&
+        return Objects.equals( channelId, channelId.channelId ) &&
                 Objects.equals( serverId, channelId.serverId );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( userId, serverId );
+        return Objects.hash( channelId, serverId );
     }
 }

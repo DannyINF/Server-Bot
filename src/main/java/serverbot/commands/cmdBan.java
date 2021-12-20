@@ -10,10 +10,16 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.member.MemberId;
+import serverbot.member.MemberManagement;
+import serverbot.moderation.Moderation;
+import serverbot.moderation.ModerationManagement;
+import serverbot.moderation.ModerationType;
 import serverbot.util.SpringContextUtils;
 import serverbot.util.getUser;
 
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -30,7 +36,7 @@ public class cmdBan implements Command {
             ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
             TextChannel modlog = event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId());
 
-            // getting the data.user
+            // getting the user
             ArrayList<String> args2 = new ArrayList<>();
             args2.add(args[0]);
             String[] args3 = new String[args2.size()];
@@ -65,6 +71,12 @@ public class cmdBan implements Command {
                     .replace("[USER]", user.getAsTag()).replace("[REASON]", sb.toString()));
             assert modlog != null;
             modlog.sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().ban(user, delay, sb.toString()).queue());
+            //TODO: implement duration
+            ModerationManagement moderationManagement = SpringContextUtils.getBean(ModerationManagement.class);
+            moderationManagement.save(new Moderation(LocalDateTime.now(), member.getId(), event.getGuild().getId(), event.getMember().getId(),
+                    ModerationType.BAN, -1L, false, sb.toString()));
+            MemberManagement memberManagement = SpringContextUtils.getBean(MemberManagement.class);
+            memberManagement.setIsBanned(new MemberId(member.getId(), event.getGuild().getId()), true);
         } else {
             permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));
         }

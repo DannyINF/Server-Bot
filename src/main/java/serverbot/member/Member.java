@@ -3,11 +3,10 @@ package serverbot.member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import serverbot.role.Role;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,10 +26,10 @@ public class Member {
     private boolean isBanned;
     private boolean isMuted;
 
-    @ElementCollection
-    private List<String> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles = new ArrayList<>();
 
-    public Member(String userId, String serverId, boolean isExiled, boolean isBanned, boolean isMuted, List<String> roles) {
+    public Member(String userId, String serverId, boolean isExiled, boolean isBanned, boolean isMuted, List<Role> roles) {
         this.userId = userId;
         this.serverId = serverId;
         this.isExiled = isExiled;

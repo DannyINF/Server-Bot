@@ -15,4 +15,8 @@ public class ModerationManagement {
     public Streamable<Moderation> findAll() {
         return moderationRepository.findAll();
     }
+
+    public void save(Moderation moderation) {
+        moderationRepository.save(moderation);
+    }
 }

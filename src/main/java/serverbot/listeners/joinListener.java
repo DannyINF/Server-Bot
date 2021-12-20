@@ -32,7 +32,7 @@ public class joinListener extends ListenerAdapter {
                 if (userOptional.get().isExiled()) {
                     event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(
                             roleManagement.findByServerIdAndRoleType(event.getGuild().getId(), RoleType.EXIL).stream()
-                                    .findFirst().get().getId())).queue();
+                                    .findFirst().get().getRoleId())).queue();
                 }
             } else {
                 userManagement.save(new User(event.getMember().getId(), Locale.GERMAN, false));
