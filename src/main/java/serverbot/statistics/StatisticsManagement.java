@@ -28,6 +28,10 @@ public class StatisticsManagement {
         return statisticsRepository.findAll();
     }
 
+    public Optional<Statistics> findById(StatisticsId statisticsId) {
+        return statisticsRepository.findById(statisticsId);
+    }
+
     public Optional<Statistics> findByUserIdAndServerId(String userId, String serverId) {
         return statisticsRepository.findByUserIdAndServerId(userId, serverId);
     }

@@ -1,6 +1,7 @@
 package serverbot.commands;
 
 //import serverbot.core.databaseHandler;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.ChannelManagement;
@@ -8,6 +9,7 @@ import serverbot.channel.ChannelType;
 import serverbot.core.messageActions;
 import serverbot.core.permissionChecker;
 import serverbot.statistics.Statistics;
+import serverbot.statistics.StatisticsId;
 import serverbot.statistics.StatisticsManagement;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -37,13 +39,15 @@ public class CmdXp implements Command {
 
         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
 
-        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get();
+        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(),
+                event.getGuild().getId()).get();
         Long xp = statistics.getXp();
         Long level = statistics.getLevel();
 
-        event.getChannel().sendMessage(messageActions.getLocalizedString("xp_msg", "serverbot/user", event.getAuthor().getId())
-                .replace("[USER]", strMember).replace("[LEVEL]", numberFormat.format(level))
-                .replace("[XP]", numberFormat.format(xp))).queue();
+        event.getChannel()
+                .sendMessage(messageActions.getLocalizedString("xp_msg", "serverbot/user", event.getAuthor().getId())
+                        .replace("[USER]", strMember).replace("[LEVEL]", numberFormat.format(level))
+                        .replace("[XP]", numberFormat.format(xp))).queue();
 
     }
 
@@ -61,13 +65,21 @@ public class CmdXp implements Command {
                     StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
                     Streamable<Statistics> statisticsStreamable = statisticsManagement.findAll();
 
-                    List<Statistics> result = statisticsStreamable.stream().sorted(
+                    List<Statistics> result = statisticsStreamable.stream()
+                            .filter(statistics -> statistics.getServerId().equals(event.getGuild().getId())).sorted(
                                     Comparator.comparing(Statistics::getXp)).collect(Collectors.toList());
+
+                    //remove bot from xp ranking
+                    result.remove(statisticsManagement.findByUserIdAndServerId(event.getJDA().getSelfUser().getId(),
+                            event.getGuild().getId()).get());
+
                     Collections.reverse(result);
 
-                    int index = result.indexOf(statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get());
+                    int index = result.stream().map(statistics -> statistics.getUserId()).collect(Collectors.toList()).lastIndexOf(event.getMember().getId());
 
-                    int startingIndex = Math.min(result.size()-1, Math.max(0, result.size()-1 - (result.size()-1 - index + 2)));
+                    int startingIndex = Math.min(result.size() - 1,
+                            Math.max(0,
+                                    result.size() - 1 - (result.size() - 1 - index + Math.min(10, result.size()) / 2)));
 
                     StringBuilder sb = new StringBuilder();
 
@@ -75,8 +87,7 @@ public class CmdXp implements Command {
                     Long xp;
                     Long level;
                     int k;
-                    //TODO: j < startingIndex + 10
-                    for (int j = startingIndex; j < startingIndex + 4; j++) {
+                    for (int j = startingIndex; j < startingIndex + Math.min(10, result.size()); j++) {
                         try {
                             name = event.getJDA().getUserById(result.get(j).getUserId()).getAsTag();
                         } catch (Exception e) {
@@ -93,7 +104,7 @@ public class CmdXp implements Command {
                             sb.append("\n``````css\n");
                         }
 
-                        sb.append(j+1);
+                        sb.append(j + 1);
                         sb.append(". ");
                         sb.append(name);
                         k = name.length();
@@ -102,14 +113,16 @@ public class CmdXp implements Command {
                             k++;
                         }
                         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
-                        sb.append(messageActions.getLocalizedString("xp_ranking_level", "user", event.getAuthor().getId()));
+                        sb.append(messageActions.getLocalizedString("xp_ranking_level", "user",
+                                event.getAuthor().getId()));
                         sb.append(numberFormat.format(level));
                         k = level.toString().length();
                         while (k < 10) {
                             sb.append(" ");
                             k++;
                         }
-                        sb.append(messageActions.getLocalizedString("xp_ranking_xp", "user", event.getAuthor().getId()));
+                        sb.append(
+                                messageActions.getLocalizedString("xp_ranking_xp", "user", event.getAuthor().getId()));
                         sb.append(numberFormat.format(xp));
                         k = xp.toString().length();
                         while (k < 10) {
@@ -117,7 +130,8 @@ public class CmdXp implements Command {
                             k++;
                         }
                         sb.append("\n");
-                        if (name.equals(event.getAuthor().getAsTag()) && j + startingIndex != 9 + startingIndex) {
+                        if (name.equals(event.getAuthor().getAsTag()) &&
+                                j + startingIndex != Math.min(10, result.size()) - 1 + startingIndex) {
                             sb.append("\n``````");
                         }
 
@@ -127,23 +141,27 @@ public class CmdXp implements Command {
                     event.getChannel().sendMessage(sb.toString()).queue();
                     break;
                 case "give":
-                    if (permissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR}, event.getMember())) {
+                    if (permissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR},
+                            event.getMember())) {
 
                         long amount;
                         Member member;
                         MessageChannel channel = event.getChannel();
                         try {
                             ArrayList<String> list = new ArrayList<>(Arrays.asList(args).subList(1, args.length - 1));
-                            member = getUser.getMemberFromInput(list.toArray(new String[0]), event.getAuthor(), event.getGuild(), event.getChannel());
+                            member = getUser.getMemberFromInput(list.toArray(new String[0]), event.getAuthor(),
+                                    event.getGuild(), event.getChannel());
                         } catch (Exception e) {
-                            channel.sendMessage("Gib bitte einen Nutzer an.").queue(msg -> msg.delete().queueAfter(5, TimeUnit.SECONDS));
+                            channel.sendMessage("Gib bitte einen Nutzer an.")
+                                    .queue(msg -> msg.delete().queueAfter(5, TimeUnit.SECONDS));
                             break;
                         }
                         assert member != null;
                         try {
                             amount = Long.parseLong(args[args.length - 1]);
                         } catch (Exception e) {
-                            channel.sendMessage("Gib bitte die Anzahl an XP an, die du hinzuf\u00fcgen willst.").queue(msg -> msg.delete().queueAfter(5, TimeUnit.SECONDS));
+                            channel.sendMessage("Gib bitte die Anzahl an XP an, die du hinzuf\u00fcgen willst.")
+                                    .queue(msg -> msg.delete().queueAfter(5, TimeUnit.SECONDS));
                             break;
                         }
 
@@ -154,11 +172,15 @@ public class CmdXp implements Command {
                             EmbedBuilder embed = new EmbedBuilder();
                             embed.setColor(Color.RED);
                             NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
-                            embed.setDescription("**" + event.getAuthor().getAsTag() + "** hat dem Nutzer **" + member.getUser().getAsTag() + "**" +
+                            embed.setDescription("**" + event.getAuthor().getAsTag() + "** hat dem Nutzer **" +
+                                    member.getUser().getAsTag() + "**" +
                                     " `" + numberFormat.format(amount) + "` XP hinzugef\u00fcgt.");
                             embed.setTimestamp(Instant.now());
                             ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
-                            event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()). sendMessageEmbeds(embed.build()).queue();
+                            event.getGuild().getTextChannelById(
+                                            channelManagement.findByServerIdAndChannelType(event.getGuild().getId(),
+                                                    ChannelType.MODLOG).stream().findFirst().get().getChannelId())
+                                    .sendMessageEmbeds(embed.build()).queue();
 
                             LevelChecker.checker(member, event.getGuild());
                         } catch (Exception e) {
@@ -172,7 +194,8 @@ public class CmdXp implements Command {
                 case "next":
                     try {
                         statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
-                        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get();
+                        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(),
+                                event.getGuild().getId()).get();
 
                         xp = statistics.getXp();
                         level = statistics.getLevel();
@@ -201,9 +224,11 @@ public class CmdXp implements Command {
                         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
                         embed.setDescription(
                                 "Next level: " + numberFormat.format(LevelChecker.nextLevel(xp)) + " XP remaining\n" +
-                                        "Next rank: " + LevelChecker.nextRank(xp)[1] + " (" + numberFormat.format(Long.parseLong(LevelChecker.nextRank(xp)[0])) + " XP remaining)"
+                                        "Next rank: " + LevelChecker.nextRank(xp)[1] + " (" +
+                                        numberFormat.format(Long.parseLong(LevelChecker.nextRank(xp)[0])) +
+                                        " XP remaining)"
                         );
-                        event.getChannel(). sendMessageEmbeds(embed.build()).queue();
+                        event.getChannel().sendMessageEmbeds(embed.build()).queue();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -219,7 +244,8 @@ public class CmdXp implements Command {
                     args2.add(args[i]);
                     String[] args3 = new String[args2.size()];
                     args3 = args2.toArray(args3);
-                    Member member = getUser.getMemberFromInput(args3, event.getAuthor(), event.getGuild(), event.getChannel());
+                    Member member = getUser.getMemberFromInput(args3, event.getAuthor(), event.getGuild(),
+                            event.getChannel());
                     assert member != null;
                     xp(event, member);
 
