@@ -67,7 +67,7 @@ public class CmdXp implements Command {
 
                     int index = result.indexOf(statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get());
 
-                    int startingIndex = Math.min(result.size()-1, Math.max(0, result.size()-1 - (result.size()-1 - index + 5)));
+                    int startingIndex = Math.min(result.size()-1, Math.max(0, result.size()-1 - (result.size()-1 - index + 2)));
 
                     StringBuilder sb = new StringBuilder();
 
@@ -76,7 +76,7 @@ public class CmdXp implements Command {
                     Long level;
                     int k;
                     //TODO: j < startingIndex + 10
-                    for (int j = startingIndex; j < startingIndex + 3; j++) {
+                    for (int j = startingIndex; j < startingIndex + 4; j++) {
                         try {
                             name = event.getJDA().getUserById(result.get(j).getUserId()).getAsTag();
                         } catch (Exception e) {

@@ -69,7 +69,7 @@ public class cmdStats implements Command {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(191, 255, 178));
         embed.setTitle("Statistiken f\u00fcr " + member.getUser().getAsTag());
-        embed.setFooter("seit dem " + statistics.getFirstJoin(), null);
+        embed.setFooter("seit dem " + statistics.getFirstJoin().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")), null);
 
         embed.setTimestamp(Instant.now());
         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
