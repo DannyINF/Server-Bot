@@ -1,13 +1,11 @@
 package serverbot.commands;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import serverbot.channel.ChannelType;
 import serverbot.role.Role;
 import serverbot.role.RoleManagement;
 import serverbot.role.RoleType;
 import serverbot.util.SpringContextUtils;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

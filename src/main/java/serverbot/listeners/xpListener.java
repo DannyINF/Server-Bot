@@ -2,7 +2,6 @@ package serverbot.listeners;
 
 //import serverbot.core.databaseHandler;
 import serverbot.core.messageActions;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +10,6 @@ import serverbot.statistics.StatisticsManagement;
 import serverbot.util.LevelChecker;
 import serverbot.util.SpringContextUtils;
 
-import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;

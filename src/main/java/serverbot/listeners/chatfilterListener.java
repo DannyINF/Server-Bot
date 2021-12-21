@@ -50,7 +50,7 @@ public class chatfilterListener extends ListenerAdapter {
                         .replace("[CHANNEL]", event.getChannel().getAsMention())
                         .replace("[MESSAGE]", "`" + event.getMessage().getContentRaw() + "`")
                         .replace("[USER]", "**" + event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator() + "**") +
-                        "\n" + sb.toString().substring(0, sb.toString().length() - 2) +
+                        "\n" + sb.substring(0, sb.toString().length() - 2) +
                         "\n[jump](" + jump + ")");
                 assert modlog != null;
                 modlog. sendMessageEmbeds(embed.build()).queue();

@@ -4,12 +4,8 @@ package serverbot.util;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import serverbot.channel.ChannelManagement;
 import serverbot.server.ServerManagement;
 import serverbot.statistics.StatisticsManagement;
-import serverbot.user.UserManagement;
-
-import java.sql.SQLException;
 
 public class giveXP {
     public static void giveXPToMember(Member member, Guild guild, long amount) {

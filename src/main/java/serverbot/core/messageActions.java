@@ -4,10 +4,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import serverbot.user.User;
 import serverbot.user.UserManagement;
-import serverbot.util.STATIC;
 import serverbot.util.SpringContextUtils;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class messageActions {

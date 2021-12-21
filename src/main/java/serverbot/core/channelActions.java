@@ -4,8 +4,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.util.Objects;
-
 public class channelActions {
     public static TextChannel getChannel(GuildMessageReceivedEvent event, String name) {
         /*try {

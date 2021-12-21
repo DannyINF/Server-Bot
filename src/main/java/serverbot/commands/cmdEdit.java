@@ -4,8 +4,6 @@ package serverbot.commands;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class cmdEdit implements Command {
 

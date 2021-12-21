@@ -6,9 +6,6 @@ import net.dv8tion.jda.api.entities.Member;
 import serverbot.statistics.Statistics;
 import serverbot.statistics.StatisticsManagement;
 
-import java.sql.SQLException;
-import java.util.Objects;
-
 public class LevelChecker {
     public static long checker(Member member, Guild guild) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);

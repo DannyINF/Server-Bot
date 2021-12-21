@@ -2,7 +2,6 @@ package serverbot.core;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import serverbot.server.ServerManagement;
-import serverbot.util.STATIC;
 import serverbot.util.SpringContextUtils;
 
 import java.util.ArrayList;

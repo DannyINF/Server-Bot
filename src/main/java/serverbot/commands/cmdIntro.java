@@ -4,11 +4,8 @@ package serverbot.commands;
 import serverbot.core.messageActions;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import serverbot.util.PlaylistChecker;
 
 import java.awt.*;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class cmdIntro implements Command {
 
@@ -33,7 +30,7 @@ public class cmdIntro implements Command {
                 break;
             case "s":
             case "set":
-                if (args[1].toLowerCase().equals("nothing")) {
+                if (args[1].equalsIgnoreCase("nothing")) {
                     /*String[] answerIntrolist = databaseHandler.database(event.getGuild().getId(), "select intro from users where id = '" + event.getAuthor().getId() + "'");
                     String[] introlist;
                     try {

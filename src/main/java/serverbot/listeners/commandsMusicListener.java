@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.core.commandParser;
 import serverbot.server.ServerManagement;
-import serverbot.util.STATIC;
 import serverbot.util.SpringContextUtils;
 
 public class commandsMusicListener extends ListenerAdapter {

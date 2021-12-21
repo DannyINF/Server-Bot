@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import serverbot.channel.ChannelManagement;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
 @Service

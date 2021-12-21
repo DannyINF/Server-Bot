@@ -2,7 +2,6 @@ package serverbot.listeners;
 
 //import serverbot.core.databaseHandler;
 
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -12,11 +11,8 @@ import serverbot.user.User;
 import serverbot.user.UserManagement;
 import serverbot.util.SpringContextUtils;
 
-import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Optional;
-
-import static java.lang.Boolean.FALSE;
 
 
 public class joinListener extends ListenerAdapter {

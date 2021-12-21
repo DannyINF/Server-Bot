@@ -4,8 +4,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import serverbot.channel.Channel;
 import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
-import serverbot.role.Role;
-import serverbot.role.RoleType;
 import serverbot.util.SpringContextUtils;
 
 import java.util.stream.Collectors;

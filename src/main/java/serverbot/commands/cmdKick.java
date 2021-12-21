@@ -15,7 +15,6 @@ import serverbot.moderation.ModerationType;
 import serverbot.util.SpringContextUtils;
 import serverbot.util.getUser;
 
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

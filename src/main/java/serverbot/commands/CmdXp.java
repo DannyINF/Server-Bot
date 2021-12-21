@@ -1,7 +1,5 @@
 package serverbot.commands;
 
-//import serverbot.core.databaseHandler;
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.ChannelManagement;
@@ -9,7 +7,6 @@ import serverbot.channel.ChannelType;
 import serverbot.core.messageActions;
 import serverbot.core.permissionChecker;
 import serverbot.statistics.Statistics;
-import serverbot.statistics.StatisticsId;
 import serverbot.statistics.StatisticsManagement;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -75,7 +72,7 @@ public class CmdXp implements Command {
 
                     Collections.reverse(result);
 
-                    int index = result.stream().map(statistics -> statistics.getUserId()).collect(Collectors.toList()).lastIndexOf(event.getMember().getId());
+                    int index = result.stream().map(Statistics::getUserId).collect(Collectors.toList()).lastIndexOf(event.getMember().getId());
 
                     int startingIndex = Math.min(result.size() - 1,
                             Math.max(0,

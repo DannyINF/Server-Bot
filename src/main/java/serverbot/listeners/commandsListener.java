@@ -7,7 +7,6 @@ import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
 import serverbot.core.commandHandler;
 import serverbot.core.commandParser;
-import serverbot.core.permissionChecker;
 import serverbot.server.ServerManagement;
 import serverbot.util.STATIC;
 import serverbot.util.SpringContextUtils;

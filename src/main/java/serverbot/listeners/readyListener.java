@@ -14,7 +14,6 @@ import serverbot.role.RoleType;
 import serverbot.server.Server;
 import serverbot.server.ServerManagement;
 import serverbot.statistics.Statistics;
-import serverbot.statistics.StatisticsId;
 import serverbot.statistics.StatisticsManagement;
 import serverbot.user.User;
 import serverbot.user.UserManagement;

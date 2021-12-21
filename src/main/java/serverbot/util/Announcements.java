@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.server.Server;
 import serverbot.server.ServerManagement;
-import serverbot.statistics.StatisticsManagement;
 
 import java.awt.*;
 import java.time.Instant;
