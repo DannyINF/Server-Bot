@@ -7,6 +7,7 @@ import serverbot.channel.ChannelType;
 import serverbot.core.messageActions;
 import serverbot.core.permissionChecker;
 import serverbot.statistics.Statistics;
+import serverbot.statistics.StatisticsId;
 import serverbot.statistics.StatisticsManagement;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -67,12 +68,13 @@ public class CmdXp implements Command {
                                     Comparator.comparing(Statistics::getXp)).collect(Collectors.toList());
 
                     //remove bot from xp ranking
-                    result.remove(statisticsManagement.findByUserIdAndServerId(event.getJDA().getSelfUser().getId(),
-                            event.getGuild().getId()).get());
+                    result.remove(result.get(result.stream().map(Statistics::getUserId).collect(Collectors.toList())
+                            .lastIndexOf(event.getJDA().getSelfUser().getId())));
 
                     Collections.reverse(result);
 
-                    int index = result.stream().map(Statistics::getUserId).collect(Collectors.toList()).lastIndexOf(event.getMember().getId());
+                    int index = result.stream().map(Statistics::getUserId).collect(Collectors.toList())
+                            .lastIndexOf(event.getMember().getId());
 
                     int startingIndex = Math.min(result.size() - 1,
                             Math.max(0,
