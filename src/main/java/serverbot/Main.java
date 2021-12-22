@@ -143,8 +143,6 @@ public class Main {
 
         commandHandler.commands.put("edit", new cmdEdit());
 
-        commandHandler.commands.put("shutdown", new cmdShutdown());
-
         commandHandler.commands.put("xp", new CmdXp());
 
         commandHandler.commands.put("2x", new cmd2x());

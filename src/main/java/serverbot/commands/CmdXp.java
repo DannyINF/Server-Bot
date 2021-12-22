@@ -76,9 +76,9 @@ public class CmdXp implements Command {
                     int index = result.stream().map(Statistics::getUserId).collect(Collectors.toList())
                             .lastIndexOf(event.getMember().getId());
 
-                    int startingIndex = Math.min(result.size() - 1,
+                    int startingIndex = Math.min(Math.min(result.size() - 1,
                             Math.max(0,
-                                    result.size() - 1 - (result.size() - 1 - index + Math.min(10, result.size()) / 2)));
+                                    result.size() - 1 - (result.size() - 1 - index + Math.min(10, result.size()) / 2))), Math.max(index-Math.min(10, result.size())+1, 0));
 
                     StringBuilder sb = new StringBuilder();
 
@@ -86,7 +86,7 @@ public class CmdXp implements Command {
                     Long xp;
                     Long level;
                     int k;
-                    for (int j = startingIndex; j < startingIndex + Math.min(10, result.size()); j++) {
+                    for (int j = startingIndex; j < startingIndex + Math.min(10, result.size()-startingIndex); j++) {
                         try {
                             name = event.getJDA().getUserById(result.get(j).getUserId()).getAsTag();
                         } catch (Exception e) {
@@ -97,7 +97,7 @@ public class CmdXp implements Command {
 
                         if (name.equals(event.getAuthor().getAsTag()) && j + startingIndex == startingIndex) {
                             sb.append("```css\n");
-                        } else if (!name.equals(event.getAuthor().getAsTag()) && j + startingIndex == startingIndex) {
+                        } else if (j + startingIndex == startingIndex*2) {
                             sb.append("```");
                         } else if (name.equals(event.getAuthor().getAsTag())) {
                             sb.append("\n``````css\n");
@@ -115,7 +115,7 @@ public class CmdXp implements Command {
                         sb.append(messageActions.getLocalizedString("xp_ranking_level", "user",
                                 event.getAuthor().getId()));
                         sb.append(numberFormat.format(level));
-                        k = level.toString().length();
+                        k = numberFormat.format(level).length();
                         while (k < 10) {
                             sb.append(" ");
                             k++;
@@ -251,6 +251,7 @@ public class CmdXp implements Command {
                     break;
             }
         } catch (Exception e) {
+            e.printStackTrace();
             xp(event, Objects.requireNonNull(event.getMember()));
         }
     }

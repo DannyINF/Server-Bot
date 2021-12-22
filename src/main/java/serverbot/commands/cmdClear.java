@@ -36,10 +36,10 @@ public class cmdClear implements Command {
                     // preparing and sending msg (information: how many msgs were deleted)
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setTitle(messageActions.getLocalizedString("clear_deleted_title",
-                            "serverbot/user", event.getAuthor().getId()));
+                            "user", event.getAuthor().getId()));
                     embed.setColor(Color.red);
                     embed.setDescription(messageActions.getLocalizedString("clear_deleted_msg",
-                                    "serverbot/user", event.getAuthor().getId())
+                                    "user", event.getAuthor().getId())
                             .replace("[COUNT]", args[0]));
                     event.getChannel(). sendMessageEmbeds(embed.build()).queue(msg -> msg.delete().queueAfter(3, TimeUnit.SECONDS));
                 } catch (Exception e) {
