@@ -11,6 +11,7 @@ import serverbot.audio.PlayerControl;
 import serverbot.commands.*;
 import serverbot.core.commandHandler;
 import serverbot.listeners.*;
+import serverbot.oauth.Oauth;
 import serverbot.util.Announcements;
 import serverbot.util.SECRETS;
 import serverbot.util.STATIC;
@@ -23,8 +24,10 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.springframework.boot.SpringApplication;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.*;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     private static JDABuilder builder;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         SpringApplication.run(Main.class, args);
 
         builder = JDABuilder.create(SECRETS.TOKEN,
@@ -87,6 +90,14 @@ public class Main {
             }
             System.out.println(ZonedDateTime.now());
         }, 0, 1, TimeUnit.MINUTES);
+
+        Oauth oauth = new Oauth();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(oauth.getDiscordLoginUrl());
+        System.out.println("input code: ");
+        String code = scanner.next();
+        String accessToken = Oauth.getAccessToken(code);
+        System.out.println(Oauth.getUserId(accessToken));
 
     }
 
