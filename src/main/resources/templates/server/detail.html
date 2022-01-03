@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html(title=#{server.title}, selected='servers')}">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    </head>
+    <body>
+        <nav layout:fragment="breadcrumbs">
+            <ul>
+                <li>
+                    <a th:href="@{/}" th:text="#{home.home}">Startseite</a>
+                </li>
+                <li>
+                    <a th:href="@{/servers}" th:text="#{server.title}">Server-Übersicht</a>
+                </li>
+                <li>
+                    <a aria-current="location" th:href="@{/server(id=${server.id})}" th:text="${server.getName()}">Server</a>
+                </li>
+            </ul>
+        </nav>
+        <main layout:fragment="content">
+            <h2 th:text="${server.getName()}" class="sub-heading">Server</h2>
+            <ul class="flex table-bar">
+
+            </ul>
+
+            <table>
+                <tr>
+                    <th th:text="#{server.name}" scope="row">Servername</th>
+                    <td th:text="${server.getName()}">Name</td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th th:text="#{server.roles}" scope="row">Serverrollen</th>
+                    <td th:text="${server.getName()}">Name</td>
+                </tr>
+            </table>
+        </main>
+    </body>
+</html>

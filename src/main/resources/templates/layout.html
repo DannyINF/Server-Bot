@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+        <!-- <script
+            th:src="@{/webjars/jquery/jquery.min.js}"
+            src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script
+            th:src="@{/webjars/Semantic-UI/semantic.min.js}"
+            src="http://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+        <link rel="stylesheet"
+            th:href="@{/webjars/Semantic-UI/semantic.min.css}"
+            href="http://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css" type="text/css"/> -->
+        <link rel="stylesheet" type="text/css" th:href="@{css/style.css}"/>
+
+        <title th:text="${#strings.isEmpty(title)} ? #{home.title} : (${title} + ' - ' + #{home.title})">Server-Bot</title>
+    </head>
+    <body class="light">
+        <div class="ui container no-transition">
+            <header>
+                <h1 th:text="#{home.title}">FestivalManager</h1>
+            </header>
+            <nav th:include="navigation :: navigation(${selected})" aria-label="main-navigation" class="main no-transition"></nav>
+            <nav layout:fragment="breadcrumbs" aria-label="breadcrumbs-navigation" class="breadcrumbs"></nav>
+            <main layout:fragment="content" class="spacing"></main>
+        </div>
+    </body>
+</html>

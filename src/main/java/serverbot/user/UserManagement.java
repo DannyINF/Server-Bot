@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import serverbot.server.Server;
 
 import java.util.Optional;
 
@@ -25,4 +26,6 @@ public class UserManagement {
     public void save(User user) {
         userRepository.save(user);
     }
+
+
 }

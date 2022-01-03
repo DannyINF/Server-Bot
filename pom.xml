@@ -12,6 +12,15 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>data.mv.db</exclude>
+                    <exclude>data.trace.db</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <!--<resources>
+            <resource>
+                <directory>src/main/resources</directory>
                 <includes>
                     <include>natives/linux-arm/libconnector.so</include>
                     <include>MessageBundle_de_BAY.properties</include>
@@ -20,6 +29,8 @@
                     <include>MessageBundle_de_SWG.properties</include>
                     <include>MessageBundle_de_SAC.properties</include>
                     <include>MessageBundle_en_GB.properties</include>
+                    <include>messages.properties</include>
+                    <include>messages_de.properties</include>
                 </includes>
             </resource>
             <resource>
@@ -30,6 +41,7 @@
                 </includes>
             </resource>
         </resources>
+    </build>-->
         <plugins>
 
             <!--<plugin>
@@ -68,13 +80,14 @@
                 <version>3.1.0</version>
             </plugin>
             <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.1</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.3.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
@@ -138,6 +151,7 @@
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -175,6 +189,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+            <version>5.6.1</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

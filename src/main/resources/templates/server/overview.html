@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html(title=#{server.title}, selected='servers')}">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    </head>
+    <body>
+        <nav layout:fragment="breadcrumbs">
+            <ul>
+                <li>
+                    <a th:href="@{/}" th:text="#{home.home}">Startseite</a>
+                </li>
+                <li>
+                    <a aria-current="location" th:href="@{/servers}" th:text="#{server.title}">Server-Übersicht</a>
+                </li>
+            </ul>
+        </nav>
+        <main layout:fragment="content">
+            <h2 th:text="#{server.title}" class="sub-heading">Servers</h2>
+
+            <table>
+                <tr>
+                    <th th:text="#{server.name}" scope="col">Servername</th>
+                </tr>
+                <tr th:each="server : ${servers}">
+                    <td>
+                        <span th:text="${server.getName()}">Server1 Name</span>
+                        <a class="details" th:href="@{/server(id=${server.id})}">
+                            <span class="bi bi-caret-right"></span>
+                            Details
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </main>
+    </body>
+</html>

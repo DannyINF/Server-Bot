@@ -3,6 +3,7 @@ package serverbot.server;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import serverbot.Main;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,5 +27,9 @@ public class Server {
         this.xpMultiplier = xpMultiplier;
         this.prefix = prefix;
         this.announcementsCounter = announcementsCounter;
+    }
+
+    public String getName() {
+        return Main.jda.getGuildById(this.getId()).getName();
     }
 }

@@ -11,7 +11,6 @@ import serverbot.audio.PlayerControl;
 import serverbot.commands.*;
 import serverbot.core.commandHandler;
 import serverbot.listeners.*;
-import serverbot.oauth.Oauth;
 import serverbot.util.Announcements;
 import serverbot.util.SECRETS;
 import serverbot.util.STATIC;
@@ -45,6 +44,8 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     private static JDABuilder builder;
 
+    public static JDA jda;
+
     public static void main(String[] args) throws InterruptedException, IOException {
         SpringApplication.run(Main.class, args);
 
@@ -68,7 +69,7 @@ public class Main {
         addListeners();
         addCommands();
 
-        JDA jda = null;
+        jda = null;
 
         try {
             jda = builder.build();
@@ -91,14 +92,6 @@ public class Main {
             System.out.println(ZonedDateTime.now());
         }, 0, 1, TimeUnit.MINUTES);
 
-        Oauth oauth = new Oauth();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(oauth.getDiscordLoginUrl());
-        System.out.println("input code: ");
-        String code = scanner.next();
-        String accessToken = Oauth.getAccessToken(code);
-        System.out.println(Oauth.getUserId(accessToken));
-
     }
 
     @Configuration
@@ -113,7 +106,6 @@ public class Main {
          */
         @Bean
         public SessionRegistry sessionRegistry() {
-            System.out.println("session");
             return new SessionRegistryImpl();
         }
     }

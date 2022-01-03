@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 13px Helvetica, Arial, sans-serif;
+}
+
+.ticket {
+    position: relative;
+    width: 600px;
+    height: 300px;
+}
+
+#server {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    right: 78px;
+    font-size: 6em;
+    letter-spacing: .1em;
+    font-weight: bolder;
+}
+
+#type {
+    position: absolute;
+    top: 105px;
+    left: 8px;
+    right: 338px;
+    font-size: 2em;
+}
+
+#id {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    writing-mode: tb-rl;
+    transform: rotate(180deg);
+    bottom: 0;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+#location {
+    position: absolute;
+}
+
+#price {
+    position: absolute;
+}
+
+#code {
+    position: absolute;
+    right: 26px;
+    top: 5px;
+    bottom: 5px;
+    width: 50px;
+    background-color: #ddd;
+}
+
+#background {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+    left: 5px;
+    background-color: #eee;
+    z-index: -1;
+}
+
+#date {
+    position: absolute;
+    top: 105px;
+    left: 268px;
+    right: 78px;
+    font-size: 2em;
+}
+
+#date::before {
+    content: "-";
+    left: -26px;
+    position: absolute;
+    top: 14px;
+}
+
+#date {
+    padding-left: 5px;
+    height: 62px;
+    vertical-align: middle;
+}
+
+#location {
+    top: 172px;
+    left: 8px;
+    font-size: 1.5em;
+}
+
+#price {
+    top: 172px;
+    left: 268px;
+    font-size: 1.5em;
+}

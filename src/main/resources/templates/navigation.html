@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    </head>
+    <body>
+        <nav th:fragment="navigation(selected)">
+            <ul class="ui menu flex no-transition">
+                <li class="item no-transition">
+                    <a href="servers.html"
+                       th:href="@{/servers}"
+                       th:text="#{nav.servers}"
+                       class="no-transition block"
+                       th:classappend="${selected} == 'servers' ? 'selected'"
+                       th:aria-current="((${selected} == 'servers') ? page)">Servers</a>
+                </li>
+            </ul>
+            <ul class="ui menu flex no-transition right">
+                <!--<li class="item no-transition" sec:authorize="isAuthenticated()">
+                    <a href="mail/overview.html"
+                       th:href="@{/mail/overview}"
+                       th:text="#{nav.mailbox}"
+                       class="no-transition block"
+                       th:classappend="${selected} == 'mail' ? 'selected'"
+                       th:aria-current="((${selected} == 'mail') ? page)">Mailbox</a>
+                </li>
+                <li class="item no-transition" sec:authorize="isAuthenticated()">
+                    <a href="profile.html"
+                       th:href="@{/profile}"
+                       th:text="${#authentication.name}"
+                       class="no-transition block"
+                       th:classappend="${selected} == 'profile' ? 'selected'"
+                       th:aria-current="((${selected} == 'profile') ? page)">Profil</a>
+                </li>-->
+                <li class="item no-transition">
+                    <a class="no-transition block" id="theme-switcher" href="#">
+                        <span th:text="#{nav.dark}" id="theme-dark">Dark</span>
+                        <span th:text="#{nav.light}" id="theme-light" style="display: none;">Light</span>
+                    </a>
+                </li>
+                <li class="item no-transition">
+                    <a class="no-transition block" th:href="@{/login}" sec:authorize="isAnonymous()" th:text="#{nav.login}">Login</a>
+                    <form class="no-transition" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                        <button type="submit" class="ui button no-transition" th:text="#{nav.logout}">Logout</button>
+                    </form>
+                </li>
+            </ul>
+
+            <script>
+                var light = (localStorage.getItem("theme") === "true"); // default is dark theme! >:
+                const themeSwitcher = document.getElementById("theme-switcher");
+                const darkText = document.getElementById("theme-dark");
+                const lightText = document.getElementById("theme-light");
+                const body = document.body;
+
+                if(!light) {
+                    body.classList.replace("light", "dark");
+                    darkText.style.display = "none";
+                    lightText.style.display = "inline";
+                }
+
+                window.addEventListener("load", function(event) {
+                    var noTransition = document.querySelectorAll(".no-transition");
+                    [...noTransition].forEach(function(elem){elem.classList.remove("no-transition")});
+                });
+
+                themeSwitcher.addEventListener("click", () => {
+                    if(light) {
+                        body.classList.replace("light", "dark");
+                        light = false;
+                        darkText.style.display = "none";
+                        lightText.style.display = "inline";
+                    } else {
+                        body.classList.replace("dark", "light");
+                        light = true;
+                        darkText.style.display = "inline";
+                        lightText.style.display = "none";
+                    }
+                    localStorage.setItem("theme", light.toString());
+                })
+            </script>
+        </nav>
+    </body>
+</html>
+
+<!--
+    sec:authorize="!hasAnyRole('BOSS','CUSTOMER')"
+    sec:authorize="hasRole('BOSS')""
+-->

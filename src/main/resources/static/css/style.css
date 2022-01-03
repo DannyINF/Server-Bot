@@ -1,0 +1,709 @@
+/* THEMES */
+
+:root {
+    --gray0: #f4f4f4;
+    --gray1: #EBEBEB;
+    --gray2: #E0E0E0;
+    --gray3: #D6D6D6;
+    --gray4: #B8B8B8;
+    --gray5: #707070;
+    --gray6: #525252;
+    --gray7: #333333;
+    --gray8: #292929;
+    --gray9: #1f1f1f;
+
+    --white: white;
+    --black: black;
+
+    --blue0: #586F7C;
+
+    --green0: #2DA44F;
+    --green1: #2C964A;
+    --green2: #238636;
+
+    --red0: #ff4b42;
+    --red1: #f43628;
+    --red2: #e31516;
+}
+
+.light {
+    --bg: var(--gray0);
+    --text: var(--gray9);
+    --border: var(--gray7);
+
+    --bg-nav-hover: var(--gray3);
+    --border-accent: var(--gray4);
+
+    --table-base-bg: var(--gray1);
+    --table-alt-bg: var(--gray2);
+
+    --button-bg: var(--green0);
+    --button-hover: var(--green1);
+    --button-red-bg : var(--red0);
+    --button-red-hover: var(--red1);
+    --button-text: var(--black);
+
+    --error: var(--red2);
+    --success: var(--green2)
+}
+
+.dark {
+    --bg: var(--gray9);
+    --text: var(--gray3);
+    --border: var(--gray3);
+    --border-accent: var(--gray5);
+
+    --bg-nav-hover: var(--gray6);
+
+    --table-base-bg: var(--gray8);
+    --table-alt-bg: var(--gray7);
+
+    --button-bg: var(--green2);
+    --button-hover: var(--green1);
+    --button-red-bg: var(--red2);
+    --button-red-hover: var(--red1);
+    --button-text: var(--white);
+
+    --error: var(--red0);
+    --success: var(--green0);
+}
+
+/* CSS RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.is-blurple {
+    background-color: #7289da;
+    color: #fff;
+}
+
+.is-blurple:hover {
+    background-color: #697ec4;
+    color: #fff;
+}
+
+/* === GENERAL === */
+
+/* whole page transitions from white to black on load */
+.no-transition {
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
+
+body {
+    margin: 0 auto;
+    width: 80%;
+    font: 13px/22px Helvetica, Arial, sans-serif;
+    background-image: url(../img/background.svg);
+    background-size: cover;
+    background-position-y: 40%;
+    /* animation-name: bg_image;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear; */
+}
+
+/* @keyframes bg_image {
+    from {background-position-y: 0%;}
+    to {background-position-y: 100%;}
+} */
+
+div.ui.container {
+    background: var(--bg);
+    height: 100vh;
+    padding: 0 35px;
+    color: var(--text);
+    transition: background 500ms ease-in-out, color 1s ease-in-out;
+    -webkit-transition: background 500ms ease-in-out, color 1s ease-in-out;
+    -moz-transition: background 500ms ease-in-out, color 1s ease-in-out;
+    -ms-transition: background 500ms ease-in-out, color 1s ease-in-out;
+    -o-transition: background 500ms ease-in-out, color 1s ease-in-out;
+}
+
+h1 {
+    font-size: 3em;
+    line-height: 3.2em;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex .right {
+    margin-left: auto !important;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 1s ease-in-out;
+    -webkit-transition: color 1s ease-in-out;
+    -moz-transition: color 1s ease-in-out;
+    -ms-transition: color 1s ease-in-out;
+    -o-transition: color 1s ease-in-out;
+}
+
+.block {
+    display: block;
+}
+
+h2.sub-heading {
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-accent);
+    transition: border 500ms ease-in-out;
+    -webkit-transition: border 500ms ease-in-out;
+    -moz-transition: border 500ms ease-in-out;
+    -ms-transition: border 500ms ease-in-out;
+    -o-transition: border 500ms ease-in-out;
+}
+
+/* give every element space from the above one */
+.spacing > * + * {
+    margin-top: 20px;
+}
+
+.online {
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    transition: background 500ms ease-in-out, border 500ms ease-in-out;
+    -webkit-transition: background 500ms ease-in-out, border 500ms ease-in-out;
+    -moz-transition: background 500ms ease-in-out, border 500ms ease-in-out;
+    -ms-transition: background 500ms ease-in-out, border 500ms ease-in-out;
+    -o-transition: background 500ms ease-in-out, border 500ms ease-in-out;
+    box-sizing: border-box;
+    border: 1px solid var(--text);
+    margin-right: 5px;
+    vertical-align: sub;
+}
+
+.online.green {
+    background-color: var(--button-bg);
+}
+
+.online.red {
+    background-color: var(--button-red-bg);
+}
+
+/* === BAR ABOVE TABLES === */
+
+.flex.table-bar {
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: block;
+    padding: .75em;
+    font-size: 13px;
+    line-height: 22px;
+    border-radius: 6px;
+    box-shadow: none;
+    border: none;
+    background-color: var(--button-bg);
+    cursor: pointer;
+    color: var(--button-text);
+    transition: background 200ms ease-in-out, color 1s ease-in-out;
+    -webkit-transition: background 200ms ease-in-out, color 1s ease-in-out;
+    -moz-transition: background 200ms ease-in-out, color 1s ease-in-out;
+    -ms-transition: background 200ms ease-in-out, color 1s ease-in-out;
+    -o-transition: background 200ms ease-in-out, color 1s ease-in-out;
+}
+
+.btn:hover,
+.btn:focus-within {
+    background-color: var(--button-hover);
+}
+
+.btn.red {
+    background-color: var(--button-red-bg);
+}
+
+.btn.red:hover,
+.btn.red:focus-within {
+    background-color: var(--button-red-hover);
+}
+
+.btn.btn-small {
+    display: inline-block;
+    padding: .3em .7em .3em .5em;
+}
+
+/* === INPUT FORM === */
+
+form.ui.form .field {
+    width: 100%;
+    position: relative;
+    z-index: 0;
+    border-bottom: 2px dashed var(--border);
+    margin: 2.5em auto 1em;
+    transition: border 500ms;
+    -webkit-transition: border 500ms;
+    -moz-transition: border 500ms;
+    -ms-transition: border 500ms;
+    -o-transition: border 500ms;
+}
+
+form.ui.form input {
+    outline: none;
+    border: none;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    padding: .25em 0;
+    background: none;
+    font-size: 1.2em;
+    color: var(--text);
+    transition: color 1s ease-in-out;
+    -webkit-transition: color 1s ease-in-out;
+    -moz-transition: color 1s ease-in-out;
+    -ms-transition: color 1s ease-in-out;
+    -o-transition: color 1s ease-in-out;
+}
+
+form.ui.form textarea {
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: -5px;
+    color: var(--text);
+    border: 1px solid var(--border);
+    outline: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -webkit-transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -moz-transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -ms-transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -o-transition: border 500ms ease-in-out, color 1s ease-in-out;
+}
+
+form.ui.form .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+form.ui.form .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+form.ui.form .switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray4);
+    border-radius: 22px;
+    -webkit-border-radius: 22px;
+    -moz-border-radius: 22px;
+    -ms-border-radius: 22px;
+    -o-border-radius: 22px;
+    transition: .4s;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -ms-transition: .4s;
+    -o-transition: .4s;
+}
+
+form.ui.form .switch .slider:before {
+    position: absolute;
+    content: " ";
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--gray1);
+    transition: .4s;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    -ms-transition: .4s;
+    -o-transition: .4s;
+}
+
+form.ui.form .switch input:checked + .slider {
+    background-color: var(--blue0);
+}
+
+form.ui.form .switch input:checked + .slider:before {
+    transform: translateX(18px);
+    -webkit-transform: translateX(18px);
+    -moz-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    -o-transform: translateX(18px);
+}
+
+form.ui.form input[type = "radio"] {
+    width: auto;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+form.ui.form .radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: var(--gray1);
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 1px solid var(--gray9);
+}
+
+form.ui.form input[type = "radio"]:checked ~ .radio {
+    background-color: var(--blue0);
+}
+
+form.ui.form .radio:after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: calc(50% - 4px);
+    left: calc(50% - 4px);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gray1);
+}
+
+form.ui.form input[type = "radio"]:checked ~ .radio:after {
+    display: block;
+}
+
+form.ui.form .border {
+    border: none;
+    border-bottom: 2px dashed var(--border);
+    transition: border 500ms ease-in-out;
+    -webkit-transition: border 500ms ease-in-out;
+    -moz-transition: border 500ms ease-in-out;
+    -ms-transition: border 500ms ease-in-out;
+    -o-transition: border 500ms ease-in-out;
+}
+
+form.ui.form fieldset ul {
+    margin-top: 10px;
+}
+
+form.ui.form fieldset legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+form.ui.form label.radio-label {
+    position: relative;
+    display: block;
+    margin-bottom: 10px;
+    padding-left: 35px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+form.ui.form label {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+form.ui.form label.inline {
+    font-size: 1.2em;
+}
+
+form.ui.form .field label.animate {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    bottom: -1.75em;
+    transform-origin: 0%;
+    transform: translateY(-2em);
+    -webkit-transform: translateY(-2em);
+    -moz-transform: translateY(-2em);
+    -ms-transform: translateY(-2em);
+    -o-transform: translateY(-2em);
+    transition: transform 400ms ease, color 1s ease-in-out;
+    -webkit-transition: transform 400ms ease, color 1s ease-in-out;
+    -moz-transition: transform 400ms ease, color 1s ease-in-out;
+    -ms-transition: transform 400ms ease, color 1s ease-in-out;
+    -o-transition: transform 400ms ease, color 1s ease-in-out;
+}
+
+form.ui.form select {
+    width: 100%;
+    padding: 0.75em 0.25em;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 0 !important;
+    outline: none;
+    transition: border 500ms ease-in-out, background 500ms ease-in-out, color 1s ease-in-out;
+    -webkit-transition: border 500ms ease-in-out, background 500ms ease-in-out, color 1s ease-in-out;
+    -moz-transition: border 500ms ease-in-out, background 500ms ease-in-out, color 1s ease-in-out;
+    -ms-transition: border 500ms ease-in-out, background 500ms ease-in-out, color 1s ease-in-out;
+    -o-transition: border 500ms ease-in-out, background 500ms ease-in-out, color 1s ease-in-out;
+}
+
+form.ui.form option {
+    background-color: var(--bg);
+}
+
+/* label animation */
+form.ui.form .field:focus-within label.animate,
+form.ui.form .field input:not(:placeholder-shown) + label.animate {
+    transform: scale(.8) translateY(-4em);
+    -webkit-transform: scale(.8) translateY(-4em);
+    -moz-transform: scale(.8) translateY(-4em);
+    -ms-transform: scale(.8) translateY(-4em);
+    -o-transform: scale(.8) translateY(-4em);
+    opacity: 1;
+}
+
+/* underline animation */
+form.ui.form .field::after {
+    background: var(--blue0);
+}
+
+form.ui.form .field.error::after,
+form.ui.form .field::after {
+    content: "";
+    position: relative;
+    display: block;
+    height: 4px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: 0%;
+    opacity: 0;
+    transition: all 500ms ease;
+    top: 2px;
+}
+
+form.ui.form .field.error,
+form.ui.form .field:focus-within {
+    border-color: transparent;
+}
+
+form.ui.form .field.error::after,
+form.ui.form .field:focus-within::after {
+    transform: scaleX(1);
+    opacity: 1;
+}
+
+/* errors */
+
+form.ui.form .field.error::after {
+    background: var(--error);
+}
+
+form.ui.form select.error {
+    border: 2px solid var(--error);
+}
+
+.errors,
+.success {
+    padding: .75em;
+    border-radius: 10px;
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+    -webkit-transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+    -moz-transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+    -ms-transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+    -o-transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+}
+
+.errors {
+    border: 1px solid var(--error);
+    color: var(--error);
+}
+
+.success {
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+.errors ul {
+    padding-left: 12px !important;
+}
+
+.errors li {
+    list-style-type: disc;
+}
+
+/* === NAVIGATION === */
+
+/* general */
+nav.main {
+    margin-bottom: 7px;
+    display:flex;
+    width: 100%;
+    justify-content: space-between;
+    border: 1px solid var(--border);
+    transition: border 500ms ease-in-out;
+    -webkit-transition: border 500ms ease-in-out;
+    -moz-transition: border 500ms ease-in-out;
+    -ms-transition: border 500ms ease-in-out;
+    -o-transition: border 500ms ease-in-out;
+}
+
+nav.main .right {
+    margin-left: auto;
+}
+
+nav.main .ui.menu .item {
+    position: relative;
+    display: block;
+    background-color: transparent;
+    transition: background .2s ease-in-out, border 500ms ease-in-out;
+    -webkit-transition: background .2s ease-in-out, border 500ms ease-in-out;
+    -moz-transition: background .2s ease-in-out, border 500ms ease-in-out;
+    -ms-transition: background .2s ease-in-out, border 500ms ease-in-out;
+    -o-transition: background .2s ease-in-out, border 500ms ease-in-out;
+}
+
+nav.main .ui.menu .item .selected::after {
+    content: "";
+    border-bottom: 3px solid var(--blue0);
+    position: absolute;
+    display: inline-block;
+    width: 80%;
+    bottom: 5px;
+    left: 10%;
+}
+
+nav.main .ui.menu a {
+    padding: .8em 1.5em .75em;
+}
+
+nav.main .ui.menu .item:hover,
+nav.main .ui.menu .item:focus-within {
+    background-color: var(--bg-nav-hover);
+}
+
+nav.main .ui.menu>.item {
+    border-right: 1px solid var(--border-accent);
+}
+
+/* right menu (login/logout, theme) */
+nav.main .ui.menu.right>.item {
+    border-left: 1px solid var(--border-accent);
+    border-right: none;
+}
+
+nav.main .ui.menu .ui.button {
+    border: none;
+    padding: .8em 1.5em .75em;
+    background-color: transparent;
+    font: 13px/22px Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    color: var(--text);
+    transition: color 1000ms ease-in-out;
+    -webkit-transition: color 1000ms ease-in-out;
+    -moz-transition: color 1000ms ease-in-out;
+    -ms-transition: color 1000ms ease-in-out;
+    -o-transition: color 1000ms ease-in-out;
+}
+
+/* Breadcrumbs */
+
+nav.breadcrumbs {
+    margin-bottom: 7px;
+}
+
+nav.breadcrumbs li {
+    display: inline;
+}
+
+nav.breadcrumbs li + li::before {
+    padding: 0 8px;
+    color: var(--text);
+    content: "/\00a0";
+    transition: color 1s ease-in-out;
+    -webkit-transition: color 1s ease-in-out;
+    -moz-transition: color 1s ease-in-out;
+    -ms-transition: color 1s ease-in-out;
+    -o-transition: color 1s ease-in-out;
+}
+
+nav.breadcrumbs a:hover,
+nav.breadcrumbs a:focus-within {
+    text-decoration: underline;
+}
+
+/* === TABLES === */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    background-color: var(--table-base-bg);
+    transition: background 500ms ease-in-out;
+    -webkit-transition: background 500ms ease-in-out;
+    -moz-transition: background 500ms ease-in-out;
+    -ms-transition: background 500ms ease-in-out;
+    -o-transition: background 500ms ease-in-out;
+}
+
+table h3 {
+    margin-bottom: 5px;
+    text-align: left;
+    font-size: 1.25em;
+}
+
+table tr:nth-child(2n) {
+    background-color: var(--table-alt-bg);
+    transition: background 500ms ease-in-out;
+    -webkit-transition: background 500ms ease-in-out;
+    -moz-transition: background 500ms ease-in-out;
+    -ms-transition: background 500ms ease-in-out;
+    -o-transition: background 500ms ease-in-out;
+}
+
+th, td {
+    padding: .8em 1em .75em;
+    border: 1px solid var(--border);
+    transition: border 500ms ease-in-out;
+    -webkit-transition: border 500ms ease-in-out;
+    -moz-transition: border 500ms ease-in-out;
+    -ms-transition: border 500ms ease-in-out;
+    -o-transition: border 500ms ease-in-out;
+}
+
+th {
+    text-align: left;
+    font-size: 1.1em;
+}
+
+a.details {
+    float: right;
+}
+
+a.details:hover,
+a.details:focus-within {
+    text-decoration: underline;
+}

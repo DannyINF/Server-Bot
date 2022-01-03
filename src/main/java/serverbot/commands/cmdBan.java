@@ -34,7 +34,9 @@ public class cmdBan implements Command {
         // only members with the ban permission are able to ban using this command
         if (permissionChecker.checkPermission(new Permission[]{Permission.BAN_MEMBERS}, event.getMember())) {
             ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
-            TextChannel modlog = event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId());
+            TextChannel modlog = event.getGuild().getTextChannelById(
+                    channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG)
+                            .stream().findFirst().get().getChannelId());
 
             // getting the user
             ArrayList<String> args2 = new ArrayList<>();
@@ -61,7 +63,7 @@ public class cmdBan implements Command {
             embed.setDescription("**" + messageActions.getLocalizedString("banned_msg_content",
                     "user", event.getAuthor().getId()) + "**\n" + sb.toString());
             user.openPrivateChannel().queue(channel ->
-                    channel. sendMessageEmbeds(embed.build()).queue()
+                    channel.sendMessageEmbeds(embed.build()).queue()
             );
             // setting up and sending the msg for the #modlog
             EmbedBuilder embed1 = new EmbedBuilder();
@@ -70,7 +72,8 @@ public class cmdBan implements Command {
             embed1.setDescription(messageActions.getLocalizedString("log_mod_ban", "server", event.getGuild().getId())
                     .replace("[USER]", user.getAsTag()).replace("[REASON]", sb.toString()));
             assert modlog != null;
-            modlog.sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().ban(user, delay, sb.toString()).queue());
+            modlog.sendMessageEmbeds(embed1.build())
+                    .queue(msg -> event.getGuild().ban(user, delay, sb.toString()).queue());
             //TODO: implement duration
             ModerationManagement moderationManagement = SpringContextUtils.getBean(ModerationManagement.class);
             moderationManagement.save(new Moderation(LocalDateTime.now(), member.getId(), event.getGuild().getId(), event.getMember().getId(),

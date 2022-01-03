@@ -38,20 +38,20 @@ public class spamListener extends ListenerAdapter {
                 () -> {
                     int i = 0;
                     int j = 0;
-                    int int_counter = 0;
-                    int maxcounter = 0;
+                    int intCounter = 0;
+                    int maxCounter = 0;
                     int size = 0;
                     String string1 = event.getMessage().getContentRaw().toLowerCase();
                     i++;
                     if (string1.length() > 0) {
                         while (i < list.size() && size < 5) {
                             if (!string1.equals(list.get(j).getContentRaw().toLowerCase()))
-                                int_counter = 0;
+                                intCounter = 0;
                             else
-                                int_counter++;
+                                intCounter++;
                             size++;
-                            if (int_counter > maxcounter) {
-                                maxcounter = int_counter;
+                            if (intCounter > maxCounter) {
+                                maxCounter = intCounter;
                             }
                             i++;
                             j++;
@@ -64,18 +64,18 @@ public class spamListener extends ListenerAdapter {
                             topic = event.getChannel().getTopic();
                         } catch (Exception ignored) {}
                         if (!event.getAuthor().isBot() && !topic.contains("{spam}")) {
-                            if (maxcounter > 3) {
+                            if (maxCounter > 3) {
                                 new cmdBan().action(new String[]{event.getAuthor().getAsMention(), "1",
                                         messageActions.getLocalizedString("spam_reason",
-                                                "serverbot/user", event.getAuthor().getId()).replace("[MESSAGE]", string1)}, event);
-                            } else if (maxcounter > 2) {
+                                                "user", event.getAuthor().getId()).replace("[MESSAGE]", string1)}, event);
+                            } else if (maxCounter > 2) {
                                 MessageBuilder builder = new MessageBuilder();
-                                builder.setContent(messageActions.getLocalizedString("spam_warn2", "serverbot/user", event.getAuthor().getId())
+                                builder.setContent(messageActions.getLocalizedString("spam_warn2", "user", event.getAuthor().getId())
                                         .replace("[USER]", event.getAuthor().getAsMention()));
                                 messageActions.selfDestroyMSG(builder.build(), 15000, event);
-                            } else if (maxcounter > 1) {
+                            } else if (maxCounter > 1) {
                                 MessageBuilder builder = new MessageBuilder();
-                                builder.setContent(messageActions.getLocalizedString("spam_warn1", "serverbot/user", event.getAuthor().getId())
+                                builder.setContent(messageActions.getLocalizedString("spam_warn1", "user", event.getAuthor().getId())
                                         .replace("[USER]", event.getAuthor().getAsMention()));
                                 messageActions.selfDestroyMSG(builder.build(), 15000, event);
                             }
