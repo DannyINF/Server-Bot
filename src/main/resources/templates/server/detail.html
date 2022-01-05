@@ -33,12 +33,57 @@
                 </tr>
             </table>
 
-            <table>
+            <script>
+                function toggleTable(string) {
+                    let lTable1 = document.getElementById(string);
+                    for (let i = 1; i < lTable1.rows.length; i++) {
+                        lTable1.rows[i].style.display = (lTable1.rows[i].style.display === "none") ? "table-row" : "none";
+                    }
+                }
+            </script>
+
+            <table id="roleTable">
                 <tr>
-                    <th th:text="#{server.roles}" scope="row">Serverrollen</th>
-                    <td th:text="${server.getName()}">Name</td>
+                    <th th:text="#{server.roles}" scope="row" id="loginLink1" onclick="toggleTable('roleTable');" href="#">Serverrollen</th>
+                    <th th:text="#{server.role.type}" scope="row">Name</th>
+                </tr>
+                <tr th:name="roles" th:each="role : ${roles}" style="display: none">
+                    <td th:text="${role.name}"></td>
+                    <td>
+                        <select id="roleType" name="roleType" th:onchange="'window.location.href = \'' + @{/changeRoleType} + '/\' + this.value + \'/' + ${role.getIdLong()} + '/' + ${server.getIdLong()} + '\''">
+                            <option th:each="roleType : ${T(serverbot.role.RoleType).values()}" th:value="${roleType}" th:text="#{'role.type.' + ${roleType}}" th:selected="((${rolemanagement.findByRoleId(role.id).get().getRoleType()} == ${roleType}) ? selected)">
+                        </select>
+                    </td>
                 </tr>
             </table>
+
+            <script type="text/javascript" th:inline="javascript">
+                var message = /*[[${rolesShown}]]*/ 'false';
+                if (message === true) {
+                    toggleTable('roleTable')
+                }
+            </script>
+
+            <table id="channelTable">
+                <tr>
+                    <th th:text="#{server.channels}" scope="row" id="loginLink2" onclick="toggleTable('channelTable');" href="#">Serverrollen</th>
+                    <th th:text="#{server.channel.type}" scope="row">Name</th>
+                </tr>
+                <tr th:name="channels" th:each="channel : ${channels}" style="display: none">
+                    <td th:text="${channel.name}"></td>
+                    <td>
+                        <select id="channelType" name="channelType" th:onchange="'window.location.href = \'' + @{/changeChannelType} + '/\' + this.value + \'/' + ${channel.getIdLong()} + '/' + ${server.getIdLong()} + '\''">
+                            <option th:each="channelType : ${T(serverbot.channel.ChannelType).values()}" th:value="${channelType}" th:text="#{'channel.type.' + ${channelType}}" th:selected="((${channelManagement.findByChannelId(channel.id).get().getChannelType()} == ${channelType}) ? selected)">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <script type="text/javascript" th:inline="javascript">
+                var message = /*[[${channelsShown}]]*/ 'false';
+                if (message === true) {
+                    toggleTable('channelTable')
+                }
+            </script>
         </main>
     </body>
 </html>

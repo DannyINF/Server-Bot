@@ -43,19 +43,8 @@ public class WelcomeController {
      */
     @GetMapping("/")
     public String index(Model model, OAuth2AuthenticationToken authentication) {
-        OAuth2AuthorizedClient client = authorizedClientService
-                .loadAuthorizedClient(
-                        authentication.getAuthorizedClientRegistrationId(),
-                        authentication.getName());
-
         model.addAttribute("name", authentication.getPrincipal().getAttributes().get("username"));
-        model.addAttribute("id", authentication.getPrincipal().getAttributes().get("id"));
 
         return "welcome";
     }
-
-    /*@GetMapping("/login")
-    public String loginViaDiscord(Model model) {
-        return "redirect:http://login.bilbot.xyz";
-    }*/
 }

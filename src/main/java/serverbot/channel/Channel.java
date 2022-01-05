@@ -30,4 +30,8 @@ public class Channel {
         this.channelType = channelType;
         this.xpMultiplier = xpMultiplier;
     }
+
+    public Long getChannelIdLong() {
+        return Long.parseLong(channelId);
+    }
 }

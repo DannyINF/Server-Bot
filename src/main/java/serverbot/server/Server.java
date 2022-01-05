@@ -32,4 +32,8 @@ public class Server {
     public String getName() {
         return Main.jda.getGuildById(this.getId()).getName();
     }
+
+    public Long getIdLong() {
+        return Long.parseLong(id);
+    }
 }

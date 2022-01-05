@@ -72,6 +72,15 @@ public class readyListener extends ListenerAdapter {
                     System.out.println("has voice channel " + voiceChannel.getName());
                 }
             }
+
+            for (Category category : g.getCategories()) {
+                if (!channelManagement.findByChannelIdAndServerId(category.getId(), g.getId()).isPresent()) {
+                    channelManagement.save(new Channel(category.getId(), g.getId(), ChannelType.DEFAULT_CATEGORY, 1F));
+                    System.out.println("add category channel " + category.getName());
+                } else {
+                    System.out.println("has category channel " + category.getName());
+                }
+            }
             for (Member member : g.getMembers()) {
                 if (!userManagement.findById(member.getId()).isPresent()) {
                     userManagement.save(new User(member.getId(), Locale.GERMAN, false));
