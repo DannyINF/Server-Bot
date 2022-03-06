@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html(title=#{server.title}, selected='member')}">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<nav layout:fragment="breadcrumbs">
+    <ul>
+        <li>
+            <a th:href="@{/}" th:text="#{home.home}">Startseite</a>
+        </li>
+        <li>
+            <a th:href="@{/servers}" th:text="#{server.title}">Server-Übersicht</a>
+        </li>
+        <li>
+            <a th:href="@{/server(id=${server.id})}" th:text="${server.getName()}">Server</a>
+        </li>
+
+        <li>
+            <a aria-current="location" th:href="@{/member(sid=${server.id},mid=${discordMember.getId()})}" th:text="${discordMember.getEffectiveName()}">Server</a>
+        </li>
+    </ul>
+</nav>
+<main layout:fragment="content">
+
+    <h2 th:text="${discordMember.getEffectiveName() + '#' + discordMember.getUser().getDiscriminator()} + ' auf ' + ${server.name}" class="sub-heading">Server</h2>
+    <i class="bi-info-circle-fill"></i>
+    <span th:text="${discordMember.onlineStatus}">Offline</span>
+    <ul class="flex table-bar">
+
+    </ul>
+    <img th:src="${discordMember.getUser().getAvatarUrl()}" height="50", width="50">
+
+    <table>
+        <tr>
+            <th>Variable</th>
+            <th>Wert</th>
+        </tr>
+        <tr>
+            <td>XP</td>
+            <td th:text="${stats.getXp()}"></td>
+        </tr>
+        <tr>
+            <td>Level</td>
+            <td th:text="${stats.getLevel()}"></td>
+        </tr>
+        <tr>
+            <td>Currency</td>
+            <td th:text="${stats.getCurrency()}"></td>
+        </tr>
+        <tr>
+            <td>Wörter</td>
+            <td th:text="${stats.getWords()}"></td>
+        </tr>
+        <tr>
+            <td>Nachrichten</td>
+            <td th:text="${stats.getMessages()}"></td>
+        </tr>
+        <tr>
+            <td>Zeichen</td>
+            <td th:text="${stats.getChars()}"></td>
+        </tr>
+        <tr>
+            <td>Zeit im Voicechat</td>
+            <td th:text="${stats.getVoiceTime()}"></td>
+        </tr>
+        <tr>
+            <td>Erster Beitritt</td>
+            <td th:text="${stats.getFirstJoin()}"></td>
+        </tr>
+        <tr>
+            <td>Letzter Beitritt</td>
+            <td th:text="${stats.getLastJoin()}"></td>
+        </tr>
+        <tr>
+            <td>Letztes Verlassen</td>
+            <td th:text="${stats.getLastLeave()}"></td>
+        </tr>
+
+    </table>
+
+    <script>
+        function filter(search, table_name, tr_name) {
+            // Declare variables
+            var input, filter, table, tr, a, i;
+            input = document.getElementById(search);
+            filter = input.value.toUpperCase();
+            table = document.getElementById(table_name);
+            tr = table.getElementsByClassName(tr_name);
+
+            for (i = 0; i < tr.length; i++) {
+                a = tr[i].getElementsByTagName("td")[0];
+                if (a.textContent.toString().toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+
+        }
+    </script>
+
+    <script type="text/javascript" th:inline="javascript">
+        function writeCookie(c, d) {
+            var a = document.getElementById('url' + c).value;
+            var b = document.getElementById(c.toString()).value;
+            document.cookie = "location=" +  $(window).scrollTop();
+            window.location.href = a + "/" + b + "/" + c + "/" + d;
+        }
+        function readCookie() {
+            var lastScrollTop = getCookie("location");
+            if (lastScrollTop) {
+                $(window).scrollTop(lastScrollTop);
+                removeCookie('location');
+            }
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        function removeCookie(cname) {
+            document.cookie = cname + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+    </script>
+    <script type="text/javascript" th:inline="javascript">
+        var message = /*[[${channelsShown}]]*/ 'false';
+        if (message === true) {
+            toggleTable('channelTable')
+        }
+    </script>
+</main>
+</body>
+</html>
