@@ -5,8 +5,9 @@
       layout:decorate="~{layout.html(title=#{server.title}, selected='servers')}">
     <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
-    <body>
+    <body onload="readCookie();">
         <nav layout:fragment="breadcrumbs">
             <ul>
                 <li>
@@ -50,7 +51,8 @@
                 <tr th:name="roles" th:each="role : ${roles}" style="display: none">
                     <td th:text="${role.name}"></td>
                     <td>
-                        <select id="roleType" name="roleType" th:onchange="'window.location.href = \'' + @{/changeRoleType} + '/\' + this.value + \'/' + ${role.getIdLong()} + '/' + ${server.getIdLong()} + '\''">
+                        <input type="hidden" th:id="url + ${role.getIdLong()}" th:value="@{/changeRoleType}">
+                        <select th:id="${role.getId()}" th:name="${role.getId()}" th:onchange="|writeCookie(${role.idLong}n, ${server.getIdLong()}n);|">
                             <option th:each="roleType : ${T(serverbot.role.RoleType).values()}" th:value="${roleType}" th:text="#{'role.type.' + ${roleType}}" th:selected="((${rolemanagement.findByRoleId(role.id).get().getRoleType()} == ${roleType}) ? selected)">
                         </select>
                     </td>
@@ -72,12 +74,47 @@
                 <tr th:name="channels" th:each="channel : ${channels}" style="display: none">
                     <td th:text="${channel.name}"></td>
                     <td>
-                        <select id="channelType" name="channelType" th:onchange="'window.location.href = \'' + @{/changeChannelType} + '/\' + this.value + \'/' + ${channel.getIdLong()} + '/' + ${server.getIdLong()} + '\''">
+                        <input type="hidden" th:id="url + ${channel.getIdLong()}" th:value="@{/changeChannelType}">
+                        <select th:id="${channel.getId()}" th:name="${channel.getId()}" th:onchange="|writeCookie(${channel.idLong}n, ${server.getIdLong()}n);|">
                             <option th:each="channelType : ${T(serverbot.channel.ChannelType).values()}" th:value="${channelType}" th:text="#{'channel.type.' + ${channelType}}" th:selected="((${channelManagement.findByChannelId(channel.id).get().getChannelType()} == ${channelType}) ? selected)">
                         </select>
                     </td>
                 </tr>
             </table>
+
+            <script type="text/javascript" th:inline="javascript">
+                function writeCookie(c, d) {
+                    var a = document.getElementById('url' + c).value;
+                    var b = document.getElementById(c.toString()).value;
+                    document.cookie = "location=" +  $(window).scrollTop();
+                    window.location.href = a + "/" + b + "/" + c + "/" + d;
+                }
+                function readCookie() {
+                    var lastScrollTop = getCookie("location");
+                    if (lastScrollTop) {
+                        $(window).scrollTop(lastScrollTop);
+                        removeCookie('location');
+                    }
+                }
+                function getCookie(cname) {
+                    let name = cname + "=";
+                    let decodedCookie = decodeURIComponent(document.cookie);
+                    let ca = decodedCookie.split(';');
+                    for(let i = 0; i <ca.length; i++) {
+                        let c = ca[i];
+                        while (c.charAt(0) === ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) === 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                }
+                function removeCookie(cname) {
+                    document.cookie = cname + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                }
+            </script>
             <script type="text/javascript" th:inline="javascript">
                 var message = /*[[${channelsShown}]]*/ 'false';
                 if (message === true) {

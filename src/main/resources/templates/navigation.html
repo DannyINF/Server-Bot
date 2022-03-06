@@ -39,7 +39,6 @@
                     </a>
                 </li>
                 <li class="item no-transition">
-                    <a class="no-transition block" th:href="@{/login}" sec:authorize="isAnonymous()" th:text="#{nav.login}">Login</a>
                     <form class="no-transition" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
                         <button type="submit" class="ui button no-transition" th:text="#{nav.logout}">Logout</button>
                     </form>
