@@ -731,3 +731,22 @@ select option {
     color: var(--text);
     background-color: var(--table-alt-bg);
 }
+
+input {
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: -5px;
+    color: var(--text);
+    border: 1px solid var(--border);
+    outline: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -webkit-transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -moz-transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -ms-transition: border 500ms ease-in-out, color 1s ease-in-out;
+    -o-transition: border 500ms ease-in-out, color 1s ease-in-out;
+}

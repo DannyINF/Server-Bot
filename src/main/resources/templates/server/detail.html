@@ -46,12 +46,13 @@
             </script>
 
             <table id="roleTable">
+                <input type="text" id="roleSearch" onkeyup="filter('roleSearch', 'roleTable', 'roles')" placeholder="Search.." title="Type in a category">
                 <tr>
                     <th th:text="#{server.roles}" scope="row" id="loginLink1" onclick="toggleTable('roleTable');" href="#">Serverrollen</th>
                     <th th:text="#{server.role.type}" scope="row">Name</th>
                 </tr>
-                <tr th:name="roles" th:each="role : ${roles}" style="display: none">
-                    <td th:text="${role.name}"></td>
+                <tr class="roles" th:name="roles" th:each="role : ${roles}" style="display: none">
+                    <td class="a" th:text="${role.name}"></td>
                     <td>
                         <input type="hidden" th:id="url + ${role.getIdLong()}" th:value="@{/changeRoleType}">
                         <select th:id="${role.getId()}" th:name="${role.getId()}" th:onchange="|writeCookie(${role.idLong}n, ${server.getIdLong()}n);|">
@@ -61,6 +62,7 @@
                 </tr>
             </table>
 
+
             <script type="text/javascript" th:inline="javascript">
                 var message = /*[[${rolesShown}]]*/ 'false';
                 if (message === true) {
@@ -69,12 +71,14 @@
             </script>
 
             <table id="channelTable">
+                <input type="text" id="channelSearch" onkeyup="filter('channelSearch', 'channelTable', 'channels')" placeholder="Search.." title="Type in a category">
+
                 <tr>
                     <th th:text="#{server.channels}" scope="row" id="loginLink2" onclick="toggleTable('channelTable');" href="#">Serverrollen</th>
                     <th th:text="#{server.channel.type}" scope="row">Name</th>
                 </tr>
-                <tr th:name="channels" th:each="channel : ${channels}" style="display: none">
-                    <td th:text="${channel.name}"></td>
+                <tr class="channels" th:name="channels" th:each="channel : ${channels}" style="display: none">
+                    <td class="a" th:text="${channel.name}"></td>
                     <td>
                         <input type="hidden" th:id="url + ${channel.getIdLong()}" th:value="@{/changeChannelType}">
                         <select th:id="${channel.getId()}" th:name="${channel.getId()}" th:onchange="|writeCookie(${channel.idLong}n, ${server.getIdLong()}n);|">
@@ -83,6 +87,27 @@
                     </td>
                 </tr>
             </table>
+
+            <script>
+                function filter(search, table_name, tr_name) {
+                    // Declare variables
+                    var input, filter, table, tr, a, i;
+                    input = document.getElementById(search);
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById(table_name);
+                    tr = table.getElementsByClassName(tr_name);
+
+                    for (i = 0; i < tr.length; i++) {
+                        a = tr[i].getElementsByTagName("td")[0];
+                        if (a.textContent.toString().toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+
+                }
+            </script>
 
             <script type="text/javascript" th:inline="javascript">
                 function writeCookie(c, d) {
