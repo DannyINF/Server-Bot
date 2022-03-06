@@ -3,10 +3,13 @@ package serverbot.server;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.OnlineStatus;
 import serverbot.Main;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
 @NoArgsConstructor(force = true)
@@ -35,5 +38,15 @@ public class Server {
 
     public Long getIdLong() {
         return Long.parseLong(id);
+    }
+
+    public Long getOnlineMembers(JDA jda) {
+        AtomicReference<Long> online = new AtomicReference<>(Long.valueOf(0));
+        jda.getGuildById(id).getMembers().stream().forEach((member -> {
+            if (member.getOnlineStatus() != OnlineStatus.OFFLINE) {
+                online.getAndSet(online.get() + 1);
+            }
+        }));
+        return online.get();
     }
 }

@@ -26,6 +26,8 @@
             <ul class="flex table-bar">
 
             </ul>
+            <i class="bi-info-circle-fill"></i>
+            <span th:text="${server.getOnlineMembers(jda)} + ' Member aktiv von ' + ${jda.getGuildById(server.idLong).getMemberCount()} + '.'">567 / 1234</span>
 
             <table>
                 <tr>

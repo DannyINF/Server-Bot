@@ -52,6 +52,7 @@ public class ServerController {
         model.addAttribute("server", server);
         model.addAttribute("rolemanagement", roleManagement);
         model.addAttribute("roles", Main.jda.getGuildById(server.getId()).getRoles());
+        model.addAttribute("jda", Main.jda);
         if (rolesShown.isPresent() && rolesShown.get() == 1) {
             model.addAttribute("rolesShown", true);
         } else {
