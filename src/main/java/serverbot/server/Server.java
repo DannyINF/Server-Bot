@@ -5,10 +5,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Member;
 import serverbot.Main;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Entity

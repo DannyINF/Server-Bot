@@ -88,6 +88,17 @@
                 </tr>
             </table>
 
+            <table id="memberTable">
+                <input type="text" id="memberSearch" onkeyup="filter('memberSearch', 'memberTable', 'members')" placeholder="Search.." title="Type in a category">
+
+                <tr>
+                    <th th:text="#{server.members}" scope="row" id="loginLink3" onclick="toggleTable('memberTable');" href="#">Servermember</th>
+                </tr>
+                <tr class="members" th:name="members" th:each="member : ${members}" style="display: none">
+                    <td class="a"> <a th:text="${jda.getUserById(member.idLong).name}" th:href="'/server?id=' + ${server.getId()} + '/member?id=' + ${member.getId()}"></a></td>
+                </tr>
+            </table>
+
             <script>
                 function filter(search, table_name, tr_name) {
                     // Declare variables

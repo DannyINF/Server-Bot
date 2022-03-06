@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import serverbot.Main;
 import serverbot.channel.ChannelManagement;
+import serverbot.member.MemberManagement;
 import serverbot.role.RoleManagement;
 
 import java.util.Optional;
@@ -25,6 +26,9 @@ public class ServerController {
 
     @Autowired
     ChannelManagement channelManagement;
+
+    @Autowired
+    MemberManagement memberManagement;
 
     @Autowired
     OAuth2AuthorizedClientService auth2AuthorizedClientService;
@@ -61,6 +65,14 @@ public class ServerController {
 
         model.addAttribute("channelManagement", channelManagement);
         model.addAttribute("channels", Main.jda.getGuildById(server.getId()).getChannels());
+        if (channelsShown.isPresent() && channelsShown.get() == 1) {
+            model.addAttribute("channelsShown", true);
+        } else {
+            model.addAttribute("channelsShown", false);
+        }
+
+        model.addAttribute("memberManagement", memberManagement);
+        model.addAttribute("members", Main.jda.getGuildById(server.getId()).getMembers());
         if (channelsShown.isPresent() && channelsShown.get() == 1) {
             model.addAttribute("channelsShown", true);
         } else {
