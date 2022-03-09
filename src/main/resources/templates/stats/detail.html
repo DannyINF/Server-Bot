@@ -70,15 +70,15 @@
         </tr>
         <tr>
             <td>Erster Beitritt</td>
-            <td th:text="${stats.getFirstJoin()}"></td>
+            <td th:text="${stats.getFormattedFirstJoin()}"></td>
         </tr>
         <tr>
             <td>Letzter Beitritt</td>
-            <td th:text="${stats.getLastJoin()}"></td>
+            <td th:text="${stats.getFormattedLastJoin()}"></td>
         </tr>
         <tr>
             <td>Letztes Verlassen</td>
-            <td th:text="${stats.getLastLeave()}"></td>
+            <td th:text="${stats.getFormattedLastLeave()}"></td>
         </tr>
 
     </table>

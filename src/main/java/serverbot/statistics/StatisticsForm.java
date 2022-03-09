@@ -10,36 +10,36 @@ import java.time.LocalDateTime;
 public class StatisticsForm {
 
     @Nonnegative
-    private Long words;
+    private final Long words;
 
     @Nonnegative
-    private Long messages;
+    private final Long messages;
 
     @Nonnegative
-    private Long chars;
+    private final Long chars;
 
     @Nonnegative
-    private Long voiceTime;
+    private final Long voiceTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm")
-    private LocalDateTime firstJoin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private final String firstJoin;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm")
-    private LocalDateTime lastJoin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private final String lastJoin;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH-mm")
-    private LocalDateTime lastLeave;
-
-    @Nonnegative
-    private Long xp;
-    @Nonnegative
-    private Long level;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private final String lastLeave;
 
     @Nonnegative
-    private Long currency;
+    private final Long xp;
+    @Nonnegative
+    private final Long level;
 
-    public StatisticsForm(Long words, Long messages, Long chars, Long voiceTime, LocalDateTime firstJoin,
-    LocalDateTime lastJoin, LocalDateTime lastLeave, Long xp, Long level, Long currency) {
+    @Nonnegative
+    private final Long currency;
+
+    public StatisticsForm(Long words, Long messages, Long chars, Long voiceTime, String firstJoin,
+    String lastJoin, String lastLeave, Long xp, Long level, Long currency) {
         this.words = words;
         this.messages = messages;
         this.chars = chars;
@@ -50,5 +50,17 @@ public class StatisticsForm {
         this.xp = xp;
         this.level = level;
         this.currency = currency;
+    }
+
+    public LocalDateTime getFirstJoin() {
+        return LocalDateTime.parse(firstJoin);
+    }
+
+    public LocalDateTime getLastJoin() {
+        return LocalDateTime.parse(lastJoin);
+    }
+
+    public LocalDateTime getLastLeave() {
+        return LocalDateTime.parse(lastLeave);
     }
 }

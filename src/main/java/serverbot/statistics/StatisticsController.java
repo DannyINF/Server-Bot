@@ -49,8 +49,10 @@ public class StatisticsController {
     @PreAuthorize("isAuthenticated()")
     public String stats_edit_post(@RequestParam("sid") Server server, @RequestParam("mid") String memberId, Model model, @Valid StatisticsForm statisticsForm, Errors errors) {
         Statistics statistics = statisticsManagement.findById(new StatisticsId(memberId, server.getId())).get();
+        System.out.println(statisticsForm.getFirstJoin());
         statistics.edit(statisticsForm.getWords(), statisticsForm.getMessages(), statisticsForm.getChars(), statisticsForm.getVoiceTime(), statisticsForm.getFirstJoin(), statisticsForm.getLastJoin(), statisticsForm.getLastLeave(), statisticsForm.getXp(), statisticsForm.getLevel(), statisticsForm.getCurrency());
         statisticsManagement.save(statistics);
+        System.out.println(statistics.getFirstJoin());
         return "redirect:/stats?sid=" + server.getId() + "&mid=" + memberId;
     }
 

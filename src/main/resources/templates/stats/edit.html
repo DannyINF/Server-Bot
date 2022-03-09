@@ -51,62 +51,62 @@
                 <td>XP</td>
                 <td>
                     <div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="text" name="xp" id="xp" th:value="${stats.xp}" required placeholder=" "/>
+                    <input type="text" name="xp" id="xp" th:value="${stats.xp}" required/>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>Level</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="text" name="level" id="level" th:value="${stats.level}" required placeholder=" "/>
+                    <input type="text" name="level" id="level" th:value="${stats.level}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Currency</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="text" name="currency" id="currency" th:value="${stats.currency}" required placeholder=" "/>
+                    <input type="text" name="currency" id="currency" th:value="${stats.currency}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Wörter</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="text" name="words" id="words" th:value="${stats.words}" required placeholder=" "/>
+                    <input type="text" name="words" id="words" th:value="${stats.words}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Nachrichten</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="text" name="messages" id="messages" th:value="${stats.messages}" required placeholder=" "/>
+                    <input type="text" name="messages" id="messages" th:value="${stats.messages}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Zeichen</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="text" name="chars" id="chars" th:value="${stats.chars}" required placeholder=" "/>
+                    <input type="text" name="chars" id="chars" th:value="${stats.chars}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Zeit im Voicechat</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="text" name="voiceTime" id="voiceTime" th:value="${stats.voiceTime}" required placeholder=" "/>
+                    <input type="text" name="voiceTime" id="voiceTime" th:value="${stats.voiceTime}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Erster Beitritt</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="datetime-local" name="firstJoin" id="firstJoin" th:value="${stats.firstJoin}" required placeholder=" "/>
+                    <input type="datetime-local" name="firstJoin" id="firstJoin" th:value="${stats.getFirstJoin()}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Letzter Beitritt</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="datetime-local" name="lastJoin" id="lastJoin" th:value="${stats.lastJoin}" required placeholder=" "/>
+                    <input type="datetime-local" name="lastJoin" id="lastJoin" th:value="${stats.getLastJoin()}" required/>
                 </div></td>
             </tr>
             <tr>
                 <td>Letztes Verlassen</td>
                 <td><div class="field"> <!--th:classappend="${#fields.hasErrors('xp')} ? 'error'"-->
-                    <input type="datetime-local" name="lastLeave" id="lastLeave" th:value="${stats.lastLeave}" required placeholder=" "/>
+                    <input type="datetime-local" name="lastLeave" id="lastLeave" th:value="${stats.getLastLeave()}" required/>
                 </div></td>
             </tr>
         </table>
