@@ -21,7 +21,7 @@
         </li>
 
         <li>
-            <a aria-current="location" th:href="@{/member(sid=${server.id},mid=${discordMember.getId()})}" th:text="${discordMember.getEffectiveName()}">Server</a>
+            <a aria-current="location" th:href="@{/templates/stats(sid=${server.id},mid=${discordMember.getId()})}" th:text="${discordMember.getEffectiveName()}">Server</a>
         </li>
     </ul>
 </nav>
@@ -82,6 +82,11 @@
         </tr>
 
     </table>
+
+    <a class="btn" th:href="@{/stats/edit(sid=${server.id}, mid=${member.get().getUserId()})}" th:title="#{member.edit}">
+        <span class="bi bi-pencil-square" th:aria-label="#{member.edit}"></span>
+        <span th:text="#{member.edit}">Ändern</span>
+    </a>
 
     <script>
         function filter(search, table_name, tr_name) {

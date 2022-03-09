@@ -95,7 +95,7 @@
                     <th th:text="#{server.members}" scope="row" id="loginLink3" onclick="toggleTable('memberTable');" href="#">Servermember</th>
                 </tr>
                 <tr class="members" th:name="members" th:each="member : ${members}" style="display: none">
-                    <td class="a"> <a th:text="${jda.getUserById(member.idLong).name}" th:href="'/member?sid=' + ${server.getId()} + '&mid=' + ${member.getId()}"></a></td>
+                    <td class="a"> <a th:text="${jda.getUserById(member.idLong).name}" th:href="'/stats?sid=' + ${server.getId()} + '&mid=' + ${member.getId()}"></a></td>
                 </tr>
             </table>
 

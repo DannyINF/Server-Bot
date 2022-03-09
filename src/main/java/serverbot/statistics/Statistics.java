@@ -72,4 +72,20 @@ public class Statistics {
                 ", currency=" + currency +
                 '}';
     }
+
+    public void edit(Long words, Long messages, Long chars,
+                     Long voiceTime, LocalDateTime firstJoin, LocalDateTime lastJoin,
+                     LocalDateTime lastLeave, Long xp,
+                     Long level, Long currency) {
+        this.words = words;
+        this.messages = messages;
+        this.chars = chars;
+        this.voiceTime = voiceTime;
+        this.firstJoin = firstJoin;
+        this.lastJoin = lastJoin;
+        this.lastLeave = lastLeave;
+        this.xp = xp;
+        this.level = level;
+        this.currency = currency;
+    }
 }
