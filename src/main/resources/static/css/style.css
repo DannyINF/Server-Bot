@@ -247,34 +247,15 @@ h2.sub-heading {
 
 /* === INPUT FORM === */
 
-form.ui.form .field {
-    width: 100%;
-    position: relative;
-    z-index: 0;
-    border-bottom: 2px dashed var(--border);
-    margin: 2.5em auto 1em;
-    transition: border 500ms;
-    -webkit-transition: border 500ms;
-    -moz-transition: border 500ms;
-    -ms-transition: border 500ms;
-    -o-transition: border 500ms;
-}
-
 form.ui.form input {
     outline: none;
     border: none;
     overflow: hidden;
     margin: 0;
     width: 100%;
-    padding: .25em 0;
     background: none;
-    font-size: 1.2em;
+    font-size: 1em;
     color: var(--text);
-    transition: color 1s ease-in-out;
-    -webkit-transition: color 1s ease-in-out;
-    -moz-transition: color 1s ease-in-out;
-    -ms-transition: color 1s ease-in-out;
-    -o-transition: color 1s ease-in-out;
 }
 
 form.ui.form textarea {
