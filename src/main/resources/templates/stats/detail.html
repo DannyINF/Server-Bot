@@ -31,7 +31,32 @@
     <i class="bi-info-circle-fill"></i>
     <span th:text="${discordMember.onlineStatus}">Offline</span>
     <ul class="flex table-bar">
-
+        <li>
+            <a class="btn red" th:href="@{/member/ban(sid=${server.id}, mid=${discordMember.getId()})}" th:text="#{member.ban}">
+                Verbannen
+            </a>
+        </li>
+        <li>
+            <a class="btn orange" th:href="@{/member/kick(sid=${server.id}, mid=${discordMember.getId()})}" th:text="#{member.kick}">
+                Kick
+            </a>
+        </li>
+        <li>
+            <a class="btn orange" th:href="@{/member/exil(sid=${server.id}, mid=${discordMember.getId()})}" th:text="#{member.exil}">
+                Exil
+            </a>
+        </li>
+        <li>
+            <a class="btn" th:href="@{/member/rename(sid=${server.id}, mid=${discordMember.getId()})}" th:text="#{member.rename}">
+                Umbenennen
+            </a>
+        </li>
+        <li>
+            <a class="btn" th:href="@{/stats/edit(sid=${server.id}, mid=${member.get().getUserId()})}" th:title="#{member.edit}">
+                <span class="bi bi-pencil-square" th:aria-label="#{member.edit}"></span>
+                <span th:text="#{member.edit}">Bearbeiten</span>
+            </a>
+        </li>
     </ul>
     <img th:src="${discordMember.getUser().getAvatarUrl()}" height="50", width="50">
 
@@ -82,11 +107,6 @@
         </tr>
 
     </table>
-
-    <a class="btn" th:href="@{/stats/edit(sid=${server.id}, mid=${member.get().getUserId()})}" th:title="#{member.edit}">
-        <span class="bi bi-pencil-square" th:aria-label="#{member.edit}"></span>
-        <span th:text="#{member.edit}">Ändern</span>
-    </a>
 
     <script>
         function filter(search, table_name, tr_name) {

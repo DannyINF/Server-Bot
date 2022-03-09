@@ -24,6 +24,9 @@
     --red0: #ff4b42;
     --red1: #f43628;
     --red2: #e31516;
+
+    --orange1: #f4aa28;
+    --orange2: #f49928;
 }
 
 .light {
@@ -41,6 +44,8 @@
     --button-hover: var(--green1);
     --button-red-bg : var(--red0);
     --button-red-hover: var(--red1);
+    --button-orange-bg : var(--bs-orange);
+    --button-orange-hover : var(--orange1);
     --button-text: var(--black);
 
     --error: var(--red2);
@@ -62,6 +67,8 @@
     --button-hover: var(--green1);
     --button-red-bg: var(--red2);
     --button-red-hover: var(--red1);
+    --button-orange-bg : var(--orange2);
+    --button-orange-hover : var(--orange1);
     --button-text: var(--white);
 
     --error: var(--red0);
@@ -238,6 +245,15 @@ h2.sub-heading {
 .btn.red:hover,
 .btn.red:focus-within {
     background-color: var(--button-red-hover);
+}
+
+.btn.orange {
+    background-color: var(--button-orange-bg);
+}
+
+.btn.orange:hover,
+.btn.orange:focus-within {
+    background-color: var(--button-orange-hover);
 }
 
 .btn.btn-small {
