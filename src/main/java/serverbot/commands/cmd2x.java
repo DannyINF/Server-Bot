@@ -19,7 +19,6 @@ public class cmd2x implements Command {
                     .queue();
             ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
             serverManagement.changeXpMultiplierTo(event.getGuild().getId(), number);
-
         }
     }
 }

@@ -20,6 +20,7 @@ import serverbot.user.UserManagement;
 import serverbot.util.SpringContextUtils;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -97,10 +98,11 @@ public class readyListener extends ListenerAdapter {
                     System.out.println("has member " + member.getEffectiveName());
                 }
                 System.out.println(statisticsManagement.findByUserIdAndServerId(member.getId(), g.getId()));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 if (!statisticsManagement.findByUserIdAndServerId(member.getId(), g.getId()).isPresent()) {
                     statisticsManagement.save(
-                            new Statistics(member.getId(), g.getId(), 0L, 0L, 0L, 0L, LocalDateTime.now(),
-                                    LocalDateTime.now(), null, 0L, 0L, 0L));
+                            new Statistics(member.getId(), g.getId(), 0L, 0L, 0L, 0L, LocalDateTime.parse(LocalDateTime.now().format(formatter)),
+                                    LocalDateTime.parse(LocalDateTime.now().format(formatter)), null, 0L, 0L, 0L));
                     System.out.println("add statistic for " + member.getEffectiveName());
                 } else {
                     System.out.println("has statistic for " + member.getEffectiveName());
