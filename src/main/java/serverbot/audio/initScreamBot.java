@@ -1,9 +1,9 @@
 package serverbot.audio;
 
-import serverbot.listeners.voiceListenerAddon;
+import serverbot.listeners.VoiceListenerAddon;
 import com.neovisionaries.ws.client.WebSocketFactory;
-import serverbot.listeners.introListener;
-import serverbot.listeners.readyListener;
+import serverbot.listeners.IntroListener;
+import serverbot.listeners.ReadyListener;
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
@@ -56,14 +56,14 @@ public class initScreamBot extends ListenerAdapter {
             e.printStackTrace();
         }
 
-        introListener il = new introListener();
+        IntroListener il = new IntroListener();
         il.playIntro(intro, guild, voiceChannel);
         isStarting = false;
     }
 
     private static void addListeners() {
-        builder.addEventListeners(new readyListener());
-        builder.addEventListeners(new introListener());
-        builder.addEventListeners(new voiceListenerAddon());
+        builder.addEventListeners(new ReadyListener());
+        builder.addEventListeners(new IntroListener());
+        builder.addEventListeners(new VoiceListenerAddon());
     }
 }

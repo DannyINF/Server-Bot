@@ -39,7 +39,7 @@ public class ServerManagement {
         serverRepository.save(server);
     }
 
-    public void changeXpMultiplierTo(String id, int multiplier) {
+    public void changeXpMultiplierTo(String id, long multiplier) {
         Server server = serverRepository.findById(id).get();
         server.setXpMultiplier(multiplier);
         serverRepository.save(server);

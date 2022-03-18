@@ -1,10 +1,10 @@
 package serverbot.audio;
 
-import serverbot.core.commandHandlerMusic;
-import serverbot.listeners.voiceListenerAddon;
+import serverbot.core.CommandHandlerMusic;
+import serverbot.listeners.VoiceListenerAddon;
 import com.neovisionaries.ws.client.WebSocketFactory;
-import serverbot.listeners.commandsMusicListener;
-import serverbot.listeners.readyListener;
+import serverbot.listeners.CommandsMusicListener;
+import serverbot.listeners.ReadyListener;
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -86,13 +86,13 @@ class initMusicAddon extends ListenerAdapter {
     }
 
     private static void addCommands() {
-        commandHandlerMusic.commands.put("music", new PlayerControl());
+        CommandHandlerMusic.commands.put("music", new PlayerControl());
     }
 
     private static void addListeners() {
-        builder.addEventListeners(new readyListener());
-        builder.addEventListeners(new voiceListenerAddon());
-        builder.addEventListeners(new commandsMusicListener());
+        builder.addEventListeners(new ReadyListener());
+        builder.addEventListeners(new VoiceListenerAddon());
+        builder.addEventListeners(new CommandsMusicListener());
     }
 
 }

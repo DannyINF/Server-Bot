@@ -20,7 +20,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import serverbot.commands.Command;
-import serverbot.core.permissionChecker;
+import serverbot.core.PermissionChecker;
 
 import java.awt.*;
 import java.util.List;
@@ -283,7 +283,7 @@ public class PlayerControl implements Command {
                 channel. sendMessageEmbeds(embed.build()).queue();
                 break;
             case "volume":
-                if (permissionChecker.checkRole(new Role[]{guild.getRolesByName("YT-Team", true).get(0)}, member)) {
+                if (PermissionChecker.checkRole(new Role[]{guild.getRolesByName("YT-Team", true).get(0)}, member)) {
                     if (args.length == 1) {
                         embed.setDescription("Current player volume: **" + player.getVolume() + "**");
                         channel. sendMessageEmbeds(embed.build()).queue();
@@ -300,7 +300,7 @@ public class PlayerControl implements Command {
                         }
                     }
                 } else {
-                    permissionChecker.noPower(channel, member);
+                    PermissionChecker.noPower(channel, member);
                 }
                 break;
             case "restart":

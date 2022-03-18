@@ -4,10 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
-import serverbot.core.messageActions;
-import serverbot.core.permissionChecker;
+import serverbot.core.MessageActions;
+import serverbot.core.PermissionChecker;
 import serverbot.statistics.Statistics;
-import serverbot.statistics.StatisticsId;
 import serverbot.statistics.StatisticsManagement;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -15,7 +14,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import serverbot.util.LevelChecker;
 import serverbot.util.SpringContextUtils;
-import serverbot.util.getUser;
+import serverbot.util.GetUser;
 
 import java.awt.*;
 import java.sql.SQLException;
@@ -43,7 +42,7 @@ public class CmdXp implements Command {
         Long level = statistics.getLevel();
 
         event.getChannel()
-                .sendMessage(messageActions.getLocalizedString("xp_msg", "serverbot/user", event.getAuthor().getId())
+                .sendMessage(MessageActions.getLocalizedString("xp_msg", "serverbot/user", event.getAuthor().getId())
                         .replace("[USER]", strMember).replace("[LEVEL]", numberFormat.format(level))
                         .replace("[XP]", numberFormat.format(xp))).queue();
 
@@ -112,7 +111,7 @@ public class CmdXp implements Command {
                             k++;
                         }
                         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
-                        sb.append(messageActions.getLocalizedString("xp_ranking_level", "user",
+                        sb.append(MessageActions.getLocalizedString("xp_ranking_level", "user",
                                 event.getAuthor().getId()));
                         sb.append(numberFormat.format(level));
                         k = numberFormat.format(level).length();
@@ -121,7 +120,7 @@ public class CmdXp implements Command {
                             k++;
                         }
                         sb.append(
-                                messageActions.getLocalizedString("xp_ranking_xp", "user", event.getAuthor().getId()));
+                                MessageActions.getLocalizedString("xp_ranking_xp", "user", event.getAuthor().getId()));
                         sb.append(numberFormat.format(xp));
                         k = xp.toString().length();
                         while (k < 10) {
@@ -140,7 +139,7 @@ public class CmdXp implements Command {
                     event.getChannel().sendMessage(sb.toString()).queue();
                     break;
                 case "give":
-                    if (permissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR},
+                    if (PermissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR},
                             event.getMember())) {
 
                         long amount;
@@ -148,7 +147,7 @@ public class CmdXp implements Command {
                         MessageChannel channel = event.getChannel();
                         try {
                             ArrayList<String> list = new ArrayList<>(Arrays.asList(args).subList(1, args.length - 1));
-                            member = getUser.getMemberFromInput(list.toArray(new String[0]), event.getAuthor(),
+                            member = GetUser.getMemberFromInput(list.toArray(new String[0]), event.getAuthor(),
                                     event.getGuild(), event.getChannel());
                         } catch (Exception e) {
                             channel.sendMessage("Gib bitte einen Nutzer an.")
@@ -186,7 +185,7 @@ public class CmdXp implements Command {
                             e.printStackTrace();
                         }
                     } else {
-                        permissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));
+                        PermissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));
                     }
 
                     break;
@@ -243,7 +242,7 @@ public class CmdXp implements Command {
                     args2.add(args[i]);
                     String[] args3 = new String[args2.size()];
                     args3 = args2.toArray(args3);
-                    Member member = getUser.getMemberFromInput(args3, event.getAuthor(), event.getGuild(),
+                    Member member = GetUser.getMemberFromInput(args3, event.getAuthor(), event.getGuild(),
                             event.getChannel());
                     assert member != null;
                     xp(event, member);

@@ -6,6 +6,7 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import serverbot.channel.ChannelManagement;
+import serverbot.util.GiveXP;
 
 import java.util.Optional;
 
@@ -84,6 +85,6 @@ public class StatisticsManagement {
 
         xp *= channelManagement.findByChannelIdAndServerId(event.getChannel().getId(), event.getGuild().getId()).get().getXpMultiplier();
 
-        serverbot.util.giveXP.giveXPToMember(event.getMember(), event.getGuild(), xp.longValue());
+        GiveXP.giveXPToMember(event.getMember(), event.getGuild(), xp.longValue());
     }
 }

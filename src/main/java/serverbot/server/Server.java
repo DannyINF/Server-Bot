@@ -21,7 +21,7 @@ public class Server {
     @Id
     private final String id;
 
-    private int xpMultiplier;
+    private long xpMultiplier;
 
     private String prefix;
 
