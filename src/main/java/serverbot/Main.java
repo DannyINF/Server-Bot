@@ -138,8 +138,6 @@ public class Main {
 
         CommandHandler.commands.put("intro", new CmdIntro());
 
-        CommandHandler.commands.put("kick", new CmdKick());
-
         CommandHandler.commands.put("statistik", new CmdStats());
         CommandHandler.commands.put("statistic", new CmdStats());
         CommandHandler.commands.put("statistics", new CmdStats());

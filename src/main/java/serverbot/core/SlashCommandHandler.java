@@ -28,6 +28,9 @@ public class SlashCommandHandler extends ListenerAdapter {
                 case "botinfo":
                     CmdBotinfo.botinfo(event);
                     break;
+                case "kick":
+                    CmdKick.kick(event);
+                    break;
                     /*
                     TODO: implement music
                 case "music":

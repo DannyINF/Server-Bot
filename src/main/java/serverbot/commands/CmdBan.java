@@ -12,18 +12,17 @@ import serverbot.core.PermissionChecker;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.User;
+import serverbot.util.SpringContextUtils;
 
 import java.awt.*;
 
 public class CmdBan {
 
-    @Autowired
-    static ChannelManagement channelManagement;
-
     public static void ban(SlashCommandEvent event, User user, int del_days, String reason) {
         event.deferReply(true).queue();
         // only members with the ban permission are able to ban using this command
         if (PermissionChecker.checkPermission(new Permission[]{Permission.BAN_MEMBERS}, event.getMember())) {
+            ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
             Streamable<Channel> streamableModlog = channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG);
             if (streamableModlog.isEmpty()) {
                 MessageActions.needChannel(event, ChannelType.MODLOG);
