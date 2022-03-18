@@ -1,7 +1,9 @@
 package serverbot.core;
 
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.channel.ChannelType;
 import serverbot.user.User;
 import serverbot.user.UserManagement;
 import serverbot.util.SpringContextUtils;
@@ -43,5 +45,9 @@ public class MessageActions {
         localizedString = localizedString.replace("ß", "\u00df");
         localizedString = localizedString.replace("ẞ", "\u1e9e");
         return localizedString;
+    }
+
+    public static void needChannel(SlashCommandEvent event, ChannelType channelType) {
+        event.getGuild().getDefaultChannel().sendMessage(">>> Bitte setze einen Channel vom Typ " + channelType.name() + "mit dem Befehl `/channel set <ID des Channels> MODLOG`.").queue();
     }
 }

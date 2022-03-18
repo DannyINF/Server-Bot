@@ -138,9 +138,7 @@ public class Main {
         CommandHandler.commands.put("music", new PlayerControl());
 
         CommandHandler.commands.put("intro", new CmdIntro());
-
-        CommandHandler.commands.put("ban", new CmdBan());
-
+        
         CommandHandler.commands.put("kick", new CmdKick());
 
         CommandHandler.commands.put("statistik", new CmdStats());
