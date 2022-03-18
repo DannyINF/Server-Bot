@@ -11,20 +11,9 @@ import serverbot.core.MessageActions;
 import serverbot.core.PermissionChecker;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
-import serverbot.member.MemberId;
-import serverbot.member.MemberManagement;
-import serverbot.moderation.Moderation;
-import serverbot.moderation.ModerationManagement;
-import serverbot.moderation.ModerationType;
-import serverbot.util.SpringContextUtils;
-import serverbot.util.GetUser;
 
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class CmdBan {
 
@@ -57,7 +46,6 @@ public class CmdBan {
                         .replace("[USER]", user.getAsTag()).replace("[REASON]", reason));
                 assert modlog != null;
                 modlog.sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().ban(user, del_days, reason).queue());
-
             }
         } else {
             PermissionChecker.noPower(event);

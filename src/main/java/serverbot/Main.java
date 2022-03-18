@@ -15,6 +15,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import serverbot.audio.PlayerControl;
 import serverbot.commands.*;
 import serverbot.core.CommandHandler;
+import serverbot.core.SlashCommandHandler;
 import serverbot.listeners.*;
 import serverbot.util.Announcements;
 import serverbot.util.SECRETS;
@@ -122,8 +123,6 @@ public class Main {
 
         CommandHandler.commands.put("help", new CmdHelp());
 
-        CommandHandler.commands.put("botinfo", new CmdBotinfo());
-
         CommandHandler.commands.put("rules", new CmdRules());
 
         CommandHandler.commands.put("chatclear", new CmdClear());
@@ -138,7 +137,7 @@ public class Main {
         CommandHandler.commands.put("music", new PlayerControl());
 
         CommandHandler.commands.put("intro", new CmdIntro());
-        
+
         CommandHandler.commands.put("kick", new CmdKick());
 
         CommandHandler.commands.put("statistik", new CmdStats());
@@ -181,6 +180,7 @@ public class Main {
         builder.addEventListeners(new ModReactionListener());
         builder.addEventListeners(new XpListener());
         builder.addEventListeners(new Announcements());
+        builder.addEventListeners(new SlashCommandHandler());
     }
 
     private static void addSlashCommands(JDA jda) {
@@ -316,7 +316,8 @@ public class Main {
                         .addSubcommands(new SubcommandData("list", "Gibt die Wiedergabeliste aus."))
                         .addSubcommands(new SubcommandData("shuffle", "Mischt die Wiedergabeliste aus."))
         );
-
+        CommandListUpdateAction global = jda.updateCommands();
+        global.queue();
         commands.queue();
     }
 }
