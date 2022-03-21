@@ -144,9 +144,6 @@ public class Main {
 
         CommandHandler.commands.put("stats", new CmdStats());
 
-        CommandHandler.commands.put("exil", new CmdExil());
-        CommandHandler.commands.put("exile", new CmdExil());
-
         CommandHandler.commands.put("edit", new CmdEdit());
 
         CommandHandler.commands.put("xp", new CmdXp());
@@ -233,13 +230,13 @@ public class Main {
                                         .addOptions(new OptionData(USER, "credits_user", "Credits des Nutzers").setRequired(true))
                         )
         );
-        /*
+
         commands.addCommands(
                 new CommandData("exil", "Exiliert oder deexiliert einen Nutzer.")
-                        .addOptions(new OptionData(USER, "exil_user", "De/exiliert diesen Nutzer.")
-                                .setRequired(true))
+                        .addOptions(new OptionData(USER, "exil_user", "De/exiliert diesen Nutzer.").setRequired(true))
+                        .addOptions(new OptionData(STRING, "exil_reason", "Gibt den Grund an."))
         );
-
+/*
         commands.addCommands(
                 new CommandData("help", "Gibt die Hilfe f\u00FCr verschiedene Themen aus.")
                         .addOptions(new OptionData(STRING, "help_topic", "Zeigt Hilfe zu diesem Suchbegriff an."))

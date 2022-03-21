@@ -1,58 +1,36 @@
 package serverbot.commands;
 
-//import serverbot.core.databaseHandler;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import serverbot.core.PermissionChecker;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import serverbot.member.MemberId;
 import serverbot.member.MemberManagement;
 import serverbot.moderation.Moderation;
 import serverbot.moderation.ModerationManagement;
 import serverbot.moderation.ModerationType;
 import serverbot.util.SpringContextUtils;
-import serverbot.util.GetUser;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class CmdExil implements Command {
-    @Override
-    public boolean called() {
-        return false;
-    }
+public class CmdExil {
 
-    @Override
-    public void action(String[] args, GuildMessageReceivedEvent event) throws SQLException {
+    public static void exile(SlashCommandEvent event, Member member, OptionMapping reason) {
+        event.deferReply(true);
         if (PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("Mythen aus Mittelerde", true).get(0)}, event.getMember()) ||
-            PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("YT-Team", true).get(0)}, event.getMember()) ||
-            PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("Moderator", true).get(0)}, event.getMember())) {
-            if (args.length > 0) {
-                Member member = GetUser.getMemberFromInput(Arrays.copyOfRange(args, 0, 1), event.getAuthor(), event.getGuild(), event.getChannel());
-                String reason = "";
-                if (args.length > 1) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (String string : Arrays.copyOfRange(args, 1, args.length)) {
-                        stringBuilder.append(string).append(" ");
-                    }
-                    reason = stringBuilder.toString();
-                }
-                exileMember(event.getGuild(), member, event.getMember(), -1L, reason);
-            } else {
-                event.getChannel().sendMessage("Please provide an user.").queue();
-            }
+                PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("YT-Team", true).get(0)}, event.getMember()) ||
+                PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("Moderator", true).get(0)}, event.getMember())) {
+            event.reply("Ein Nutzer wurde de/exiliert.").queue();
+            exileMember(event.getGuild(), member, event.getMember(), -1L, reason == null ? "" : reason.getAsString());
         } else {
-            PermissionChecker.noPower(event.getChannel(), Objects.requireNonNull(event.getMember()));
+            PermissionChecker.noPower(event);
         }
-
     }
+
     public static void exileMember(Guild guild, Member member, Member moderator, Long duration, String reason) {
         MemberManagement memberManagement = SpringContextUtils.getBean(MemberManagement.class);
         serverbot.member.Member selectedMember = memberManagement.findById(new MemberId(member.getId(), guild.getId())).get();

@@ -46,6 +46,9 @@ public class SlashCommandHandler extends ListenerAdapter {
                             break;
                     }
                     break;
+                case "exil":
+                    CmdExil.exile(event, event.getOption("exil_user").getAsMember(), event.getOption("exil_reason"));
+                    break;
                     /*
                     TODO: implement music
                 case "music":
