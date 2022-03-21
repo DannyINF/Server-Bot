@@ -128,8 +128,6 @@ public class Main {
         CommandHandler.commands.put("chatclear", new CmdClear());
         CommandHandler.commands.put("clear", new CmdClear());
 
-        CommandHandler.commands.put("talk", new CmdTalk());
-
         CommandHandler.commands.put("report", new CmdReport());
 
         CommandHandler.commands.put("search", new CmdSearch());
@@ -267,13 +265,13 @@ public class Main {
                 new CommandData("stats", "Gibt Statistiken aus.")
                         .addOptions(new OptionData(USER, "stats_user", "Statistiken dieses Nutzers").setRequired(true))
         );
-        /*
+
         commands.addCommands(
                 new CommandData("say", "L\u00E4sst den Bot reden.")
                         .addOptions(new OptionData(STRING, "say_query", "Was der Bot sagen soll.")
                                 .setRequired(true))
         );
-        */
+
         commands.addCommands(
                 new CommandData("xp", "Gibt deine XP aus.")
                         .addSubcommands(new SubcommandData("ranking", "Gibt eine XP-Rangliste aus. (Standard: eigene Platzierung)")

@@ -67,6 +67,9 @@ public class SlashCommandHandler extends ListenerAdapter {
                             CmdXp.get(event, event.getOption("xp_user").getAsMember());
                             break;
                     }
+                case "say":
+                    CmdSay.say(event, event.getOption("say_query").getAsString());
+                    break;
                     /*
                     TODO: implement music
                 case "music":
