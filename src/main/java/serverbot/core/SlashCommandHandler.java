@@ -52,6 +52,21 @@ public class SlashCommandHandler extends ListenerAdapter {
                 case "stats":
                     CmdStats.stats(event, event.getOption("stats_user").getAsMember());
                     break;
+                case "xp":
+                    switch (event.getSubcommandName()) {
+                        case "ranking":
+                            CmdXp.ranking(event);
+                            break;
+                        case "give":
+                            CmdXp.give(event, event.getOption("xp_give_amount").getAsLong(), event.getOption("xp_give_user").getAsMember());
+                            break;
+                        case "next":
+                            CmdXp.next(event, event.getOption("xp_next_user").getAsMember());
+                            break;
+                        case "get":
+                            CmdXp.get(event, event.getOption("xp_user").getAsMember());
+                            break;
+                    }
                     /*
                     TODO: implement music
                 case "music":

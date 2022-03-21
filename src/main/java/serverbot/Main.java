@@ -140,8 +140,6 @@ public class Main {
 
         CommandHandler.commands.put("edit", new CmdEdit());
 
-        CommandHandler.commands.put("xp", new CmdXp());
-
         CommandHandler.commands.put("role", new CmdRole());
 
         CommandHandler.commands.put("channel", new CmdChannel());
@@ -275,19 +273,20 @@ public class Main {
                         .addOptions(new OptionData(STRING, "say_query", "Was der Bot sagen soll.")
                                 .setRequired(true))
         );
-
+        */
         commands.addCommands(
                 new CommandData("xp", "Gibt deine XP aus.")
                         .addSubcommands(new SubcommandData("ranking", "Gibt eine XP-Rangliste aus. (Standard: eigene Platzierung)")
                                 .addOptions(new OptionData(INTEGER, "xp_rank", "Rangliste ab dieser Platzierung.")))
                         .addSubcommands(new SubcommandData("give", "Vergibt XP an einen Nutzer")
-                                .addOptions(new OptionData(USER, "xp_give_user", "Nutzer, der XP erhalten soll.").setRequired(true)))
+                                .addOptions(new OptionData(USER, "xp_give_user", "Nutzer, der XP erhalten soll.").setRequired(true))
+                                .addOptions(new OptionData(INTEGER, "xp_give_amount", "Anzahl an vergebenen XP").setRequired(true)))
                         .addSubcommands(new SubcommandData("next", "Zeigt an, wie viele XP zum n\u00E4chsten Level und zum n\u00E4chsten Rang ben\u00F6tigt werden.")
-                                .addOptions(new OptionData(USER, "xp_next_user", "F\u00FCr diesen Nutzer.")))
+                                .addOptions(new OptionData(USER, "xp_next_user", "F\u00FCr diesen Nutzer.").setRequired(true)))
                         .addSubcommands(new SubcommandData("get", "Gibt die XP aus.")
-                                .addOptions(new OptionData(USER, "xp_user", "XP des Nutzers")))
+                                .addOptions(new OptionData(USER, "xp_user", "XP des Nutzers").setRequired(true)))
         );
-
+/*
         commands.addCommands(
                 new CommandData("music", "Musikbefehl")
                         .addSubcommands(new SubcommandData("join", "Tritt einem Voicechannel bei.").addOptions(new OptionData(STRING, "music_join_channel", "Channel oder ID")))
