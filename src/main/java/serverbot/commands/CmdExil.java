@@ -41,7 +41,6 @@ public class CmdExil {
             List<String> rolesFromDB = selectedMember.getRoles().stream().map(serverbot.role.Role::getRoleId).collect(
                     Collectors.toList());
             guild.removeRoleFromMember(member, exil).queue();
-            assert rolesFromDB != null;
             //TODO: catch case where role is not existing anymore
             for (String id : rolesFromDB) {
                 guild.addRoleToMember(member, Objects.requireNonNull(guild.getRoleById(id))).queue();

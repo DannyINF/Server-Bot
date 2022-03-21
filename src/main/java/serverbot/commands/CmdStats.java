@@ -3,7 +3,9 @@ package serverbot.commands;
 //import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import serverbot.statistics.Statistics;
 import serverbot.statistics.StatisticsManagement;
@@ -17,39 +19,19 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class CmdStats implements Command {
-    @Override
-    public boolean called() {
-        return false;
-    }
+public class CmdStats {
 
-    @Override
-    public void action(String[] args, GuildMessageReceivedEvent event) {
-        Member member;
-        TextChannel channel = event.getChannel();
-        if (args.length > 0) {
-            ArrayList<String> args2 = new ArrayList<>();
-            int i = 0;
-            while (i < args.length - 1) {
-                args2.add(args[i]);
-                args2.add(" ");
-                i++;
-            }
-            args2.add(args[i]);
-            String[] args3 = new String[args2.size()];
-            args3 = args2.toArray(args3);
-            member = GetUser.getMemberFromInput(args3, event.getAuthor(), event.getGuild(), channel);
-        } else {
-            member = event.getMember();
-        }
-        assert member != null;
+    public static void stats(SlashCommandEvent event, Member member) {
+        event.deferReply(true);
+        MessageChannel channel = event.getChannel();
+
         long words;
         long msg;
         long chars;
         long voiceTime;
 
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
-        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get();
+        Statistics statistics = statisticsManagement.findByUserIdAndServerId(member.getId(), event.getGuild().getId()).get();
         words = statistics.getWords();
         msg = statistics.getMessages();
         chars = statistics.getChars();
@@ -68,11 +50,10 @@ public class CmdStats implements Command {
         embed.setTimestamp(Instant.now());
         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
         embed.setDescription(
-                        "Words: " + numberFormat.format(words) +
+                "Words: " + numberFormat.format(words) +
                         "\nMessages: " + numberFormat.format(msg) +
                         "\nCharacters: " + numberFormat.format(chars) +
                         "\nVoicetime: " + days + " days, " + hours + " hours, " + minutes + " minutes");
-        event.getChannel(). sendMessageEmbeds(embed.build()).queue();
-
+        event.replyEmbeds(embed.build()).queue();
     }
 }

@@ -138,12 +138,6 @@ public class Main {
 
         CommandHandler.commands.put("intro", new CmdIntro());
 
-        CommandHandler.commands.put("statistik", new CmdStats());
-        CommandHandler.commands.put("statistic", new CmdStats());
-        CommandHandler.commands.put("statistics", new CmdStats());
-
-        CommandHandler.commands.put("stats", new CmdStats());
-
         CommandHandler.commands.put("edit", new CmdEdit());
 
         CommandHandler.commands.put("xp", new CmdXp());
@@ -270,12 +264,12 @@ public class Main {
                                         .setRequired(true)))
                         .addSubcommands(new SubcommandData("list", "Listet alle Rollen auf"))
         );
-
+        */
         commands.addCommands(
                 new CommandData("stats", "Gibt Statistiken aus.")
-                        .addOptions(new OptionData(USER, "stats_user", "Statistiken dieses Nutzers"))
+                        .addOptions(new OptionData(USER, "stats_user", "Statistiken dieses Nutzers").setRequired(true))
         );
-
+        /*
         commands.addCommands(
                 new CommandData("say", "L\u00E4sst den Bot reden.")
                         .addOptions(new OptionData(STRING, "say_query", "Was der Bot sagen soll.")
