@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface StatisticsRepository extends CrudRepository<Statistics, StatisticsId> {
     Streamable<Statistics> findAll();
 
-    @Query("select s from Statistics s where s.userId = ?1 and s.serverId = ?2")
     Optional<Statistics> findByUserIdAndServerId(String userId, String serverId);
 }

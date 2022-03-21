@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import serverbot.commands.*;
 
+import java.util.Optional;
+
 public class SlashCommandHandler extends ListenerAdapter {
 
     @Override
@@ -30,6 +32,19 @@ public class SlashCommandHandler extends ListenerAdapter {
                     break;
                 case "kick":
                     CmdKick.kick(event);
+                    break;
+                case "credits":
+                    switch (event.getSubcommandName()) {
+                        case "get":
+                            CmdCredits.get(event, event.getOption("credits_user").getAsMember());
+                            break;
+                        case "give":
+                            CmdCredits.give(event, event.getOption("credits_give_amount").getAsLong(), event.getOption("credits_give_user").getAsUser());
+                            break;
+                        case "gift":
+                            CmdCredits.gift(event, event.getOption("credits_gift_amount").getAsLong(), event.getOption("credits_gift_user").getAsUser());
+                            break;
+                    }
                     break;
                     /*
                     TODO: implement music

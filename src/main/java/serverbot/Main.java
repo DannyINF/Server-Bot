@@ -201,7 +201,7 @@ public class Main {
         commands.addCommands(
                 new CommandData("botinfo", "Gibt Informationen zum Bot aus.")
         );
-
+        /*
         commands.addCommands(
                 new CommandData("channel", "Setzt Channel.")
                         .addSubcommands(new SubcommandData("set", "Setzt einen Channeltyp.")
@@ -215,7 +215,7 @@ public class Main {
                 new CommandData("clear", "L\u00F6scht Nachrichten aus diesem Channel.")
                         .addOptions(new OptionData(INTEGER, "clear_amount", "Wie viele Nachrichten gel\u00F6scht werden sollen. (Standard: 100)"))
         );
-
+        */
         commands.addCommands(
                 new CommandData("credits", "Gibt die Credits eines Nutzers aus.")
                         .addSubcommands(
@@ -225,15 +225,15 @@ public class Main {
                         )
                         .addSubcommands(
                                 new SubcommandData("gift", "Schenke einem Nutzer einen Teil deiner eigenen Credits.")
-                                        .addOptions(new OptionData(INTEGER, "credits_gift_amount", "Anzahl an Credits").setRequired(true))
+                                        .addOptions(new OptionData(INTEGER, "credits_gift_amount", "Anzahl an Credits").setMinValue(1L).setRequired(true))
                                         .addOptions(new OptionData(USER, "credits_gift_user", "Nutzer, der die Credits erhalten soll.").setRequired(true))
                         )
                         .addSubcommands(
                                 new SubcommandData("get", "Gibt die Credits aus.")
-                                        .addOptions(new OptionData(USER, "credits_user", "Credits des Nutzers"))
+                                        .addOptions(new OptionData(USER, "credits_user", "Credits des Nutzers").setRequired(true))
                         )
         );
-
+        /*
         commands.addCommands(
                 new CommandData("exil", "Exiliert oder deexiliert einen Nutzer.")
                         .addOptions(new OptionData(USER, "exil_user", "De/exiliert diesen Nutzer.")
@@ -245,14 +245,14 @@ public class Main {
                         .addOptions(new OptionData(STRING, "help_topic", "Zeigt Hilfe zu diesem Suchbegriff an."))
 
         );
-
+*/
         commands.addCommands(
                 new CommandData("kick", "Kickt einen Nutzer.")
                         .addOptions(new OptionData(USER, "kick_user", "Nutzer, der gekickt werden soll.")
                                 .setRequired(true))
                         .addOptions(new OptionData(STRING, "kick_reason", "Grund f\u00FCr den Kick."))
         );
-
+/*
         commands.addCommands(
                 new CommandData("report", "Erstellt einen Report")
         );
@@ -313,7 +313,7 @@ public class Main {
                         .addSubcommands(new SubcommandData("info", "Gibt Informationen zum gerade spielenden Track aus."))
                         .addSubcommands(new SubcommandData("list", "Gibt die Wiedergabeliste aus."))
                         .addSubcommands(new SubcommandData("shuffle", "Mischt die Wiedergabeliste aus."))
-        );
+        );*/
         CommandListUpdateAction global = jda.updateCommands();
         global.queue();
         commands.queue();

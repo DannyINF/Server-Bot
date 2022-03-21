@@ -36,7 +36,7 @@ public class CmdXp implements Command {
 
         NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
 
-        Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(),
+        Statistics statistics = statisticsManagement.findByUserIdAndServerId(xpMember.getId(),
                 event.getGuild().getId()).get();
         Long xp = statistics.getXp();
         Long level = statistics.getLevel();

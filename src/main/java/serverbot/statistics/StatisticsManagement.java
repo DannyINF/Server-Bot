@@ -42,6 +42,12 @@ public class StatisticsManagement {
         save(statistics);
     }
 
+    public void addCreditsToUser(String userId, String serverId, Long amount) {
+        Statistics statistics = findByUserIdAndServerId(userId, serverId).get();
+        statistics.setCurrency(statistics.getCurrency() + amount);
+        save(statistics);
+    }
+
     public void addWordsToUser(String userId, String serverId, Long amount) {
         Statistics statistics = findByUserIdAndServerId(userId, serverId).get();
         statistics.setWords(statistics.getWords() + amount);

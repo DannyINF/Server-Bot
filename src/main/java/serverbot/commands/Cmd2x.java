@@ -21,6 +21,8 @@ public class Cmd2x {
                     .queue();
             ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
             serverManagement.changeXpMultiplierTo(event.getGuild().getId(), number);
+        } else {
+            event.reply(">>> Du besitzt nicht die benötigten Berechtigungen.").queue();
         }
     }
 }
