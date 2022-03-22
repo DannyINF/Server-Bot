@@ -200,6 +200,5 @@ public class CmdXp {
         event.reply(MessageActions.getLocalizedString("xp_msg", "serverbot/user", xpMember.getId())
                 .replace("[USER]", strMember).replace("[LEVEL]", numberFormat.format(level))
                 .replace("[XP]", numberFormat.format(xp))).queue();
-
     }
 }

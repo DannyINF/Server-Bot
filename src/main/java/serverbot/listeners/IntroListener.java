@@ -1,6 +1,5 @@
 package serverbot.listeners;
 
-import serverbot.audio.PlayerControl;
 import serverbot.audio.GuildMusicManager;
 //import serverbot.core.databaseHandler;
 import serverbot.util.PlaylistCheckerScreamBot;
@@ -25,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
+
+import static serverbot.core.SlashCommandHandler.DEFAULT_VOLUME;
 
 public class IntroListener extends ListenerAdapter {
 
@@ -208,7 +209,7 @@ public class IntroListener extends ListenerAdapter {
                 mng = musicManagers.get(guildId);
                 if (mng == null) {
                     mng = new GuildMusicManager(playerManager);
-                    mng.player.setVolume(PlayerControl.DEFAULT_VOLUME);
+                    mng.player.setVolume(DEFAULT_VOLUME);
                     musicManagers.put(guildId, mng);
                 }
             }

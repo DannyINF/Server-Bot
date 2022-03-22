@@ -1,6 +1,7 @@
 package serverbot.audio;
 
 import serverbot.core.CommandHandlerMusic;
+import serverbot.core.SlashCommandHandler;
 import serverbot.listeners.VoiceListenerAddon;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import serverbot.listeners.CommandsMusicListener;
@@ -81,12 +82,12 @@ class initMusicAddon extends ListenerAdapter {
             e.printStackTrace();
         }
 
-        PlayerControl pc = new PlayerControl();
-        pc.musicPlayer(textChannel, member, message, guild, args, embed, voiceChannel);
+        //PlayerControl pc = new PlayerControl();
+        //pc.musicPlayer(textChannel, member, message, guild, args, embed, voiceChannel);
     }
 
     private static void addCommands() {
-        CommandHandlerMusic.commands.put("music", new PlayerControl());
+
     }
 
     private static void addListeners() {

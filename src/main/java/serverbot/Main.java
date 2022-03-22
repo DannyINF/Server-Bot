@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import serverbot.audio.PlayerControl;
 import serverbot.commands.*;
 import serverbot.core.CommandHandler;
 import serverbot.core.SlashCommandHandler;
@@ -131,8 +130,6 @@ public class Main {
         CommandHandler.commands.put("report", new CmdReport());
 
         CommandHandler.commands.put("search", new CmdSearch());
-
-        CommandHandler.commands.put("music", new PlayerControl());
 
         CommandHandler.commands.put("intro", new CmdIntro());
 
@@ -284,24 +281,28 @@ public class Main {
                         .addSubcommands(new SubcommandData("get", "Gibt die XP aus.")
                                 .addOptions(new OptionData(USER, "xp_user", "XP des Nutzers").setRequired(true)))
         );
-/*
+
         commands.addCommands(
                 new CommandData("music", "Musikbefehl")
-                        .addSubcommands(new SubcommandData("join", "Tritt einem Voicechannel bei.").addOptions(new OptionData(STRING, "music_join_channel", "Channel oder ID")))
+                        .addSubcommands(new SubcommandData("join", "Tritt einem Voicechannel bei.")
+                                .addOptions(new OptionData(CHANNEL, "music_join_channel", "Channel oder ID").setRequired(true)))
                         .addSubcommands(new SubcommandData("leave", "Verl\u00E4sst einen Voicechannel."))
-                        .addSubcommands(new SubcommandData("play", "Spielt einen Track ab.").addOptions(new OptionData(STRING, "music_play_url", "Link")))
-                        .addSubcommands(new SubcommandData("pplay", "F\u00FCgt eine Playlist hinzu.").addOptions(new OptionData(STRING, "music_pplay_url", "Link").setRequired(true)))
+                        .addSubcommands(new SubcommandData("play", "Spielt einen Track ab.")
+                                .addOptions(new OptionData(STRING, "music_play_url", "Link")))
+                        .addSubcommands(new SubcommandData("pplay", "F\u00FCgt eine Playlist hinzu.")
+                                .addOptions(new OptionData(STRING, "music_pplay_url", "Link").setRequired(true)))
                         .addSubcommands(new SubcommandData("skip", "Skipt einen Track."))
                         .addSubcommands(new SubcommandData("pause", "Pausiert einen Track oder beendet eine Pausierung."))
                         .addSubcommands(new SubcommandData("stop", "Stoppt den Abspieler und entleert die Liste."))
-                        .addSubcommands(new SubcommandData("volume", "Gibt die Lautst\u00E4rke zur\u00FCck oder setzt diese auf einen Wert.").addOptions(new OptionData(INTEGER, "music_volume_amount", "Lautst\u00E4rke von 10 - 100")))
+                        .addSubcommands(new SubcommandData("volume", "Gibt die Lautst\u00E4rke zur\u00FCck oder setzt diese auf einen Wert.")
+                                .addOptions(new OptionData(INTEGER, "music_volume_amount", "Lautst\u00E4rke von 10 - 100")))
                         .addSubcommands(new SubcommandData("restart", "Startet den spielenden Track neu."))
                         .addSubcommands(new SubcommandData("repeat", "Setzt den Abspieler in einer Schleife oder beendet diese."))
                         .addSubcommands(new SubcommandData("reset", "Setzt den Abspieler komplett zur\u00FCck."))
                         .addSubcommands(new SubcommandData("info", "Gibt Informationen zum gerade spielenden Track aus."))
                         .addSubcommands(new SubcommandData("list", "Gibt die Wiedergabeliste aus."))
                         .addSubcommands(new SubcommandData("shuffle", "Mischt die Wiedergabeliste aus."))
-        );*/
+        );
         CommandListUpdateAction global = jda.updateCommands();
         global.queue();
         commands.queue();

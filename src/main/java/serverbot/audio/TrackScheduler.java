@@ -14,9 +14,9 @@ import java.util.Queue;
  * This class schedules tracks for the audio player. It contains the queue of tracks.
  */
 public class TrackScheduler extends AudioEventAdapter {
-    final Queue<AudioTrack> queue;
+    public final Queue<AudioTrack> queue;
     private final AudioPlayer player;
-    AudioTrack lastTrack;
+    public AudioTrack lastTrack;
     private boolean repeating = false;
 
     /**
@@ -45,7 +45,7 @@ public class TrackScheduler extends AudioEventAdapter {
     /**
      * Start the next track, stopping the current one if it is playing.
      */
-    void nextTrack() {
+    public void nextTrack() {
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(queue.poll(), false);
@@ -64,15 +64,15 @@ public class TrackScheduler extends AudioEventAdapter {
 
     }
 
-    boolean isRepeating() {
+    public boolean isRepeating() {
         return repeating;
     }
 
-    void setRepeating(boolean repeating) {
+    public void setRepeating(boolean repeating) {
         this.repeating = repeating;
     }
 
-    void shuffle() {
+    public void shuffle() {
         Collections.shuffle((List<?>) queue);
     }
 }
