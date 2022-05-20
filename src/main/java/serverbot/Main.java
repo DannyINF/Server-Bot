@@ -154,7 +154,6 @@ public class Main {
         builder.addEventListeners(new SpamListener());
         builder.addEventListeners(new EmptyChannelListener());
         builder.addEventListeners(new StatisticsListener());
-        builder.addEventListeners(new ActivityListener());
         builder.addEventListeners(new ModReactionListener());
         builder.addEventListeners(new XpListener());
         builder.addEventListeners(new Announcements());
