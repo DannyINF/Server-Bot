@@ -127,8 +127,6 @@ public class Main {
         CommandHandler.commands.put("chatclear", new CmdClear());
         CommandHandler.commands.put("clear", new CmdClear());
 
-        CommandHandler.commands.put("report", new CmdReport());
-
         CommandHandler.commands.put("search", new CmdSearch());
 
         CommandHandler.commands.put("intro", new CmdIntro());
@@ -136,8 +134,6 @@ public class Main {
         CommandHandler.commands.put("edit", new CmdEdit());
 
         CommandHandler.commands.put("role", new CmdRole());
-
-        CommandHandler.commands.put("channel", new CmdChannel());
 
         // commands.put("apply", new cmdMinecraftApply());
         // commands.put("bewerben", new cmdMinecraftApply());
@@ -185,16 +181,16 @@ public class Main {
         commands.addCommands(
                 new CommandData("botinfo", "Gibt Informationen zum Bot aus.")
         );
-        /*
+
         commands.addCommands(
                 new CommandData("channel", "Setzt Channel.")
                         .addSubcommands(new SubcommandData("set", "Setzt einen Channeltyp.")
                                 .addOptions(new OptionData(STRING, "channel_set_type", "Channeltyp")
                                         .addChoice("Log", "log").addChoice("Modlog", "modlog").addChoice("Spam", "spam")
                                         .addChoice("Voicelog", "voicelog").addChoice("CMDlog", "cmdlog").setRequired(true))
-                                .addOptions(new OptionData(CHANNEL, "channel_channel", "Channel").setRequired(true)))
+                                .addOptions(new OptionData(CHANNEL, "channel_set_channel", "Channel").setRequired(true)))
         );
-
+/*
         commands.addCommands(
                 new CommandData("clear", "L\u00F6scht Nachrichten aus diesem Channel.")
                         .addOptions(new OptionData(INTEGER, "clear_amount", "Wie viele Nachrichten gel\u00F6scht werden sollen. (Standard: 100)"))
@@ -236,10 +232,13 @@ public class Main {
                                 .setRequired(true))
                         .addOptions(new OptionData(STRING, "kick_reason", "Grund f\u00FCr den Kick."))
         );
-/*
+
         commands.addCommands(
                 new CommandData("report", "Erstellt einen Report")
+                .addOptions(new OptionData(USER, "report_offender", "Nutzer, den du melden möchtest.").setRequired(true))
+                .addOptions(new OptionData(CHANNEL, "report_channel", "Kanal, in welchem die Situation vorfiel.").setRequired(true))
         );
+        /*
 
         commands.addCommands(
                 new CommandData("role", "Rollenmanagement")

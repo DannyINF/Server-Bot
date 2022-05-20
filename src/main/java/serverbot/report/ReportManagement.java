@@ -25,4 +25,12 @@ public class ReportManagement {
     public Optional<Report> findById(ReportId reportId) {
         return reportRepository.findById(reportId);
     }
+
+    public Streamable<Report> findByUserIdAndRulingType(String userId, RulingType rulingType) {
+        return reportRepository.findByUserIdAndRulingType(userId, rulingType);
+    }
+
+    public Streamable<Report> findUnfinishedReportsByUserId(String userId, RulingType rulingType1, RulingType rulingType2) {
+        return reportRepository.findUnfinishedReportsByUserId(userId, rulingType1, rulingType2);
+    }
 }

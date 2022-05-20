@@ -1,28 +1,30 @@
 package serverbot.commands;
 
-//import serverbot.core.databaseHandler;
+import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import serverbot.core.SlashCommandHandler;
+import serverbot.report.Report;
+import serverbot.report.ReportManagement;
+import serverbot.report.RulingType;
+import serverbot.util.SpringContextUtils;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
-public class CmdReport implements Command {
-    @Override
-    public boolean called() {
-        return false;
-    }
+public class CmdReport {
 
-    @Override
-    public void action(String[] args, GuildMessageReceivedEvent event) throws SQLException {
-        //TODO: close reports that are open
-        /*databaseHandler.database(event.getGuild().getId(), "delete from reports where victim_id = '" + event.getAuthor().getId() + "' and (report_id = '1' or report_id = '2' or report_id = '3' or report_id = '4' or report_id = '5')");
-        databaseHandler.database(event.getGuild().getId(), "delete from applications where id = '" + event.getAuthor().getId() + "' and step < 10");
-        //core.databaseHandler.database(event.getGuild().getId(), "delete from quizquestions where author_id = '" + event.getAuthor().getId() + "' and status < 14");
-        databaseHandler.database(event.getGuild().getId(), "insert into reports (report_id, victim_id, offender_id, channel, cause, info) " +
-                "values ('1', '" + event.getAuthor().getId() + "', '', '', '', '')");
-        event.getAuthor().openPrivateChannel().queue(channel -> {
-            channel.sendMessage(">>> Hey **" + event.getAuthor().getAsTag() + "**,\n" +
-                            "um einen Report zu erstellen, musst du mir noch einige Fragen beantworten:").queue();
-            channel.sendMessage(">>> Wen m\u00f6chtest du reporten? Gib hier am besten alles so genau wie m\u00f6glich an, wie z.B. die ID oder den Namen mit Tag (Nutzer#1234).").queue();
-        });*/
+    public static void report(SlashCommandEvent event, User offender, GuildChannel guildChannel) {
+        event.reply("Ich habe dir privat ein paar Fragen gesendet. Bitte beantworte diese, um deinen Report abzuschließen.").queue();
+        ReportManagement reportManagement = SpringContextUtils.getBean(ReportManagement.class);
+        reportManagement.save(new Report(LocalDateTime.now(), event.getUser().getId(), event.getGuild().getId(), offender.getId(), guildChannel.getId(), "", "", RulingType.NEED_CAUSE));
+
+        event.getUser().openPrivateChannel().queue(channel -> {
+            channel.sendMessage(">>> Hey **" + event.getUser().getAsTag() + "**,\n" +
+                    "um einen Report zu erstellen, musst du mir noch einige Fragen beantworten:").queue();
+            channel.sendMessage(">>> Wie w\u00fcrdest du den Vorfall einfach kategorisieren? (beispielsweise \"Beleidigung\", \"Hetze\" oder \"Spam\")\n " +
+                    "Halte diese Angabe so allgemein und unpers\u00f6nlich wie m\u00f6glich!").queue();
+        });
     }
 }

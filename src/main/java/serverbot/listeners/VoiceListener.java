@@ -5,19 +5,20 @@ import net.dv8tion.jda.api.audio.AudioReceiveHandler;
 import net.dv8tion.jda.api.audio.CombinedAudio;
 import net.dv8tion.jda.api.audio.UserAudio;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.channel.voice.VoiceChannelDeleteEvent;
 import net.dv8tion.jda.api.events.channel.voice.update.VoiceChannelUpdateNameEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.Objects;
 
-//TODO: Check this out as well
 public class VoiceListener extends ListenerAdapter implements AudioReceiveHandler {
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
         if (event.getGuild().getRolesByName(event.getChannelJoined().getName(), true).isEmpty()) {
@@ -39,8 +40,6 @@ public class VoiceListener extends ListenerAdapter implements AudioReceiveHandle
         event.getGuild().addRoleToMember(event.getMember(), event.getGuild()
                 .getRolesByName(event.getChannelJoined().getName(), true).get(0)).queue();
     }
-
-    //TODO: On rename voice chat -> rename voice role as well
 
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
         if (event.getGuild().getAudioManager().isConnected()) {

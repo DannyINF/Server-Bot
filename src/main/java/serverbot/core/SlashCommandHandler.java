@@ -22,6 +22,7 @@ import net.dv8tion.jda.api.exceptions.PermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import serverbot.audio.GuildMusicManager;
 import serverbot.audio.TrackScheduler;
+import serverbot.channel.ChannelType;
 import serverbot.commands.*;
 
 import java.awt.*;
@@ -94,7 +95,18 @@ public class SlashCommandHandler extends ListenerAdapter {
                 case "music":
                     action(event);
                     break;
-
+                case "report":
+                    CmdReport.report(event, event.getOption("report_offender").getAsUser(), event.getOption("report_channel").getAsGuildChannel());
+                    break;
+                case "channel":
+                    switch (event.getSubcommandName()) {
+                        case "set":
+                            serverbot.channel.ChannelType channelType = ChannelType.valueOf(event.getOption("channel_set_type").getAsString());
+                            GuildChannel guildChannel = event.getOption("channel_set_channel").getAsGuildChannel();
+                            CmdChannel.set(event, channelType, guildChannel);
+                            break;
+                    }
+                    break;
                 default:
                     event.reply("I can't handle that command right now :(").setEphemeral(true).queue();
             }
