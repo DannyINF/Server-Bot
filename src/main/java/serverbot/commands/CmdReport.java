@@ -3,14 +3,11 @@ package serverbot.commands;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import serverbot.core.SlashCommandHandler;
 import serverbot.report.Report;
 import serverbot.report.ReportManagement;
 import serverbot.report.RulingType;
 import serverbot.util.SpringContextUtils;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class CmdReport {

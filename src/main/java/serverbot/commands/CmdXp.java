@@ -12,19 +12,15 @@ import serverbot.statistics.StatisticsManagement;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import serverbot.util.LevelChecker;
 import serverbot.util.SpringContextUtils;
-import serverbot.util.GetUser;
 
 import java.awt.*;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.Instant;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 

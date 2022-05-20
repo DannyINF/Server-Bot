@@ -1,7 +1,5 @@
 package serverbot.audio;
 
-import serverbot.core.CommandHandlerMusic;
-import serverbot.core.SlashCommandHandler;
 import serverbot.listeners.VoiceListenerAddon;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import serverbot.listeners.CommandsMusicListener;

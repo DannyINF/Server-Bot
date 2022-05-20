@@ -464,18 +464,16 @@ public class SlashCommandHandler extends ListenerAdapter {
                     String nowplaying = String.format("**Playing:** %s\n**Time:** [%s / %s] added by **" + currentTrack.getUserData() + "**",
                             title, position, duration);
                     embed.setDescription(nowplaying);
-                    event.replyEmbeds(embed.build()).queue();
                 } else {
                     embed.setDescription("The player is not currently playing anything!");
-                    event.replyEmbeds(embed.build()).queue();
                 }
+                event.replyEmbeds(embed.build()).queue();
                 break;
             case "list":
                 java.util.Queue<AudioTrack> queue = scheduler.queue;
                 synchronized (queue) {
                     if (queue.isEmpty()) {
                         embed.setDescription("The queue is currently empty!");
-                        event.replyEmbeds(embed.build()).queue();
                     } else {
                         int trackCount = 0;
                         long queueLength = 0;
@@ -492,8 +490,8 @@ public class SlashCommandHandler extends ListenerAdapter {
                         sb.append("\n").append("Total Queue Time Length: ").append(getTimestamp(queueLength));
 
                         embed.setDescription(sb.toString());
-                        event.replyEmbeds(embed.build()).queue();
                     }
+                    event.replyEmbeds(embed.build()).queue();
                 }
                 break;
             case "shuffle":

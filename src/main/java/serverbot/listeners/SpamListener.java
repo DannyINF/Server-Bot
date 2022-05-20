@@ -1,6 +1,5 @@
 package serverbot.listeners;
 
-import serverbot.commands.CmdBan;
 import serverbot.core.MessageActions;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;

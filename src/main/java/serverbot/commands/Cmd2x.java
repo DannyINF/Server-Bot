@@ -1,7 +1,6 @@
 package serverbot.commands;
 
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import serverbot.server.ServerManagement;
 import serverbot.util.SpringContextUtils;

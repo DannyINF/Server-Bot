@@ -2,7 +2,6 @@ package serverbot.commands;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.Channel;
 import serverbot.channel.ChannelManagement;
