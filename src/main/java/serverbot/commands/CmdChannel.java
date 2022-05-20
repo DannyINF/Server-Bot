@@ -14,9 +14,11 @@ import java.util.stream.Stream;
 public class CmdChannel {
 
     public static void set(SlashCommandEvent event, ChannelType channelType, GuildChannel guildChannel) {
-        event.deferReply(true).queue(); // Let the user know we received the command before doing anything else
+        event.reply("Der Channel **" + guildChannel.getAsMention() + "** hat nun den Typ **" + channelType + "**.").queue(); // Let the user know we received the command before doing anything else
 
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
-        channelManagement.save(new Channel(guildChannel.getId(), event.getGuild().getId(), channelType, 1.0f));
+        Channel channel = channelManagement.findByChannelId(guildChannel.getId()).get();
+        channel.setChannelType(channelType);
+        channelManagement.save(channel);
     }
 }

@@ -101,7 +101,12 @@ public class SlashCommandHandler extends ListenerAdapter {
                 case "channel":
                     switch (event.getSubcommandName()) {
                         case "set":
-                            serverbot.channel.ChannelType channelType = ChannelType.valueOf(event.getOption("channel_set_type").getAsString());
+                            ChannelType channelType = null;
+                            try {
+                                channelType = ChannelType.valueOf(event.getOption("channel_set_type").getAsString().toUpperCase());
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
                             GuildChannel guildChannel = event.getOption("channel_set_channel").getAsGuildChannel();
                             CmdChannel.set(event, channelType, guildChannel);
                             break;
