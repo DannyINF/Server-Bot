@@ -34,8 +34,12 @@ public class Report {
 
     private RulingType rulingType;
 
+    private String messageId;
+
+    private Long trollCoins;
+
     public Report(LocalDateTime dateTime, String userId, String serverId, String offenderId, String channelId,
-                  String cause, String info, RulingType rulingType) {
+                  String cause, String info, RulingType rulingType, String messageId, Long trollCoins) {
         this.dateTime = dateTime;
         this.userId = userId;
         this.serverId = serverId;
@@ -44,5 +48,7 @@ public class Report {
         this.cause = cause;
         this.info = info;
         this.rulingType = rulingType;
+        this.messageId = messageId;
+        this.trollCoins = trollCoins;
     }
 }

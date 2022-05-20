@@ -33,4 +33,8 @@ public class ReportManagement {
     public Streamable<Report> findUnfinishedReportsByUserId(String userId, RulingType rulingType1, RulingType rulingType2) {
         return reportRepository.findUnfinishedReportsByUserId(userId, rulingType1, rulingType2);
     }
+
+    public Optional<Report> findByMessageId(String messageId) {
+        return reportRepository.findByMessageId(messageId);
+    }
 }

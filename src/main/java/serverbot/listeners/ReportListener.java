@@ -75,6 +75,7 @@ public class ReportListener extends ListenerAdapter {
                 msg.addReaction("\u26D4").queue();
                 msg.addReaction("\uD83D\uDD28").queue();
                 report.setRulingType(RulingType.WAITING);
+                report.setMessageId(msg.getId());
                 reportManagement.save(report);
             });
             event.getChannel().sendMessage(">>> Dein Report wurde abgesendet und wird schnellstm\u00f6glichst bearbeitet. Vielen Dank!").queue();

@@ -18,7 +18,7 @@ public class CmdReport {
     public static void report(SlashCommandEvent event, User offender, GuildChannel guildChannel) {
         event.reply("Ich habe dir privat ein paar Fragen gesendet. Bitte beantworte diese, um deinen Report abzuschließen.").queue();
         ReportManagement reportManagement = SpringContextUtils.getBean(ReportManagement.class);
-        reportManagement.save(new Report(LocalDateTime.now(), event.getUser().getId(), event.getGuild().getId(), offender.getId(), guildChannel.getId(), "", "", RulingType.NEED_CAUSE));
+        reportManagement.save(new Report(LocalDateTime.now(), event.getUser().getId(), event.getGuild().getId(), offender.getId(), guildChannel.getId(), "", "", RulingType.NEED_CAUSE, "", 0L));
 
         event.getUser().openPrivateChannel().queue(channel -> {
             channel.sendMessage(">>> Hey **" + event.getUser().getAsTag() + "**,\n" +
