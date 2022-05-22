@@ -1,7 +1,6 @@
 package serverbot;
 
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -13,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import serverbot.commands.*;
-import serverbot.core.CommandHandler;
 import serverbot.core.SlashCommandHandler;
 import serverbot.listeners.*;
 import serverbot.util.Announcements;
@@ -74,7 +71,6 @@ public class Main {
         builder.setActivity(Activity.of(Activity.ActivityType.DEFAULT, "/help | " + STATIC.VERSION));
 
         addListeners();
-        addCommands();
 
         jda = null;
 
@@ -117,27 +113,6 @@ public class Main {
         public SessionRegistry sessionRegistry() {
             return new SessionRegistryImpl();
         }
-    }
-
-    private static void addCommands() {
-
-        CommandHandler.commands.put("help", new CmdHelp());
-
-        CommandHandler.commands.put("rules", new CmdRules());
-
-        CommandHandler.commands.put("chatclear", new CmdClear());
-        CommandHandler.commands.put("clear", new CmdClear());
-
-        CommandHandler.commands.put("search", new CmdSearch());
-
-        CommandHandler.commands.put("intro", new CmdIntro());
-
-        CommandHandler.commands.put("edit", new CmdEdit());
-
-        CommandHandler.commands.put("role", new CmdRole());
-
-        // commands.put("apply", new cmdMinecraftApply());
-        // commands.put("bewerben", new cmdMinecraftApply());
     }
 
     private static void addListeners() {

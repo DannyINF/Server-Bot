@@ -5,8 +5,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
-import serverbot.core.CommandHandler;
-import serverbot.core.CommandParser;
 import serverbot.server.ServerManagement;
 import serverbot.util.STATIC;
 import serverbot.util.SpringContextUtils;
@@ -23,13 +21,7 @@ public class CommandsListener extends ListenerAdapter {
 
         if (message.startsWith(serverManagement.findById(event.getGuild().getId()).get().getPrefix())) {
 
-            try {
-                CommandHandler.handleCommand(CommandParser.parser(message, event));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (!event.getChannel().getName().toLowerCase().contains("spam") && !event.getAuthor().equals(event.getJDA().getSelfUser())) {
+            if (!channelManagement.findByChannelId(event.getChannel().getId()).get().getChannelType().equals(ChannelType.SPAM) && !event.getAuthor().equals(event.getJDA().getSelfUser())) {
                 if (STATIC.addCommandSpammer(event.getAuthor().getId()) == 0)
                     event.getChannel().sendMessage(Objects.requireNonNull(event.getMember()).getAsMention() + ", bitte f\u00fchre Befehle nur im Channel " + event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.SPAM).get().findFirst().get().getChannelId()).getAsMention() + " aus!").queue(msg -> msg.delete().queueAfter(5, TimeUnit.SECONDS));
             }
