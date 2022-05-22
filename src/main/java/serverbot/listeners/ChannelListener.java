@@ -27,13 +27,13 @@ public class ChannelListener extends ListenerAdapter {
     @Override
     public void onTextChannelCreate(@NotNull TextChannelCreateEvent event) {
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
-        channelManagement.save(new Channel(event.getChannel().getId(), event.getGuild().getId(), ChannelType.DEFAULT_TEXT, 1F));
+        channelManagement.save(new Channel(event.getChannel().getId(), event.getGuild().getId(), ChannelType.DEFAULT_TEXT, 1D));
     }
 
     @Override
     public void onVoiceChannelCreate(@NotNull VoiceChannelCreateEvent event) {
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
-        channelManagement.save(new Channel(event.getChannel().getId(), event.getGuild().getId(), ChannelType.DEFAULT_VOICE, 1F));
+        channelManagement.save(new Channel(event.getChannel().getId(), event.getGuild().getId(), ChannelType.DEFAULT_VOICE, 1D));
     }
 
     @Override

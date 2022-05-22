@@ -188,6 +188,9 @@ public class Main {
                                         .addChoice("Log", "log").addChoice("Modlog", "modlog").addChoice("Spam", "spam")
                                         .addChoice("Voicelog", "voicelog").addChoice("CMDlog", "cmdlog").setRequired(true))
                                 .addOptions(new OptionData(CHANNEL, "channel_set_channel", "Channel").setRequired(true)))
+                        .addSubcommands(new SubcommandData("change_xp_multiplier", "Ändert den Xp-Multiplier des Channels.")
+                        .addOptions(new OptionData(NUMBER, "channel_xp_multiplier", "Der neue Xp-Multiplier des Channels.").setRequired(true))
+                        .addOptions(new OptionData(CHANNEL, "channel_xp_channel", "Der Channel, dessen Xp-Multiplier geändert werden soll.").setRequired(true)))
         );
 /*
         commands.addCommands(

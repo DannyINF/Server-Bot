@@ -79,18 +79,16 @@ public class StatisticsManagement {
     }
 
     public void giveXP(GuildMessageReceivedEvent event) {
-        Float xp;
+        Double xp;
         int amount = event.getMessage().getContentRaw().length();
 
         // only the first 140 characters count
-        xp = Math.min(amount, 140F);
+        xp = Math.min(amount, 140D);
 
         if (!event.getMessage().getAttachments().isEmpty()) {
             xp += 15;
         }
 
-        xp *= channelManagement.findByChannelIdAndServerId(event.getChannel().getId(), event.getGuild().getId()).get().getXpMultiplier();
-
-        GiveXP.giveXPToMember(event.getMember(), event.getGuild(), xp.longValue());
+        GiveXP.giveXPToMember(event.getMember(), event.getGuild(), xp.longValue(), event.getChannel().getId());
     }
 }

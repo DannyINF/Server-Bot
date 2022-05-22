@@ -1,10 +1,10 @@
 package serverbot.util;
 
-//import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.VoiceChannel;
+import serverbot.channel.ChannelManagement;
 import serverbot.statistics.StatisticsManagement;
 
 import java.sql.SQLException;
@@ -27,11 +27,14 @@ public class VoiceActivity {
                     long xp;
 
                     xp = (long) (sqrt(2520 * membercount - 671) / 9 - 43 / 9);
+                    ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+                    Double xpModifier = channelManagement.findByChannelId(voiceChannel.getId()).stream().findFirst().get().getXpMultiplier();
 
-                    GiveXP.giveXPToMember(member, guild, xp);
+                    xp = (long) (xp * xpModifier);
+
+                    GiveXP.giveXPToMember(member, guild, xp, voiceChannel.getId());
                     StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
                     statisticsManagement.addVoiceTimeToUser(member.getId(), guild.getId(), 1L);
-
                 }
             }
         }

@@ -22,9 +22,9 @@ public class Channel {
 
     private ChannelType channelType;
 
-    private Float xpMultiplier;
+    private Double xpMultiplier;
 
-    public Channel(String channelId, String serverId, ChannelType channelType, Float xpMultiplier) {
+    public Channel(String channelId, String serverId, ChannelType channelType, Double xpMultiplier) {
         this.channelId = channelId;
         this.serverId = serverId;
         this.channelType = channelType;

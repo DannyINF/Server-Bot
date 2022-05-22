@@ -17,4 +17,13 @@ public class CmdChannel {
         channel.setChannelType(channelType);
         channelManagement.save(channel);
     }
+
+    public static void changeXpMultiplier(SlashCommandEvent event, Double xpMultiplier, GuildChannel guildChannel) {
+        event.reply(String.format("Der Xp-Multiplier des Channels **%s** beträgt nun **%.2f**.", guildChannel.getName(), xpMultiplier)).queue();
+
+        ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
+        Channel channel = channelManagement.findByChannelId(guildChannel.getId()).get();
+        channel.setXpMultiplier(xpMultiplier);
+        channelManagement.save(channel);
+    }
 }

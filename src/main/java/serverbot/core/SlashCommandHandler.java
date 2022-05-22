@@ -110,6 +110,11 @@ public class SlashCommandHandler extends ListenerAdapter {
                             GuildChannel guildChannel = event.getOption("channel_set_channel").getAsGuildChannel();
                             CmdChannel.set(event, channelType, guildChannel);
                             break;
+                        case "change_xp_multiplier":
+                            Double xpMultiplier = event.getOption("channel_xp_multiplier").getAsDouble();
+                            guildChannel = event.getOption("channel_xp_channel").getAsGuildChannel();
+                            CmdChannel.changeXpMultiplier(event, xpMultiplier, guildChannel);
+                            break;
                     }
                     break;
                 default:

@@ -59,7 +59,7 @@ public class ReadyListener extends ListenerAdapter {
             }
             for (TextChannel textChannel : g.getTextChannels()) {
                 if (!channelManagement.findByChannelIdAndServerId(textChannel.getId(), g.getId()).isPresent()) {
-                    channelManagement.save(new Channel(textChannel.getId(), g.getId(), ChannelType.DEFAULT_TEXT, 1F));
+                    channelManagement.save(new Channel(textChannel.getId(), g.getId(), ChannelType.DEFAULT_TEXT, 1D));
                     System.out.println("add text channel " + textChannel.getName());
                 } else {
                     System.out.println("has text channel " + textChannel.getName());
@@ -67,7 +67,7 @@ public class ReadyListener extends ListenerAdapter {
             }
             for (VoiceChannel voiceChannel : g.getVoiceChannels()) {
                 if (!channelManagement.findByChannelIdAndServerId(voiceChannel.getId(), g.getId()).isPresent()) {
-                    channelManagement.save(new Channel(voiceChannel.getId(), g.getId(), ChannelType.DEFAULT_VOICE, 1F));
+                    channelManagement.save(new Channel(voiceChannel.getId(), g.getId(), ChannelType.DEFAULT_VOICE, 1D));
                     System.out.println("add voice channel " + voiceChannel.getName());
                 } else {
                     System.out.println("has voice channel " + voiceChannel.getName());
@@ -76,7 +76,7 @@ public class ReadyListener extends ListenerAdapter {
 
             for (Category category : g.getCategories()) {
                 if (!channelManagement.findByChannelIdAndServerId(category.getId(), g.getId()).isPresent()) {
-                    channelManagement.save(new Channel(category.getId(), g.getId(), ChannelType.DEFAULT_CATEGORY, 1F));
+                    channelManagement.save(new Channel(category.getId(), g.getId(), ChannelType.DEFAULT_CATEGORY, 1D));
                     System.out.println("add category channel " + category.getName());
                 } else {
                     System.out.println("has category channel " + category.getName());
