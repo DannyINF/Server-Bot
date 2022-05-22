@@ -20,6 +20,8 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import serverbot.audio.GuildMusicManager;
 import serverbot.audio.TrackScheduler;
 import serverbot.channel.ChannelType;
@@ -116,6 +118,13 @@ public class SlashCommandHandler extends ListenerAdapter {
                             CmdChannel.changeXpMultiplier(event, xpMultiplier, guildChannel);
                             break;
                     }
+                    break;
+                case "mute":
+                    GuildChannel guildChannel = event.getOption("mute_channel").getAsGuildChannel();
+                    Optional<OptionMapping> optionalRole = Optional.ofNullable(event.getOption("mute_role"));
+                    Optional<OptionMapping> optionalUser = Optional.ofNullable(event.getOption("mute_user"));
+
+                    CmdMute.mute(event, guildChannel, optionalRole, optionalUser);
                     break;
                 default:
                     event.reply("I can't handle that command right now :(").setEphemeral(true).queue();

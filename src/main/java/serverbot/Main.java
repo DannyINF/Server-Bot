@@ -1,6 +1,7 @@
 package serverbot;
 
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
@@ -233,6 +234,13 @@ public class Main {
                         .addOptions(new OptionData(USER, "kick_user", "Nutzer, der gekickt werden soll.")
                                 .setRequired(true))
                         .addOptions(new OptionData(STRING, "kick_reason", "Grund f\u00FCr den Kick."))
+        );
+
+        commands.addCommands(
+                new CommandData("mute", "Ent/mutet einen Voicechannel, optional mit Ausnahmen.")
+                .addOptions(new OptionData(CHANNEL, "mute_channel", "Channel, in dem ge(ent)muted werden soll.").setRequired(true))
+                .addOptions(new OptionData(ROLE, "mute_role", "Rolle, die nicht gemuted werden soll."))
+                .addOptions(new OptionData(USER, "mute_user", "Nutzer, der nicht gemutet werden soll."))
         );
 
         commands.addCommands(
