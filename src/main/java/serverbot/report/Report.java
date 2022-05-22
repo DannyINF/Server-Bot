@@ -36,10 +36,10 @@ public class Report {
 
     private String messageId;
 
-    private Long trollCoins;
+    private Long trollCredits;
 
     public Report(LocalDateTime dateTime, String userId, String serverId, String offenderId, String channelId,
-                  String cause, String info, RulingType rulingType, String messageId, Long trollCoins) {
+                  String cause, String info, RulingType rulingType, String messageId, Long trollCredits) {
         this.dateTime = dateTime;
         this.userId = userId;
         this.serverId = serverId;
@@ -49,6 +49,6 @@ public class Report {
         this.info = info;
         this.rulingType = rulingType;
         this.messageId = messageId;
-        this.trollCoins = trollCoins;
+        this.trollCredits = trollCredits;
     }
 }

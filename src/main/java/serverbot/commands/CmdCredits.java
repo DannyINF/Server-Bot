@@ -40,7 +40,7 @@ public class CmdCredits {
                 embed.setColor(Color.RED);
                 NumberFormat numberFormat = new DecimalFormat("###,###,###,###,###");
                 embed.setDescription("**" + event.getUser().getAsTag() + "** hat dem Nutzer **" + user.getAsTag() + "**" +
-                        " `" + numberFormat.format(amount) + "` Coins hinzugef\u00fcgt.");
+                        " `" + numberFormat.format(amount) + "` Credits hinzugef\u00fcgt.");
                 embed.setTimestamp(Instant.now());
                 assert modlog != null;
                 modlog.sendMessageEmbeds(embed.build()).queue();

@@ -118,7 +118,7 @@ public class ModReactionListener extends ListenerAdapter {
                         channel.sendMessageEmbeds(pm_victim.build()).queue()
                 );
 
-                report.setTrollCoins(victim_coins);
+                report.setTrollCredits(victim_coins);
 
                 msg.clearReactions().queue();
                 msg.addReaction("\uD83D\uDD04").queue();
