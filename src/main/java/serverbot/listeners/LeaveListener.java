@@ -1,5 +1,6 @@
 package serverbot.listeners;
 
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
@@ -16,7 +17,7 @@ public class LeaveListener extends ListenerAdapter {
 
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
 
-        TextChannel welcome = event.getGuild().getDefaultChannel();
+        BaseGuildMessageChannel welcome = event.getGuild().getDefaultChannel();
 
         assert welcome != null;
         welcome.sendMessage("Nam\u00E1ri\u00EB " + Objects.requireNonNull(event.getMember()).getAsMention() + " (" + event.getMember().getUser().getAsTag() + ")! Nai autuvaly\u00eb rain\u00eb!").queue();

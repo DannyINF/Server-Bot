@@ -4,7 +4,7 @@ package serverbot.commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import serverbot.statistics.Statistics;
 import serverbot.statistics.StatisticsManagement;
 import serverbot.util.SpringContextUtils;
@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 
 public class CmdStats {
 
-    public static void stats(SlashCommandEvent event, Member member) {
+    public static void stats(SlashCommandInteractionEvent event, Member member) {
         event.deferReply(true);
         MessageChannel channel = event.getChannel();
 

@@ -2,7 +2,7 @@ package serverbot.listeners;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
@@ -25,7 +25,7 @@ import java.util.Objects;
 public class ModReactionListener extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
+    public void onMessageReactionAdd(MessageReactionAddEvent event) {
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
         if (channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).toList().contains(channelManagement.findByChannelId(event.getChannel().getId()).get())) {
             if (event.getMember().getUser().isBot())
@@ -73,7 +73,7 @@ public class ModReactionListener extends ListenerAdapter {
         }
     }
 
-    private static void executeAction(GuildMessageReactionAddEvent event, RulingType rulingType, Message msg, List<User> users) {
+    private static void executeAction(MessageReactionAddEvent event, RulingType rulingType, Message msg, List<User> users) {
         ReportManagement reportManagement = SpringContextUtils.getBean(ReportManagement.class);
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
         RoleManagement roleManagement = SpringContextUtils.getBean(RoleManagement.class);

@@ -1,12 +1,12 @@
 package serverbot.commands;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public interface Command {
 
     boolean called();
 
-    default void action(String[] args, GuildMessageReceivedEvent event) throws Exception {
+    default void action(String[] args, MessageReceivedEvent event) throws Exception {
 
     }
 }

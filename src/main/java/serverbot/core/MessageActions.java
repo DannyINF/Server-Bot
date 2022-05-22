@@ -1,8 +1,8 @@
 package serverbot.core;
 
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import serverbot.channel.ChannelType;
 import serverbot.user.User;
 import serverbot.user.UserManagement;
@@ -11,7 +11,7 @@ import serverbot.util.SpringContextUtils;
 import java.util.*;
 
 public class MessageActions {
-    public static void selfDestroyMSG(Message msg, int time_in_millis, GuildMessageReceivedEvent event) {
+    public static void selfDestroyMSG(Message msg, int time_in_millis, MessageReceivedEvent event) {
         Message send = event.getChannel().sendMessage(msg).complete();
 
         new Timer().schedule(new TimerTask() {
@@ -47,7 +47,7 @@ public class MessageActions {
         return localizedString;
     }
 
-    public static void needChannel(SlashCommandEvent event, ChannelType channelType) {
+    public static void needChannel(SlashCommandInteractionEvent event, ChannelType channelType) {
         event.getGuild().getDefaultChannel().sendMessage(">>> Bitte setze einen Channel vom Typ " + channelType.name() + "mit dem Befehl `/channel set <ID des Channels> MODLOG`.").queue();
     }
 }

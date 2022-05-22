@@ -1,6 +1,7 @@
 package serverbot.listeners;
 
 //import serverbot.core.databaseHandler;
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import serverbot.core.MessageActions;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.GuildBanEvent;
@@ -20,7 +21,7 @@ public class BanListener extends ListenerAdapter {
             e.printStackTrace();
         }*/
 
-        TextChannel welcome = event.getGuild().getDefaultChannel();
+        BaseGuildMessageChannel welcome = event.getGuild().getDefaultChannel();
         assert welcome != null;
         welcome.sendMessage(event.getUser().getAsMention() + " klebt jetzt am Banhammer!").queue();
 

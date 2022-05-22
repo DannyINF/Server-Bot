@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.Channel;
 import serverbot.channel.ChannelManagement;
@@ -23,11 +23,11 @@ import java.time.Instant;
 
 public class CmdCredits {
 
-    public static void get(SlashCommandEvent event, Member member) {
+    public static void get(SlashCommandInteractionEvent event, Member member) {
         credits(event, member);
     }
 
-    public static void give(SlashCommandEvent event, long amount, User user) {
+    public static void give(SlashCommandInteractionEvent event, long amount, User user) {
         if (PermissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR}, event.getMember())) {
 
             ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
@@ -55,7 +55,7 @@ public class CmdCredits {
         }
     }
 
-    public static void gift(SlashCommandEvent event, long amount, User user) {
+    public static void gift(SlashCommandInteractionEvent event, long amount, User user) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(),
                 event.getGuild().getId()).get();
@@ -73,7 +73,7 @@ public class CmdCredits {
         }
     }
 
-    private static void credits(SlashCommandEvent event, Member member) {
+    private static void credits(SlashCommandInteractionEvent event, Member member) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         String strMember;
         strMember = member.getUser().getAsTag();

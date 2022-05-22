@@ -1,26 +1,23 @@
 package serverbot.commands;
 
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
 import java.util.List;
 import java.util.Optional;
 
 public class CmdMute {
-    public static void mute(SlashCommandEvent event, GuildChannel guildChannel, Optional<OptionMapping> optionalRole, Optional<OptionMapping> optionalUser) {
+    public static void mute(SlashCommandInteractionEvent event, AudioChannel audioChannel, Optional<OptionMapping> optionalRole, Optional<OptionMapping> optionalUser) {
         //check if guildChannel is of type voice
-        if (!guildChannel.getType().isAudio()) {
+        if (!audioChannel.getType().isAudio()) {
             event.reply("Der angegebene Channel muss ein Voicechannel sein!").queue();
             return;
         }
 
         //check if user in channel are muted
         boolean areMuted = false;
-        for (Member member : guildChannel.getMembers()) {
+        for (Member member : audioChannel.getMembers()) {
             if (member.getVoiceState().isGuildMuted()) {
                 areMuted = true;
                 break;
@@ -28,15 +25,15 @@ public class CmdMute {
         }
 
         if (areMuted) {
-            event.reply(String.format("Alle Nutzer im Channel **%s** wurden entmuted.", guildChannel.getName())).queue();
-            for (Member member : guildChannel.getMembers()) {
+            event.reply(String.format("Alle Nutzer im Channel **%s** wurden entmuted.", audioChannel.getName())).queue();
+            for (Member member : audioChannel.getMembers()) {
                 if (member.getVoiceState().isGuildMuted()) {
                     member.mute(false).queue();
                 }
             }
         } else {
-            event.reply(String.format("Alle Nutzer im Channel **%s** wurden (bis auf Ausnahmen) gemuted.", guildChannel.getName())).queue();
-            List<Member> membersInChannel = guildChannel.getMembers();
+            event.reply(String.format("Alle Nutzer im Channel **%s** wurden (bis auf Ausnahmen) gemuted.", audioChannel.getName())).queue();
+            List<Member> membersInChannel = audioChannel.getMembers();
             if (optionalRole.isPresent()) {
                 Role role = optionalRole.get().getAsRole();
                 membersInChannel.removeAll(event.getGuild().getMembersWithRoles(role));

@@ -2,7 +2,7 @@ package serverbot.listeners;
 
 //import serverbot.core.databaseHandler;
 import serverbot.core.MessageActions;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.statistics.Statistics;
@@ -16,9 +16,9 @@ import java.util.TimerTask;
 
 public class XpListener extends ListenerAdapter {
     /**
-     * @param event GuildMessageReceivedEvent
+     * @param event MessageReceivedEvent
      */
-    private static void checkLevel(GuildMessageReceivedEvent event) {
+    private static void checkLevel(MessageReceivedEvent event) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         Statistics statistics = statisticsManagement.findByUserIdAndServerId(event.getMember().getId(), event.getGuild().getId()).get();
 
@@ -51,7 +51,7 @@ public class XpListener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         statisticsManagement.giveXP(event);
         checkLevel(event);

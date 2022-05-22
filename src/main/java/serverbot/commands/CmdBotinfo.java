@@ -1,12 +1,12 @@
 package serverbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import serverbot.util.STATIC;
 
 public class CmdBotinfo {
 
-    public static void botinfo(SlashCommandEvent event) {
+    public static void botinfo(SlashCommandInteractionEvent event) {
         String out = "\nThis bot is running on following servers: \n";
         long members = 0;
         int i = 0;

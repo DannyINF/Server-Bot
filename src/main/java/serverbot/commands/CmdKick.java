@@ -1,7 +1,7 @@
 package serverbot.commands;
 
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.Channel;
 import serverbot.channel.ChannelManagement;
@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class CmdKick {
 
-    public static void kick(SlashCommandEvent event) {
+    public static void kick(SlashCommandInteractionEvent event) {
 
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
 
@@ -53,7 +53,7 @@ public class CmdKick {
                     }
 
                     String finalReason = reason;
-                    event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()).sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().kick(user.getId(), finalReason).queue());
+                    event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId()).sendMessageEmbeds(embed1.build()).queue(msg -> event.getGuild().kick(user, finalReason).queue());
 
                     ModerationManagement moderationManagement = SpringContextUtils.getBean(ModerationManagement.class);
                     moderationManagement.save(new Moderation(LocalDateTime.now(), user.getId(), event.getGuild().getId(), event.getUser().getId(),

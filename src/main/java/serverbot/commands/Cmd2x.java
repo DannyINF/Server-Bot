@@ -1,13 +1,13 @@
 package serverbot.commands;
 
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import serverbot.server.ServerManagement;
 import serverbot.util.SpringContextUtils;
 
 public class Cmd2x {
 
-    public static void TwoX(SlashCommandEvent event) {
+    public static void TwoX(SlashCommandInteractionEvent event) {
         if (event.getMember().getId().equals("277746420281507841")) {
             OptionMapping option = event.getOption("2x_amount");
             long number;

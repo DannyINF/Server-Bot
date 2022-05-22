@@ -3,7 +3,7 @@ package serverbot.commands;
 //import serverbot.core.databaseHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
@@ -22,7 +22,7 @@ public class CmdSearch implements Command {
     }
 
     @Override
-    public void action(String[] args, GuildMessageReceivedEvent event) throws IOException, SQLException {
+    public void action(String[] args, MessageReceivedEvent event) throws IOException, SQLException {
 
             EmbedBuilder embed = new EmbedBuilder();
             StringBuilder sb = new StringBuilder();

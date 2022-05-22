@@ -1,7 +1,7 @@
 package serverbot.util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.server.Server;
@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Announcements extends ListenerAdapter {
 
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull MessageReceivedEvent event) {
         ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
         Server server = serverManagement.findById(event.getGuild().getId()).get();
         int i = server.getAnnouncementsCounter();

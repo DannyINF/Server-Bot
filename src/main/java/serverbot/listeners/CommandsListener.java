@@ -1,6 +1,6 @@
 package serverbot.listeners;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.channel.ChannelManagement;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CommandsListener extends ListenerAdapter {
 
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull MessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw();
         ServerManagement serverManagement = SpringContextUtils.getBean(ServerManagement.class);
         ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);

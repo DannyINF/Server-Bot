@@ -1,6 +1,6 @@
 package serverbot.statistics;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
@@ -78,7 +78,7 @@ public class StatisticsManagement {
         save(statistics);
     }
 
-    public void giveXP(GuildMessageReceivedEvent event) {
+    public void giveXP(MessageReceivedEvent event) {
         Double xp;
         int amount = event.getMessage().getContentRaw().length();
 

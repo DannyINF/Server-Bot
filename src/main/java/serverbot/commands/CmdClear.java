@@ -5,7 +5,7 @@ import serverbot.core.PermissionChecker;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageHistory;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.util.*;
@@ -20,7 +20,7 @@ public class CmdClear implements Command {
     }
 
     @Override
-    public void action(String[] args, GuildMessageReceivedEvent event) {
+    public void action(String[] args, MessageReceivedEvent event) {
             // only members with the permission "ADMINISTRATOR" are able to perform this command
             if (PermissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR}, event.getMember())) {
                 //getting number of msgs that shall be deleted

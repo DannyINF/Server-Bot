@@ -1,6 +1,6 @@
 package serverbot.commands;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import serverbot.role.Role;
 import serverbot.role.RoleManagement;
 import serverbot.role.RoleType;
@@ -16,7 +16,7 @@ public class CmdRole implements Command {
     }
 
     @Override
-    public void action(String[] args, GuildMessageReceivedEvent event) throws Exception {
+    public void action(String[] args, MessageReceivedEvent event) throws Exception {
         String action = args[0];
         String id = args[1];
         RoleManagement roleManagement = SpringContextUtils.getBean(RoleManagement.class);

@@ -3,7 +3,7 @@ package serverbot.commands;
 import serverbot.core.PermissionChecker;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class CmdRules implements Command {
 
     //TODO: Update to database-usage
     @Override
-    public void action(String[] args, GuildMessageReceivedEvent event) {
+    public void action(String[] args, MessageReceivedEvent event) {
         if (PermissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR}, event.getMember())) {
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(Color.red);

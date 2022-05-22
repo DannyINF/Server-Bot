@@ -1,6 +1,6 @@
 package serverbot.listeners;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.statistics.StatisticsManagement;
@@ -8,7 +8,7 @@ import serverbot.util.SpringContextUtils;
 
 public class StatisticsListener extends ListenerAdapter {
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
 
         int newWords = event.getMessage().getContentRaw().split(" ").length;

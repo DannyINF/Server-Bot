@@ -1,7 +1,7 @@
 package serverbot.commands;
 
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.Channel;
 import serverbot.channel.ChannelManagement;
@@ -17,7 +17,7 @@ import java.awt.*;
 
 public class CmdBan {
 
-    public static void ban(SlashCommandEvent event, User user, int del_days, String reason) {
+    public static void ban(SlashCommandInteractionEvent event, User user, int del_days, String reason) {
         event.deferReply(true).queue();
         // only members with the ban permission are able to ban using this command
         if (PermissionChecker.checkPermission(new Permission[]{Permission.BAN_MEMBERS}, event.getMember())) {

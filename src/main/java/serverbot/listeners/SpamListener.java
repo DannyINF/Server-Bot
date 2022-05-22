@@ -3,7 +3,7 @@ package serverbot.listeners;
 import serverbot.core.MessageActions;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.pagination.MessagePaginationAction;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class SpamListener extends ListenerAdapter {
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         int limit = 100;
         List<Message> list = new ArrayList<>();
         Consumer<Message> consumer = (message) -> {
@@ -60,7 +60,7 @@ public class SpamListener extends ListenerAdapter {
                         }
                         String topic = "";
                         try {
-                            topic = event.getChannel().getTopic();
+                            topic = event.getTextChannel().getTopic();
                         } catch (Exception ignored) {}
                         if (!event.getAuthor().isBot() && !topic.contains("{spam}")) {
                             if (maxCounter > 3) {

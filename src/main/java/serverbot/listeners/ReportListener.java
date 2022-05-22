@@ -2,8 +2,8 @@ package serverbot.listeners;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.priv.react.PrivateMessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.util.Streamable;
@@ -18,7 +18,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class ReportListener extends ListenerAdapter {
-    public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         ReportManagement reportManagement = SpringContextUtils.getBean(ReportManagement.class);
         Streamable<Report> reportStreamable = reportManagement.findUnfinishedReportsByUserId(event.getAuthor().getId(), RulingType.NEED_CAUSE, RulingType.NEED_INFO);
         if (!reportStreamable.isEmpty()) {
@@ -53,10 +53,10 @@ public class ReportListener extends ListenerAdapter {
         }
     }
 
-    public void onPrivateMessageReactionAdd(PrivateMessageReactionAddEvent event) {
+    public void onMessageReactionAdd(MessageReactionAddEvent event) {
         ReportManagement reportManagement = SpringContextUtils.getBean(ReportManagement.class);
         Streamable<Report> reportStreamable = reportManagement.findByUserIdAndRulingType(event.getUserId(), RulingType.NEED_VERIFICATION);
-        if (!reportStreamable.isEmpty()) {
+        if (!reportStreamable.isEmpty() && event.isFromType(net.dv8tion.jda.api.entities.ChannelType.PRIVATE)) {
             Report report = reportStreamable.stream().findFirst().get();
             EmbedBuilder embed = new EmbedBuilder();
             Guild guild = event.getJDA().getGuildById(report.getServerId());

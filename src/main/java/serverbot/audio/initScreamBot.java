@@ -29,7 +29,7 @@ public class initScreamBot extends ListenerAdapter {
         builder.setWebsocketFactory(ws);
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.ONLINE);
-        builder.setActivity(Activity.of(Activity.ActivityType.DEFAULT, " RAAAAAAAAAAAAAAAAAAAAAH"));
+        builder.setActivity(Activity.of(Activity.ActivityType.PLAYING, " RAAAAAAAAAAAAAAAAAAAAAH"));
 
         addListeners();
 

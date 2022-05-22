@@ -1,7 +1,7 @@
 package serverbot.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.data.util.Streamable;
 import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 public class CmdXp {
 
-    public static void ranking(SlashCommandEvent event) {
+    public static void ranking(SlashCommandInteractionEvent event) {
         event.deferReply(true);
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         Streamable<Statistics> statisticsStreamable = statisticsManagement.findAll();
@@ -108,7 +108,7 @@ public class CmdXp {
         event.reply(sb.toString()).queue();
     }
 
-    public static void give(SlashCommandEvent event, long amount, Member member) {
+    public static void give(SlashCommandInteractionEvent event, long amount, Member member) {
         event.deferReply(true);
         if (PermissionChecker.checkPermission(new Permission[]{Permission.ADMINISTRATOR},
                 event.getMember())) {
@@ -138,7 +138,7 @@ public class CmdXp {
         }
     }
 
-    public static void next(SlashCommandEvent event, Member member) {
+    public static void next(SlashCommandInteractionEvent event, Member member) {
         event.deferReply(true);
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         Statistics statistics = statisticsManagement.findByUserIdAndServerId(member.getId(),
@@ -178,11 +178,11 @@ public class CmdXp {
         event.replyEmbeds(embed.build()).queue();
     }
 
-    public static void get(SlashCommandEvent event, Member member) {
+    public static void get(SlashCommandInteractionEvent event, Member member) {
         xp(event, member);
     }
 
-    private static void xp(SlashCommandEvent event, Member xpMember) {
+    private static void xp(SlashCommandInteractionEvent event, Member xpMember) {
         StatisticsManagement statisticsManagement = SpringContextUtils.getBean(StatisticsManagement.class);
         String strMember = xpMember.getUser().getAsTag();
 

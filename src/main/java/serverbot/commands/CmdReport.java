@@ -2,7 +2,7 @@ package serverbot.commands;
 
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import serverbot.report.Report;
 import serverbot.report.ReportManagement;
 import serverbot.report.RulingType;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 public class CmdReport {
 
-    public static void report(SlashCommandEvent event, User offender, GuildChannel guildChannel) {
+    public static void report(SlashCommandInteractionEvent event, User offender, GuildChannel guildChannel) {
         event.reply("Ich habe dir privat ein paar Fragen gesendet. Bitte beantworte diese, um deinen Report abzuschließen.").queue();
         ReportManagement reportManagement = SpringContextUtils.getBean(ReportManagement.class);
         reportManagement.save(new Report(LocalDateTime.now(), event.getUser().getId(), event.getGuild().getId(), offender.getId(), guildChannel.getId(), "", "", RulingType.NEED_CAUSE, "", 0L));

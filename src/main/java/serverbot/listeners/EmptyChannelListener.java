@@ -1,5 +1,6 @@
 package serverbot.listeners;
 
+import net.dv8tion.jda.api.entities.AudioChannel;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.VoiceChannel;
@@ -16,11 +17,11 @@ public class EmptyChannelListener extends ListenerAdapter {
 
     //TODO: iclude this into music function
 
-    private static void shouldLeaveFunction(Guild g, VoiceChannel c) {
+    private static void shouldLeaveFunction(Guild g, AudioChannel c) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                if (Objects.requireNonNull(g.getSelfMember().getVoiceState()).inVoiceChannel() && Objects.equals(g.getSelfMember().getVoiceState().getChannel(), c)) {
+                if (Objects.requireNonNull(g.getSelfMember().getVoiceState()).inAudioChannel() && Objects.equals(g.getSelfMember().getVoiceState().getChannel(), c)) {
                     boolean shouldLeave = true;
                     for (Member member : c.getMembers()) {
                         if (!member.getUser().isBot()) {
@@ -38,7 +39,7 @@ public class EmptyChannelListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
-        if (Objects.requireNonNull(event.getGuild().getSelfMember().getVoiceState()).inVoiceChannel() && Objects.equals(event.getGuild().getSelfMember().getVoiceState().getChannel(), event.getChannelLeft())) {
+        if (Objects.requireNonNull(event.getGuild().getSelfMember().getVoiceState()).inAudioChannel() && Objects.equals(event.getGuild().getSelfMember().getVoiceState().getChannel(), event.getChannelLeft())) {
             boolean shouldLeave = true;
             for (Member member : event.getChannelLeft().getMembers()) {
                 if (!member.getUser().isBot()) {
@@ -53,7 +54,7 @@ public class EmptyChannelListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
-        if (Objects.requireNonNull(event.getGuild().getSelfMember().getVoiceState()).inVoiceChannel() && Objects.equals(event.getGuild().getSelfMember().getVoiceState().getChannel(), event.getChannelLeft())) {
+        if (Objects.requireNonNull(event.getGuild().getSelfMember().getVoiceState()).inAudioChannel() && Objects.equals(event.getGuild().getSelfMember().getVoiceState().getChannel(), event.getChannelLeft())) {
             boolean shouldLeave = true;
             for (Member member : event.getChannelLeft().getMembers()) {
                 if (!member.getUser().isBot()) {

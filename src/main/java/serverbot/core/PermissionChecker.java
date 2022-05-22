@@ -2,8 +2,9 @@ package serverbot.core;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import serverbot.role.Role;
 import serverbot.role.RoleManagement;
 import serverbot.role.RoleType;
@@ -32,11 +33,11 @@ public class PermissionChecker {
         return hasRole;
     }
 
-    public static void noPower(TextChannel textChannel, Member member) {
+    public static void noPower(MessageChannel textChannel, Member member) {
         textChannel.sendMessage(member.getAsMention() + " https://giphy.com/gifs/RX3vhj311HKLe").queue();
     }
 
-    public static void noPower(SlashCommandEvent event) {
+    public static void noPower(SlashCommandInteractionEvent event) {
         event.reply("https://giphy.com/gifs/RX3vhj311HKLe").queue();
     }
 }

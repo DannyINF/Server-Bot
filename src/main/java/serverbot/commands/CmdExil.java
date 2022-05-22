@@ -1,7 +1,7 @@
 package serverbot.commands;
 
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import serverbot.core.PermissionChecker;
 import serverbot.member.MemberId;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class CmdExil {
 
-    public static void exile(SlashCommandEvent event, Member member, OptionMapping reason) {
+    public static void exile(SlashCommandInteractionEvent event, Member member, OptionMapping reason) {
         event.deferReply(true);
         if (PermissionChecker.checkRole(RoleType.MODERATOR, event.getMember())) {
             event.reply("Ein Nutzer wurde de/exiliert.").queue();

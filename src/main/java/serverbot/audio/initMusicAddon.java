@@ -1,12 +1,12 @@
 package serverbot.audio;
 
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import serverbot.listeners.VoiceListenerAddon;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import serverbot.listeners.CommandsMusicListener;
 import serverbot.listeners.ReadyListener;
 import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
@@ -16,7 +16,7 @@ import java.util.Objects;
 class initMusicAddon extends ListenerAdapter {
     private static JDABuilder builder;
 
-    static void main(String token, String[] args, GuildMessageReceivedEvent event, EmbedBuilder embed, VoiceChannel userVoiceChannel) throws InterruptedException {
+    static void main(String token, String[] args, MessageReceivedEvent event, EmbedBuilder embed, VoiceChannel userVoiceChannel) throws InterruptedException {
 
         WebSocketFactory ws = new WebSocketFactory();
         ws.setVerifyHostname(false);
@@ -31,7 +31,7 @@ class initMusicAddon extends ListenerAdapter {
         builder.setWebsocketFactory(ws);
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.ONLINE);
-        builder.setActivity(Activity.of(Activity.ActivityType.DEFAULT, " \u266A"));
+        builder.setActivity(Activity.of(Activity.ActivityType.PLAYING, " \u266A"));
 
         addListeners();
         addCommands();

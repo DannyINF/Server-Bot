@@ -5,7 +5,7 @@ import serverbot.channel.ChannelManagement;
 import serverbot.channel.ChannelType;
 import serverbot.core.MessageActions;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import serverbot.util.SpringContextUtils;
@@ -16,7 +16,7 @@ import java.net.URL;
 
 
 public class ChatfilterListener extends ListenerAdapter {
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getAuthor().equals(event.getJDA().getSelfUser())) {
             ChannelManagement channelManagement = SpringContextUtils.getBean(ChannelManagement.class);
             TextChannel modlog = event.getGuild().getTextChannelById(channelManagement.findByServerIdAndChannelType(event.getGuild().getId(), ChannelType.MODLOG).stream().findFirst().get().getChannelId());

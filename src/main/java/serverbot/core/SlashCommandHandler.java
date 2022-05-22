@@ -17,10 +17,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import serverbot.audio.GuildMusicManager;
 import serverbot.audio.TrackScheduler;
@@ -36,7 +35,7 @@ import java.util.logging.Level;
 public class SlashCommandHandler extends ListenerAdapter {
 
     @Override
-    public void onSlashCommand(SlashCommandEvent event) {
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         // Only accept commands from guilds
         if (event.getGuild() == null)
             return;
@@ -121,11 +120,11 @@ public class SlashCommandHandler extends ListenerAdapter {
                     }
                     break;
                 case "mute":
-                    GuildChannel guildChannel = event.getOption("mute_channel").getAsGuildChannel();
+                    AudioChannel audioChannel = event.getOption("mute_channel").getAsAudioChannel();
                     Optional<OptionMapping> optionalRole = Optional.ofNullable(event.getOption("mute_role"));
                     Optional<OptionMapping> optionalUser = Optional.ofNullable(event.getOption("mute_user"));
 
-                    CmdMute.mute(event, guildChannel, optionalRole, optionalUser);
+                    CmdMute.mute(event, audioChannel, optionalRole, optionalUser);
                     break;
                 default:
                     event.reply("I can't handle that command right now :(").setEphemeral(true).queue();
@@ -182,12 +181,12 @@ public class SlashCommandHandler extends ListenerAdapter {
     // repeat       - Makes the player repeat the currently playing song
     // reset        - Completely resets the player, fixing all errors and clearing the queue.
 
-    public void action(SlashCommandEvent event) throws Exception {
+    public void action(SlashCommandInteractionEvent event) throws Exception {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(33, 237, 90));
         embed.setTitle("Music");
 
-        VoiceChannel userVoiceChannel = null;
+        AudioChannel userVoiceChannel = null;
         try {
             userVoiceChannel = Objects.requireNonNull(event.getMember().getVoiceState()).getChannel();
         } catch (Exception ignored) {
@@ -206,7 +205,7 @@ public class SlashCommandHandler extends ListenerAdapter {
         }
         if (userVoiceChannel != null) {
             if (!music_addons.isEmpty()) {
-                VoiceChannel botchannel = null;
+                AudioChannel botchannel = null;
                 boolean inAction = false;
                 try {
                     botchannel = Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getId()).getVoiceState()).getChannel();
@@ -223,7 +222,7 @@ public class SlashCommandHandler extends ListenerAdapter {
                         if (m.getOnlineStatus().equals(OnlineStatus.OFFLINE)) {
                             addon_available.add(addon_available.size(), m);
                         } else if (m.getOnlineStatus().equals(OnlineStatus.ONLINE)) {
-                            if (Objects.requireNonNull(m.getVoiceState()).inVoiceChannel()) {
+                            if (Objects.requireNonNull(m.getVoiceState()).inAudioChannel()) {
                                 if (Objects.requireNonNull(m.getVoiceState().getChannel()).equals(userVoiceChannel)) {
                                     addon_available.add(0, m);
                                     inAction = true;
@@ -288,7 +287,7 @@ public class SlashCommandHandler extends ListenerAdapter {
         }
     }
 
-    public void musicPlayer(TextChannel channel, Member member, Guild guild, EmbedBuilder embed, VoiceChannel userVoiceChannel, SlashCommandEvent event) {
+    public void musicPlayer(TextChannel channel, Member member, Guild guild, EmbedBuilder embed, AudioChannel userVoiceChannel, SlashCommandInteractionEvent event) {
         GuildMusicManager mng = getMusicManager(guild);
         AudioPlayer player = mng.player;
         TrackScheduler scheduler = mng.scheduler;
@@ -347,7 +346,7 @@ public class SlashCommandHandler extends ListenerAdapter {
                     }
                 } else    //Commands has 2 parts, play and url.
                 {
-                    if (Objects.requireNonNull(member.getVoiceState()).inVoiceChannel()) {
+                    if (Objects.requireNonNull(member.getVoiceState()).inAudioChannel()) {
                         guild.getAudioManager().setSendingHandler(mng.sendHandler);
                         try {
                             guild.getAudioManager().openAudioConnection(userVoiceChannel);
@@ -363,7 +362,7 @@ public class SlashCommandHandler extends ListenerAdapter {
                 }
                 break;
             case "pplay":
-                if (Objects.requireNonNull(member.getVoiceState()).inVoiceChannel()) {
+                if (Objects.requireNonNull(member.getVoiceState()).inAudioChannel()) {
                     guild.getAudioManager().setSendingHandler(mng.sendHandler);
                     try {
                         guild.getAudioManager().openAudioConnection(userVoiceChannel);
@@ -522,7 +521,7 @@ public class SlashCommandHandler extends ListenerAdapter {
         }
     }
 
-    private void loadAndPlay(GuildMusicManager mng, final MessageChannel channel, String url, User user, final boolean addPlaylist, SlashCommandEvent event) {
+    private void loadAndPlay(GuildMusicManager mng, final MessageChannel channel, String url, User user, final boolean addPlaylist, SlashCommandInteractionEvent event) {
         final String trackUrl;
 
         //Strip <>'s that prevent discord from embedding link resources
