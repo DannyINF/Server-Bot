@@ -13,10 +13,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.Collections;
-import java.util.Objects;
-
-import static java.awt.SystemColor.text;
 
 public class VoiceListener extends ListenerAdapter implements AudioReceiveHandler {
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {

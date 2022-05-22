@@ -138,9 +138,6 @@ public class Main {
     }
 
     private static void addSlashCommands(JDA jda) {
-        Guild beta = jda.getGuildById(712664262102745159L);
-        CommandListUpdateAction commands = beta.updateCommands();
-
         jda.updateCommands()
                 .addCommands(Commands.slash("2x", "Aktiviert oder deaktiviert das Doppel-XP-Event.")
                         .addOption(INTEGER, "2x_amount", "Multiplikator (wenn nicht gegeben, dann 2)"))
@@ -263,9 +260,5 @@ public class Main {
                         .addSubcommands(
                                 new SubcommandData("shuffle", "Mischt die Wiedergabeliste aus.")))
         .queue();
-
-        CommandListUpdateAction global = jda.updateCommands();
-        global.queue();
-        commands.queue();
     }
 }
