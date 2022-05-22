@@ -2,9 +2,12 @@ package serverbot.core;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import serverbot.role.Role;
+import serverbot.role.RoleManagement;
+import serverbot.role.RoleType;
+import serverbot.util.SpringContextUtils;
 
 public class PermissionChecker {
     public static boolean checkPermission(Permission[] permission, Member member) {
@@ -16,11 +19,14 @@ public class PermissionChecker {
         }
         return hasPermission;
     }
-    public static boolean checkRole(Role[] roles, Member member) {
-        boolean hasRole = true;
-        for (Role role : roles) {
-            if (!member.getRoles().contains(role)) {
-                hasRole = false;
+    public static boolean checkRole(RoleType roleType, Member member) {
+        RoleManagement roleManagement = SpringContextUtils.getBean(RoleManagement.class);
+
+        boolean hasRole = false;
+        for (Role role : roleManagement.findByServerIdAndRoleType(member.getGuild().getId(), roleType)) {
+            if (member.getRoles().contains(member.getGuild().getRoleById(role.getRoleId()))) {
+                hasRole = true;
+                break;
             }
         }
         return hasRole;

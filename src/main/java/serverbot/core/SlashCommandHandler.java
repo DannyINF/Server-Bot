@@ -26,6 +26,7 @@ import serverbot.audio.GuildMusicManager;
 import serverbot.audio.TrackScheduler;
 import serverbot.channel.ChannelType;
 import serverbot.commands.*;
+import serverbot.role.RoleType;
 
 import java.awt.*;
 import java.util.*;
@@ -408,8 +409,7 @@ public class SlashCommandHandler extends ListenerAdapter {
                 event.replyEmbeds(embed.build()).queue();
                 break;
             case "volume":
-                if (PermissionChecker.checkRole(new Role[]{guild.getRolesByName("Vala", true).get(0)}, member) ||
-                        PermissionChecker.checkRole(new Role[]{guild.getRolesByName("Leser", true).get(0)}, member)) {
+                if (PermissionChecker.checkRole(RoleType.MODERATOR, member)) {
                     int amount = -1;
                     try {
                         amount = (int) event.getOption("music_volume_amount").getAsLong();

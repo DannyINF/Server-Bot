@@ -27,7 +27,6 @@ public class RoleManagement {
     }
 
     public void save(Role role) {
-        System.out.println("saved");
         roleRepository.save(role);
     }
 

@@ -1,5 +1,5 @@
 package serverbot.role;
 
 public enum RoleType {
-    EXIL, VOICE, DEFAULT
+    EXIL, VOICE, DEFAULT, MODERATOR
 }

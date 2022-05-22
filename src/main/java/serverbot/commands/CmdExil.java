@@ -9,6 +9,7 @@ import serverbot.member.MemberManagement;
 import serverbot.moderation.Moderation;
 import serverbot.moderation.ModerationManagement;
 import serverbot.moderation.ModerationType;
+import serverbot.role.RoleType;
 import serverbot.util.SpringContextUtils;
 
 import java.time.LocalDateTime;
@@ -21,9 +22,7 @@ public class CmdExil {
 
     public static void exile(SlashCommandEvent event, Member member, OptionMapping reason) {
         event.deferReply(true);
-        if (PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("Mythen aus Mittelerde", true).get(0)}, event.getMember()) ||
-                PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("YT-Team", true).get(0)}, event.getMember()) ||
-                PermissionChecker.checkRole(new Role[]{event.getGuild().getRolesByName("Moderator", true).get(0)}, event.getMember())) {
+        if (PermissionChecker.checkRole(RoleType.MODERATOR, event.getMember())) {
             event.reply("Ein Nutzer wurde de/exiliert.").queue();
             exileMember(event.getGuild(), member, event.getMember(), -1L, reason == null ? "" : reason.getAsString());
         } else {
